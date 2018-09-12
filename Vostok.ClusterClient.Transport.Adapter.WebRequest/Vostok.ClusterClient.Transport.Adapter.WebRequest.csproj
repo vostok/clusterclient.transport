@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard20</TargetFramework>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <Reference Include="Vostok.ClusterClient.Transport.WebRequest">
+            <SpecificVersion>False</SpecificVersion>
+            <HintPath>..\..\vostok.clusterclient.transport.webrequest\Vostok.ClusterClient.Transport.WebRequest\bin\Release\netstandard20\Vostok.ClusterClient.Transport.WebRequest.dll</HintPath>
+        </Reference>
+        <Reference Include="Vostok.ClusterClient.Core">
+            <SpecificVersion>False</SpecificVersion>
+            <HintPath>..\..\vostok.clusterclient.core\Vostok.ClusterClient.Core\bin\Release\netstandard2.0\Vostok.ClusterClient.Core.dll</HintPath>
+        </Reference>
+        <Reference Include="Vostok.Logging.Abstractions">
+            <SpecificVersion>False</SpecificVersion>
+            <HintPath>..\..\vostok.logging.abstractions\Vostok.Logging.Abstractions\bin\Release\netstandard2.0\Vostok.Logging.Abstractions.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <Compile Include="..\Vostok.ClusterClient.Transport\UniversalTransportSettings.cs" />
+        <Compile Include="..\Vostok.ClusterClient.Transport\Translator.cs" />
+    </ItemGroup>
+
+
+    <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+        <ILRepackExecutable>$(MSBuildThisFileDirectory)..\..\vostok.devtools.ilrepack.bin\net40\ILRepack.exe</ILRepackExecutable>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
+        <ILRepackExecutable>dotnet $(MSBuildThisFileDirectory)../../vostok.devtools.ilrepack.bin/netcoreapp2.1/ILRepack.Core.dll</ILRepackExecutable>
+    </PropertyGroup>
+
+    <Target Name="RepackAssemblies" AfterTargets="Build" Condition="'$(Configuration)' == 'Release' Or '$(Configuration)' == 'NoTests'">
+        <ItemGroup>
+            <MergeAssemblies Include="$(ProjectDir)$(OutputPath)$(AssemblyName).dll" />
+            <MergeAssemblies Include="$(ProjectDir)$(OutputPath)Vostok.ClusterClient.Transport.Webrequest.dll" />
+        </ItemGroup>
+        <Exec Command="$(ILRepackExecutable) /internalize /log:$(ProjectDir)$(OutputPath)ilrepack.log /lib:&quot;$(PubDirWithoutSlash)&quot; /out:$(ProjectDir)$(OutputPath)$(AssemblyName).Merged.dll @(MergeAssemblies->'%(RelativeDir)%(FileName)%(Extension)', ' ')" />
+    </Target>
+    
+</Project>
