@@ -37,7 +37,7 @@
   </Target>
   
   <ItemGroup>
-    <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Adapter.WebRequest\bin\Release\netstandard20\Vostok.ClusterClient.Transport.Adapter.WebRequest.Merged.dll" />
+    <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Adapter.WebRequest\bin\Release\netstandard2.0\Vostok.ClusterClient.Transport.Adapter.WebRequest.Merged.dll" />
     <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Adapter.Sockets\bin\Release\netcoreapp2.1\Vostok.ClusterClient.Transport.Adapter.Sockets.Merged.dll" />
   </ItemGroup>
 </Project>
