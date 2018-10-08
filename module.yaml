@@ -21,5 +21,5 @@ full-build > notests:
     target: Vostok.ClusterClient.Transport.sln
     configuration: Release
   deps:
-    - clusterclient.transport.tests
-    - logging.console
+    - vostok.clusterclient.transport.tests
+    - vostok.logging.console
