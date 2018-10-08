@@ -30,13 +30,14 @@
       <HintPath>..\..\vostok.logging.abstractions\Vostok.Logging.Abstractions\bin\Release\netstandard2.0\Vostok.Logging.Abstractions.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Vostok.ClusterClient.Transport.Adapter.WebRequest\Vostok.ClusterClient.Transport.Adapter.WebRequest.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
+  
+  <Target Name="BuildTransports" BeforeTargets="BeforeBuild">
+    <Exec Command="dotnet build -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Adapter.WebRequest"/>
+    <Exec Command="dotnet build -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Adapter.Sockets"/>
+  </Target>
   
   <ItemGroup>
     <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Adapter.WebRequest\bin\Release\netstandard20\Vostok.ClusterClient.Transport.Adapter.WebRequest.Merged.dll" />
+    <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Adapter.Sockets\bin\Release\netcoreapp2.1\Vostok.ClusterClient.Transport.Adapter.Sockets.Merged.dll" />
   </ItemGroup>
 </Project>

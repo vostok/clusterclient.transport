@@ -2,7 +2,8 @@
 using Vostok.ClusterClient.Transport.Webrequest;
 using Vostok.Logging.Abstractions;
 
-namespace Vostok.ClusterClient.Transport.Adapter.WebRequest
+// ReSharper disable once CheckNamespace
+namespace Vostok.ClusterClient.Transport.Adapter
 {
     public static class TransportFactory
     {

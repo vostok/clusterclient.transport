@@ -7,7 +7,7 @@
     <ItemGroup>
         <Reference Include="Vostok.ClusterClient.Transport.WebRequest">
             <SpecificVersion>False</SpecificVersion>
-            <HintPath>..\..\vostok.clusterclient.transport.webrequest\Vostok.ClusterClient.Transport.WebRequest\bin\Release\netstandard20\Vostok.ClusterClient.Transport.WebRequest.dll</HintPath>
+            <HintPath>..\..\vostok.clusterclient.transport.webrequest\Vostok.ClusterClient.Transport.WebRequest\bin\Release\netstandard2.0\Vostok.ClusterClient.Transport.WebRequest.dll</HintPath>
         </Reference>
         <Reference Include="Vostok.ClusterClient.Core">
             <SpecificVersion>False</SpecificVersion>
@@ -38,7 +38,7 @@
             <MergeAssemblies Include="$(ProjectDir)$(OutputPath)$(AssemblyName).dll" />
             <MergeAssemblies Include="$(ProjectDir)$(OutputPath)Vostok.ClusterClient.Transport.Webrequest.dll" />
         </ItemGroup>
-        <Exec Command="$(ILRepackExecutable) /internalize /log:$(ProjectDir)$(OutputPath)ilrepack.log /lib:&quot;$(PubDirWithoutSlash)&quot; /out:$(ProjectDir)$(OutputPath)$(AssemblyName).Merged.dll @(MergeAssemblies->'%(RelativeDir)%(FileName)%(Extension)', ' ')" />
+        <Exec Command="$(ILRepackExecutable) /internalize /lib:&quot;$(PubDirWithoutSlash)&quot; /out:$(ProjectDir)$(OutputPath)$(AssemblyName).Merged.dll @(MergeAssemblies->'%(RelativeDir)%(FileName)%(Extension)', ' ')" />
     </Target>
     
 </Project>

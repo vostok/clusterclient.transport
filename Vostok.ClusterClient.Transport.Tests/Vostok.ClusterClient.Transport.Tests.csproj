@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\vostok.clusterclient.transport.tests\Vostok.ClusterClient.Transport.Tests.Shared\Vostok.ClusterClient.Transport.Tests.Shared.csproj" />
     <ProjectReference Include="..\Vostok.ClusterClient.Transport\Vostok.ClusterClient.Transport.csproj" />
   </ItemGroup>
 
@@ -29,6 +30,10 @@
     <Reference Include="Vostok.Logging.Abstractions">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\vostok.logging.abstractions\Vostok.Logging.Abstractions\bin\Release\netstandard2.0\Vostok.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Vostok.Logging.Console">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\vostok.logging.console\Vostok.Logging.Console\bin\Release\netstandard2.0\Vostok.Logging.Console.dll</HintPath>
     </Reference>
   </ItemGroup>
 
