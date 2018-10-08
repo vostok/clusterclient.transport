@@ -17,7 +17,7 @@
   <PropertyGroup>
     <PackageProjectUrl>https://github.com/vostok/clusterclient.transport</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/vostok/clusterclient.transport/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageTags>vostok</PackageTags>
+    <PackageTags>vostok vostok.clusterclient</PackageTags>
     <RepositoryUrl>https://github.com/vostok/clusterclient.transport</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
