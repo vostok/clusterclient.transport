@@ -6,9 +6,9 @@
     </PropertyGroup>
     
     <ItemGroup>
-        <Reference Include="Vostok.ClusterClient.Transport.WebRequest">
+        <Reference Include="Vostok.ClusterClient.Transport.Webrequest">
             <SpecificVersion>False</SpecificVersion>
-            <HintPath>..\..\vostok.clusterclient.transport.webrequest\Vostok.ClusterClient.Transport.WebRequest\bin\Release\netstandard2.0\Vostok.ClusterClient.Transport.WebRequest.dll</HintPath>
+            <HintPath>..\..\vostok.clusterclient.transport.webrequest\Vostok.ClusterClient.Transport.Webrequest\bin\Release\netstandard2.0\Vostok.ClusterClient.Transport.Webrequest.dll</HintPath>
         </Reference>
         <Reference Include="Vostok.ClusterClient.Core">
             <SpecificVersion>False</SpecificVersion>
