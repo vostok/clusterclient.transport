@@ -1,17 +1,9 @@
 using System;
 
-namespace Vostok.ClusterClient.Transport
+namespace Vostok.Clusterclient.Transport
 {
     public class UniversalTransportSettings
     {
-        public bool Pipelined { get; set; } = true;
-
-        public bool FixThreadPoolProblems { get; set; } = true;
-
-        public int ConnectionAttempts { get; set; } = 2;
-
-        public TimeSpan? ConnectionTimeout { get; set; } = TimeSpan.FromMilliseconds(750);
-
         public TimeSpan RequestAbortTimeout { get; set; } = TimeSpan.FromMilliseconds(250);
 
         public long? MaxResponseBodySize { get; set; } = null;
@@ -24,6 +16,6 @@ namespace Vostok.ClusterClient.Transport
 
         public TimeSpan TcpKeepAliveTime { get; set; } = TimeSpan.FromSeconds(3);
 
-        public TimeSpan TcpKeepAlivePeriod { get; set; } = TimeSpan.FromSeconds(1);
+        public TimeSpan TcpKeepAliveInterval { get; set; } = TimeSpan.FromSeconds(1);
     }
 }

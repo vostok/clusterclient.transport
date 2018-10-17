@@ -6,6 +6,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Configurations>Debug;Release</Configurations>
     <LangVersion>7.2</LangVersion>
+    <RootNamespace>Vostok.Clusterclient.Transport</RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
     <VersionPrefix>0.0.1</VersionPrefix>
@@ -32,8 +33,8 @@
   </ItemGroup>
   
   <Target Name="BuildTransports" BeforeTargets="BeforeBuild">
-    <Exec Command="dotnet build -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Adapter.WebRequest"/>
-    <Exec Command="dotnet build -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Adapter.Sockets"/>
+    <Exec Command="dotnet build -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Adapter.WebRequest" />
+    <Exec Command="dotnet build -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Adapter.Sockets" />
   </Target>
   
   <ItemGroup>

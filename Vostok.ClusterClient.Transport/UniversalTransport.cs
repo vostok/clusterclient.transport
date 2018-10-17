@@ -2,11 +2,11 @@ using System;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Vostok.ClusterClient.Core.Model;
-using Vostok.ClusterClient.Core.Transport;
+using Vostok.Clusterclient.Core.Model;
+using Vostok.Clusterclient.Core.Transport;
 using Vostok.Logging.Abstractions;
 
-namespace Vostok.ClusterClient.Transport
+namespace Vostok.Clusterclient.Transport
 {
     public class UniversalTransport : ITransport
     {
@@ -21,21 +21,21 @@ namespace Vostok.ClusterClient.Transport
                 assembly = LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.Sockets.Merged.dll");
             else
                 throw new NotSupportedException("Runtime is not supported");
-            var type = assembly.GetType("Vostok.ClusterClient.Transport.Adapter.TransportFactory");
+            var type = assembly.GetType("Vostok.Clusterclient.Transport.Adapter.TransportFactory");
             var method = type.GetMethod("Create", BindingFlags.Static|BindingFlags.Public);
-            implementation = (ITransport) method.Invoke(null, new Object[]{settings ?? new UniversalTransportSettings(), log});
+            implementation = (ITransport) method.Invoke(null, new object[]{settings ?? new UniversalTransportSettings(), log});
         }
 
         /// <inheritdoc />
-        public Task<Response> SendAsync(Request request, TimeSpan timeout, CancellationToken cancellationToken)
-            => implementation.SendAsync(request, timeout, cancellationToken);
+        public Task<Response> SendAsync(Request request, TimeSpan? connectionTimeout, TimeSpan timeout, CancellationToken cancellationToken)
+            => implementation.SendAsync(request, connectionTimeout, timeout, cancellationToken);
 
         /// <inheritdoc />
         public TransportCapabilities Capabilities => implementation.Capabilities;
         
         private Assembly LoadAssemblyFromResource(string libName)
         {
-            const string nameSpace = "Vostok.ClusterClient.Transport";
+            const string nameSpace = "Vostok.Clusterclient.Transport";
 
             var assembly = Assembly.GetExecutingAssembly();
             var resName = $"{nameSpace}.{libName}";

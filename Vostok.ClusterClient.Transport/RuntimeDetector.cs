@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace Vostok.ClusterClient.Transport
+namespace Vostok.Clusterclient.Transport
 {
     public static class RuntimeDetector
     {

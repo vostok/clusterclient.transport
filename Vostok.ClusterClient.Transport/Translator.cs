@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace Vostok.ClusterClient.Transport
+namespace Vostok.Clusterclient.Transport
 {
     internal static class Translator
     {

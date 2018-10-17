@@ -1,9 +1,9 @@
-﻿using Vostok.ClusterClient.Core.Transport;
-using Vostok.ClusterClient.Transport.Webrequest;
+﻿using Vostok.Clusterclient.Core.Transport;
+using Vostok.Clusterclient.Transport.Webrequest;
 using Vostok.Logging.Abstractions;
 
 // ReSharper disable once CheckNamespace
-namespace Vostok.ClusterClient.Transport.Adapter
+namespace Vostok.Clusterclient.Transport.Adapter
 {
     public static class TransportFactory
     {
@@ -12,13 +12,13 @@ namespace Vostok.ClusterClient.Transport.Adapter
             var settings = Translator.Translate<UniversalTransportSettings>(rawSettings);
             var webRequestTransportSettings = new WebRequestTransportSettings
             {
-                Pipelined = settings.Pipelined,
-                ConnectionAttempts = settings.ConnectionAttempts,
-                ConnectionTimeout = settings.ConnectionTimeout,
                 AllowAutoRedirect = settings.AllowAutoRedirect,
                 RequestAbortTimeout = settings.RequestAbortTimeout,
                 UseResponseStreaming = settings.UseResponseStreaming,
-                MaxResponseBodySize = settings.MaxResponseBodySize
+                MaxResponseBodySize = settings.MaxResponseBodySize,
+                TcpKeepAliveEnabled = settings.TcpKeepAliveEnabled,
+                TcpKeepAliveInterval = settings.TcpKeepAliveInterval,
+                TcpKeepAliveTime = settings.TcpKeepAliveTime
             };
             
             return new WebRequestTransport(webRequestTransportSettings, log);
