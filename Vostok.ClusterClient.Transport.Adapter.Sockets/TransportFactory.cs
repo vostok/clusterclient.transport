@@ -1,5 +1,5 @@
 ﻿using Vostok.Clusterclient.Core.Transport;
-using Vostok.ClusterClient.Transport.Sockets;
+using Vostok.Clusterclient.Transport.Sockets;
 using Vostok.Logging.Abstractions;
 
 // ReSharper disable once CheckNamespace
