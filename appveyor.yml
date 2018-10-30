@@ -10,8 +10,7 @@ matrix:
 environment:
   sshKeyEncryptionSecret:
     secure: YxpCTXzimLxFE18bQJPIzD1n5WyQK/M/rVuGvtrM/SJ/HzGTGK43v4zO9xSeiK4F
-  APPVEYOR_SSH_KEY: AAAAB3NzaC1yc2EAAAADAQABAAABAQDVZYhi5Uk+eTWRQhGYVCqoBlfNNYDQ98E/V4K9gLdMO/OT3d69WDhLmS6Gw4VEaBLUv5WzGOGdXk3JPdNRMgIy9QWui1hABCo0VdgogY6n6WiMgBgNs8qU/jadhrW+avpXEYUg74Bzg+sxbOSWkCpopwb2LOt69nzThNbIg70EM3PBM9ATqDTCiL/nb5uT93715JvXcCDPpiMTrg2R9PxzndS2IdpJmNy0Qe74VBeoGPBhRDTcELa5CGeoVWQMRLreCLGM/kY1FS0JZpJWiqsFUYiDec3HvhwEZ/3LGV3ARVMIPoBz4WKBzc1sd8K7eP5xpX5iuPcuwE26F/PEqQEJ
-    
+
   matrix:
     # This dimension of build matrix controls our intention to produce NuGet packages.
     # Producing packages also implies building and testing against NuGet dependencies.
