@@ -22,17 +22,17 @@ namespace Vostok.Clusterclient.Transport
             else
                 throw new NotSupportedException("Runtime is not supported");
             var type = assembly.GetType("Vostok.Clusterclient.Transport.Adapter.TransportFactory");
-            var method = type.GetMethod("Create", BindingFlags.Static|BindingFlags.Public);
-            implementation = (ITransport) method.Invoke(null, new object[]{settings ?? new UniversalTransportSettings(), log});
+            var method = type.GetMethod("Create", BindingFlags.Static | BindingFlags.Public);
+            implementation = (ITransport)method.Invoke(null, new object[] {settings ?? new UniversalTransportSettings(), log});
         }
+
+        /// <inheritdoc />
+        public TransportCapabilities Capabilities => implementation.Capabilities;
 
         /// <inheritdoc />
         public Task<Response> SendAsync(Request request, TimeSpan? connectionTimeout, TimeSpan timeout, CancellationToken cancellationToken)
             => implementation.SendAsync(request, connectionTimeout, timeout, cancellationToken);
 
-        /// <inheritdoc />
-        public TransportCapabilities Capabilities => implementation.Capabilities;
-        
         private Assembly LoadAssemblyFromResource(string libName)
         {
             const string nameSpace = "Vostok.Clusterclient.Transport";
