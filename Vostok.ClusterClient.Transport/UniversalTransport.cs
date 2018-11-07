@@ -17,6 +17,7 @@ namespace Vostok.Clusterclient.Transport
     {
         private readonly ITransport implementation;
 
+        /// <inheritdoc cref="UniversalTransport" />
         public UniversalTransport(UniversalTransportSettings settings, ILog log)
         {
             Assembly assembly;

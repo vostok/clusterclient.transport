@@ -33,7 +33,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Compile Include="..\..\vostok.commons.environment\Vostok.Commons.Environment\RuntimeDetector.cs" LinkBase="Commons\RuntimeDetector.cs"/>
+    <Compile Include="..\..\vostok.commons.environment\Vostok.Commons.Environment\RuntimeDetector.cs" Link="Commons\RuntimeDetector.cs" />
   </ItemGroup>
   
   <Target Name="BuildTransports" BeforeTargets="BeforeBuild">
