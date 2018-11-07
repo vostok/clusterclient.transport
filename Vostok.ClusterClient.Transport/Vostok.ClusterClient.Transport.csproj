@@ -32,6 +32,10 @@
     </Reference>
   </ItemGroup>
   
+  <ItemGroup>
+    <Compile Include="..\..\vostok.commons.environment\Vostok.Commons.Environment\RuntimeDetector.cs" LinkBase="Commons"/>
+  </ItemGroup>
+  
   <Target Name="BuildTransports" BeforeTargets="BeforeBuild">
     <Exec Command="dotnet build -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Adapter.WebRequest" />
     <Exec Command="dotnet build -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Adapter.Sockets" />

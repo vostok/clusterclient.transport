@@ -15,6 +15,7 @@ notests *default:
     - vostok.devtools
     - vostok.devtools.ilrepack.bin
     - vostok.clusterclient.transport.webrequest@develop
+    - vostok.commons.environment/src
 
 full-build > notests:
   build:

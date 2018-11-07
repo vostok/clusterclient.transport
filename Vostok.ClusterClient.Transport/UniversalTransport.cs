@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Clusterclient.Core.Transport;
+using Vostok.Commons.Environment;
 using Vostok.Logging.Abstractions;
 
 namespace Vostok.Clusterclient.Transport
