@@ -48,6 +48,10 @@ namespace Vostok.Clusterclient.Transport.Tests
 
     internal class ContentReceivingTests : ContentReceivingTests<Config>
     {
+        public override void Should_return_response_with_correct_content_length_when_buffer_factory_is_overridden()
+        {
+            // ignore test: buffer factory setting is non-public and cannot be set from UniversalTransport
+        }
     }
 
     internal class ContentSendingTests : ContentSendingTests<Config>
