@@ -9,6 +9,10 @@ using Vostok.Logging.Abstractions;
 
 namespace Vostok.Clusterclient.Transport
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// Provider universal ClusterClient transport which internally uses different runtime-dependent implementations.
+    /// </summary>
     public class UniversalTransport : ITransport
     {
         private readonly ITransport implementation;
@@ -24,7 +28,7 @@ namespace Vostok.Clusterclient.Transport
                 throw new NotSupportedException("Runtime is not supported");
             var type = assembly.GetType("Vostok.Clusterclient.Transport.Adapter.TransportFactory");
             var method = type.GetMethod("Create", BindingFlags.Static | BindingFlags.Public);
-            implementation = (ITransport)method.Invoke(null, new object[] {settings ?? new UniversalTransportSettings(), log});
+            implementation = (ITransport) method.Invoke(null, new object[] {settings ?? new UniversalTransportSettings(), log});
         }
 
         /// <inheritdoc />
