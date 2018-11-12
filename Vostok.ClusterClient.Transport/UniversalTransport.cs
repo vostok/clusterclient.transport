@@ -25,6 +25,8 @@ namespace Vostok.Clusterclient.Transport
                 assembly = LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.WebRequest.Merged.dll");
             else if (RuntimeDetector.IsDotNetCore21AndNewer)
                 assembly = LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.Sockets.Merged.dll");
+            else if (RuntimeDetector.IsDotNetCore20)
+                assembly = LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.Native.Merged.dll");
             else
                 throw new NotSupportedException("Runtime is not supported");
             var type = assembly.GetType("Vostok.Clusterclient.Transport.Adapter.TransportFactory");
