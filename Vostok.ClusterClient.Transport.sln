@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vostok.ClusterClient.Transp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vostok.ClusterClient.Transport.TestsShared", "..\vostok.clusterclient.transport.tests\Vostok.ClusterClient.Transport.Tests.Shared\Vostok.ClusterClient.Transport.Tests.Shared.csproj", "{AFEB1BB8-E806-4446-B493-C94F8F625A7D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vostok.ClusterClient.Transport.Adapter.Native", "Vostok.ClusterClient.Transport.Adapter.Native\Vostok.ClusterClient.Transport.Adapter.Native.csproj", "{5331104D-1F44-432B-AEC0-F8000C61B598}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,9 @@ Global
 		{AFEB1BB8-E806-4446-B493-C94F8F625A7D}.NoTests|Any CPU.Build.0 = Debug|Any CPU
 		{AFEB1BB8-E806-4446-B493-C94F8F625A7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFEB1BB8-E806-4446-B493-C94F8F625A7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5331104D-1F44-432B-AEC0-F8000C61B598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5331104D-1F44-432B-AEC0-F8000C61B598}.NoTests|Any CPU.ActiveCfg = Debug|Any CPU
+		{5331104D-1F44-432B-AEC0-F8000C61B598}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

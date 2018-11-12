@@ -10,11 +10,12 @@ notests *default:
 
   deps:
     - vostok.logging.abstractions
+    - vostok.clusterclient.transport.webrequest@develop
     - vostok.clusterclient.transport.sockets@develop
+    - vostok.clusterclient.transport.native@develop
     - vostok.clusterclient.core@develop
     - vostok.devtools
     - vostok.devtools.ilrepack.bin
-    - vostok.clusterclient.transport.webrequest@develop
     - vostok.commons.environment/src
 
 full-build > notests:

@@ -39,6 +39,7 @@
   <Target Name="BuildTransports" BeforeTargets="BeforeBuild">
     <Exec Command="dotnet build -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Adapter.WebRequest" />
     <Exec Command="dotnet build -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Adapter.Sockets" />
+    <Exec Command="dotnet build -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Adapter.Native" />
   </Target>
   
   <ItemGroup>
