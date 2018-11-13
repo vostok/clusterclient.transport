@@ -40,5 +40,19 @@ namespace Vostok.Clusterclient.Transport
         ///     transmission is not received.
         /// </summary>
         public TimeSpan TcpKeepAliveInterval { get; set; } = TimeSpan.FromSeconds(1);
+
+        internal UniversalTransportSettings Clone()
+        {
+            return new UniversalTransportSettings
+            {
+                TcpKeepAliveEnabled = TcpKeepAliveEnabled,
+                TcpKeepAliveInterval = TcpKeepAliveInterval,
+                TcpKeepAliveTime = TcpKeepAliveTime,
+                AllowAutoRedirect = AllowAutoRedirect,
+                RequestAbortTimeout = RequestAbortTimeout,
+                UseResponseStreaming = UseResponseStreaming,
+                MaxResponseBodySize = MaxResponseBodySize
+            };
+        }
     }
 }

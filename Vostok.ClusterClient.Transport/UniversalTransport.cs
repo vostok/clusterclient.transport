@@ -1,10 +1,8 @@
 using System;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Clusterclient.Core.Transport;
-using Vostok.Commons.Environment;
 using Vostok.Logging.Abstractions;
 
 namespace Vostok.Clusterclient.Transport
@@ -15,23 +13,16 @@ namespace Vostok.Clusterclient.Transport
     /// </summary>
     public class UniversalTransport : ITransport
     {
-        private readonly ITransport implementation;
+        private readonly UniversalTransportSettings settings;
+        private readonly ILog log;
+        private readonly object sync = new object();
+        private ITransport implementation;
 
         /// <inheritdoc cref="UniversalTransport" />
         public UniversalTransport(UniversalTransportSettings settings, ILog log)
         {
-            Assembly assembly;
-            if (RuntimeDetector.IsDotNetFramework)
-                assembly = LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.WebRequest.Merged.dll");
-            else if (RuntimeDetector.IsDotNetCore21AndNewer)
-                assembly = LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.Sockets.Merged.dll");
-            else if (RuntimeDetector.IsDotNetCore20)
-                assembly = LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.Native.Merged.dll");
-            else
-                throw new NotSupportedException("Runtime is not supported");
-            var type = assembly.GetType("Vostok.Clusterclient.Transport.Adapter.TransportFactory");
-            var method = type.GetMethod("Create", BindingFlags.Static | BindingFlags.Public);
-            implementation = (ITransport) method.Invoke(null, new object[] {settings ?? new UniversalTransportSettings(), log});
+            this.settings = settings.Clone();
+            this.log = log;
         }
 
         /// <inheritdoc />
@@ -39,22 +30,18 @@ namespace Vostok.Clusterclient.Transport
 
         /// <inheritdoc />
         public Task<Response> SendAsync(Request request, TimeSpan? connectionTimeout, TimeSpan timeout, CancellationToken cancellationToken)
-            => implementation.SendAsync(request, connectionTimeout, timeout, cancellationToken);
-
-        private Assembly LoadAssemblyFromResource(string libName)
         {
-            const string nameSpace = "Vostok.Clusterclient.Transport";
-
-            var assembly = Assembly.GetExecutingAssembly();
-            var resName = $"{nameSpace}.{libName}";
-
-            using (var input = assembly.GetManifestResourceStream(resName))
+            // ReSharper disable once InvertIf
+            if (implementation == null)
             {
-                var size = input.Length;
-                var bytes = new byte[size];
-                input.Read(bytes, 0, bytes.Length);
-                return Assembly.Load(bytes);
+                lock (sync)
+                {
+                    if (implementation == null)
+                        implementation = TransportFactory.Create(settings, log);
+                }
             }
+            
+            return implementation.SendAsync(request, connectionTimeout, timeout, cancellationToken);
         }
     }
 }
