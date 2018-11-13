@@ -32,13 +32,19 @@
     </Reference>
   </ItemGroup>
   
+  <ItemGroup>
+    <Compile Include="..\..\vostok.commons.environment\Vostok.Commons.Environment\RuntimeDetector.cs" Link="Commons\RuntimeDetector.cs" />
+  </ItemGroup>
+  
   <Target Name="BuildTransports" BeforeTargets="BeforeBuild">
     <Exec Command="dotnet build -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Adapter.WebRequest" />
     <Exec Command="dotnet build -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Adapter.Sockets" />
+    <Exec Command="dotnet build -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Adapter.Native" />
   </Target>
   
   <ItemGroup>
     <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Adapter.WebRequest\bin\Release\netstandard2.0\Vostok.ClusterClient.Transport.Adapter.WebRequest.Merged.dll" />
     <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Adapter.Sockets\bin\Release\netcoreapp2.1\Vostok.ClusterClient.Transport.Adapter.Sockets.Merged.dll" />
+    <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Adapter.Native\bin\Release\netcoreapp2.0\Vostok.ClusterClient.Transport.Adapter.Native.Merged.dll" />
   </ItemGroup>
 </Project>

@@ -4,14 +4,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Clusterclient.Core.Transport;
+using Vostok.Commons.Environment;
 using Vostok.Logging.Abstractions;
 
 namespace Vostok.Clusterclient.Transport
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// Provider universal ClusterClient transport which internally uses different runtime-dependent implementations.
+    /// </summary>
     public class UniversalTransport : ITransport
     {
         private readonly ITransport implementation;
 
+        /// <inheritdoc cref="UniversalTransport" />
         public UniversalTransport(UniversalTransportSettings settings, ILog log)
         {
             Assembly assembly;
@@ -19,20 +25,22 @@ namespace Vostok.Clusterclient.Transport
                 assembly = LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.WebRequest.Merged.dll");
             else if (RuntimeDetector.IsDotNetCore21AndNewer)
                 assembly = LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.Sockets.Merged.dll");
+            else if (RuntimeDetector.IsDotNetCore20)
+                assembly = LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.Native.Merged.dll");
             else
                 throw new NotSupportedException("Runtime is not supported");
             var type = assembly.GetType("Vostok.Clusterclient.Transport.Adapter.TransportFactory");
-            var method = type.GetMethod("Create", BindingFlags.Static|BindingFlags.Public);
-            implementation = (ITransport) method.Invoke(null, new object[]{settings ?? new UniversalTransportSettings(), log});
+            var method = type.GetMethod("Create", BindingFlags.Static | BindingFlags.Public);
+            implementation = (ITransport) method.Invoke(null, new object[] {settings ?? new UniversalTransportSettings(), log});
         }
+
+        /// <inheritdoc />
+        public TransportCapabilities Capabilities => implementation.Capabilities;
 
         /// <inheritdoc />
         public Task<Response> SendAsync(Request request, TimeSpan? connectionTimeout, TimeSpan timeout, CancellationToken cancellationToken)
             => implementation.SendAsync(request, connectionTimeout, timeout, cancellationToken);
 
-        /// <inheritdoc />
-        public TransportCapabilities Capabilities => implementation.Capabilities;
-        
         private Assembly LoadAssemblyFromResource(string libName)
         {
             const string nameSpace = "Vostok.Clusterclient.Transport";

@@ -10,7 +10,7 @@ namespace Vostok.Clusterclient.Transport.Adapter
         public static ITransport Create(object rawSettings, ILog log)
         {
             var settings = Translator.Translate<UniversalTransportSettings>(rawSettings);
-            var webRequestTransportSettings = new WebRequestTransportSettings
+            var transportSettings = new WebRequestTransportSettings
             {
                 AllowAutoRedirect = settings.AllowAutoRedirect,
                 RequestAbortTimeout = settings.RequestAbortTimeout,
@@ -21,7 +21,7 @@ namespace Vostok.Clusterclient.Transport.Adapter
                 TcpKeepAliveTime = settings.TcpKeepAliveTime
             };
             
-            return new WebRequestTransport(webRequestTransportSettings, log);
+            return new WebRequestTransport(transportSettings, log);
         }
     }
 }

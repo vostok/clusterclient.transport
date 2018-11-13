@@ -1,5 +1,5 @@
 ﻿using Vostok.Clusterclient.Core.Transport;
-using Vostok.Clusterclient.Transport.Sockets;
+using Vostok.Clusterclient.Transport.Native;
 using Vostok.Logging.Abstractions;
 
 // ReSharper disable once CheckNamespace
@@ -10,18 +10,15 @@ namespace Vostok.Clusterclient.Transport.Adapter
         public static ITransport Create(object rawSettings, ILog log)
         {
             var settings = Translator.Translate<UniversalTransportSettings>(rawSettings);
-            var transportSettings = new SocketsTransportSettings
+            var transportSettings = new NativeTransportSettings
             {
                 AllowAutoRedirect = settings.AllowAutoRedirect,
                 RequestAbortTimeout = settings.RequestAbortTimeout,
                 UseResponseStreaming = settings.UseResponseStreaming,
-                MaxResponseBodySize = settings.MaxResponseBodySize,
-                TcpKeepAliveEnabled = settings.TcpKeepAliveEnabled,
-                TcpKeepAliveInterval = settings.TcpKeepAliveInterval,
-                TcpKeepAliveTime = settings.TcpKeepAliveTime
+                MaxResponseBodySize = settings.MaxResponseBodySize
             };
             
-            return new SocketsTransport(transportSettings, log);
+            return new NativeTransport(transportSettings, log);
         }
     }
 }
