@@ -24,7 +24,7 @@ namespace Vostok.Clusterclient.Transport
             this.settings = settings.Clone();
             this.log = log;
         }
-        
+
         /// <inheritdoc cref="UniversalTransport" />
         public UniversalTransport(ILog log)
             : this(new UniversalTransportSettings(), log)
@@ -46,7 +46,7 @@ namespace Vostok.Clusterclient.Transport
                         implementation = TransportFactory.Create(settings, log);
                 }
             }
-            
+
             return implementation.SendAsync(request, connectionTimeout, timeout, cancellationToken);
         }
     }

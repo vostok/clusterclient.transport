@@ -11,7 +11,7 @@ namespace Vostok.Clusterclient.Transport
     {
         private static readonly object Sync = new object();
         private static volatile Func<UniversalTransportSettings, ILog, ITransport> createTransport;
-        
+
         public static ITransport Create(UniversalTransportSettings settings, ILog log)
         {
             if (createTransport == null)
@@ -25,7 +25,7 @@ namespace Vostok.Clusterclient.Transport
 
             return createTransport(settings, log);
         }
-        
+
         private static Func<UniversalTransportSettings, ILog, ITransport> BuildFactory(ILog log)
         {
             try

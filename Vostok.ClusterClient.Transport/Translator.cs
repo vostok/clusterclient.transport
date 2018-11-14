@@ -23,20 +23,21 @@ namespace Vostok.Clusterclient.Transport
             public static Func<object, TTarget> GetTranslator(Type type)
             {
                 return Cache.GetOrAdd(
-                    type,
-                    t => new Lazy<Func<object, TTarget>>(() => CreateTranslator(t))).Value;
+                        type,
+                        t => new Lazy<Func<object, TTarget>>(() => CreateTranslator(t)))
+                    .Value;
             }
 
             private static Func<object, TTarget> CreateTranslator(Type sourceType)
             {
                 var targetType = typeof(TTarget);
-                
+
                 var properties = targetType.GetProperties(
                     BindingFlags.Instance | BindingFlags.Public | BindingFlags.FlattenHierarchy);
 
                 var objectParameter = Expression.Parameter(typeof(object));
                 var parameter = Expression.Convert(objectParameter, sourceType);
-                
+
                 var bindings = new List<MemberBinding>();
 
                 foreach (var property in properties)
@@ -49,10 +50,9 @@ namespace Vostok.Clusterclient.Transport
                 }
 
                 var memberInit = Expression.MemberInit(Expression.New(targetType), bindings);
-                
+
                 return Expression.Lambda<Func<object, TTarget>>(memberInit, objectParameter).Compile();
             }
-
         }
     }
 }

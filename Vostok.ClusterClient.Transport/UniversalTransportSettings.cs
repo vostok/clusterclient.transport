@@ -12,7 +12,7 @@ namespace Vostok.Clusterclient.Transport
         /// <summary>
         ///     Gets or sets the maximum response body size in bytes. This parameter doesn't affect content streaming.
         /// </summary>
-        public long? MaxResponseBodySize { get; set; } = null;
+        public long? MaxResponseBodySize { get; set; }
 
         /// <summary>
         ///     Gets or sets the delegate that decide use response streaming or not.
@@ -22,12 +22,12 @@ namespace Vostok.Clusterclient.Transport
         /// <summary>
         ///     Gets or sets a value that indicates whether the transport should follow HTTP redirection responses.
         /// </summary>
-        public bool AllowAutoRedirect { get; set; } = false;
+        public bool AllowAutoRedirect { get; set; }
 
         /// <summary>
         ///     Enables TCP keep alive.
         /// </summary>
-        public bool TcpKeepAliveEnabled { get; set; } = false;
+        public bool TcpKeepAliveEnabled { get; set; }
 
         /// <summary>
         ///     Gets or sets the duration between two keepalive transmissions in idle condition.

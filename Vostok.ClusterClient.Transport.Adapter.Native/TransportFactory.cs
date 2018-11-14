@@ -17,7 +17,7 @@ namespace Vostok.Clusterclient.Transport.Adapter
                 UseResponseStreaming = settings.UseResponseStreaming,
                 MaxResponseBodySize = settings.MaxResponseBodySize
             };
-            
+
             return new NativeTransport(transportSettings, log);
         }
     }

@@ -20,7 +20,7 @@ namespace Vostok.Clusterclient.Transport.Adapter
                 TcpKeepAliveInterval = settings.TcpKeepAliveInterval,
                 TcpKeepAliveTime = settings.TcpKeepAliveTime
             };
-            
+
             return new WebRequestTransport(transportSettings, log);
         }
     }
