@@ -63,7 +63,7 @@ namespace Vostok.Clusterclient.Transport
             else
             {
                 assembly = LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.Webrequest.Merged.dll");
-                log.ForContext<UniversalTransport>().Debug("Unknown .NET runtime. Use Webrequest transport as fallback.");
+                log.ForContext<UniversalTransport>().Debug("Unknown .NET runtime. Use WebRequest-based transport as fallback.");
             }
 
             return assembly;
