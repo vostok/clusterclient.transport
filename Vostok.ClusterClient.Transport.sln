@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vostok.ClusterClient.Transp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vostok.ClusterClient.Transport.Tests", "Vostok.ClusterClient.Transport.Tests\Vostok.ClusterClient.Transport.Tests.csproj", "{87C54CC1-C3B8-4730-B55D-5DB6F9C3ABA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vostok.ClusterClient.Transport.Adapter.WebRequest", "Vostok.ClusterClient.Transport.Adapter.WebRequest\Vostok.ClusterClient.Transport.Adapter.WebRequest.csproj", "{90E06421-82F2-42AF-BEFC-A81CDFB4616E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vostok.ClusterClient.Transport.Adapter.Webrequest", "Vostok.ClusterClient.Transport.Adapter.Webrequest\Vostok.ClusterClient.Transport.Adapter.Webrequest.csproj", "{90E06421-82F2-42AF-BEFC-A81CDFB4616E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vostok.ClusterClient.Transport.Adapter.Sockets", "Vostok.ClusterClient.Transport.Adapter.Sockets\Vostok.ClusterClient.Transport.Adapter.Sockets.csproj", "{896C030E-98B4-44DE-AE26-DB55E586C06E}"
 EndProject
@@ -47,6 +47,7 @@ Global
 		{5331104D-1F44-432B-AEC0-F8000C61B598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5331104D-1F44-432B-AEC0-F8000C61B598}.NoTests|Any CPU.ActiveCfg = Debug|Any CPU
 		{5331104D-1F44-432B-AEC0-F8000C61B598}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5331104D-1F44-432B-AEC0-F8000C61B598}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

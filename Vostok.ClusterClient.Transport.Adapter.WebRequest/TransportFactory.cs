@@ -10,6 +10,7 @@ namespace Vostok.Clusterclient.Transport.Adapter
         public static ITransport Create(object rawSettings, ILog log)
         {
             var settings = Translator.Translate<UniversalTransportSettings>(rawSettings);
+            
             var transportSettings = new WebRequestTransportSettings
             {
                 AllowAutoRedirect = settings.AllowAutoRedirect,

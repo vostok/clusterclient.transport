@@ -59,10 +59,10 @@ namespace Vostok.Clusterclient.Transport
             else if (RuntimeDetector.IsDotNetCore20)
                 assembly = LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.Native.Merged.dll");
             else if (RuntimeDetector.IsDotNetFramework)
-                assembly = LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.WebRequest.Merged.dll");
+                assembly = LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.Webrequest.Merged.dll");
             else
             {
-                assembly = LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.WebRequest.Merged.dll");
+                assembly = LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.Webrequest.Merged.dll");
                 log.ForContext<UniversalTransport>().Debug("Unknown .NET runtime. Use Webrequest transport as fallback.");
             }
 
