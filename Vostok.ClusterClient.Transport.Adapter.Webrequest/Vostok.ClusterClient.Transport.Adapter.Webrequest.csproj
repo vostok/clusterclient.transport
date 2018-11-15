@@ -4,6 +4,7 @@
         <AssemblyName>Vostok.ClusterClient.Transport.Adapter.Webrequest</AssemblyName>
         <TargetFramework>netstandard2.0</TargetFramework>
         <RootNamespace>Vostok.Clusterclient.Transport.Adapter</RootNamespace>
+        <DotnetCementRefsExclude>true</DotnetCementRefsExclude>
     </PropertyGroup>
     
     <ItemGroup>

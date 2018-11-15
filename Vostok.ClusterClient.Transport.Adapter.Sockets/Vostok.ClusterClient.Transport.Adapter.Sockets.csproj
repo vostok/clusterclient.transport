@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <RootNamespace>Vostok.Clusterclient.Transport.Adapter</RootNamespace>
+    <DotnetCementRefsExclude>true</DotnetCementRefsExclude>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\Vostok.ClusterClient.Transport\UniversalTransportSettings.cs" />
