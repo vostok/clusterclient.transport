@@ -7,21 +7,24 @@ notests *default:
 
   install:
     - Vostok.ClusterClient.Transport/bin/Release/netstandard2.0/Vostok.ClusterClient.Transport.dll
+    - module vostok.clusterclient.core
+    - module vostok.logging.abstractions
 
   deps:
+    - vostok.devtools
+    - vostok.devtools.ilrepack.bin
     - vostok.logging.abstractions
+    - vostok.clusterclient.core
     - vostok.clusterclient.transport.webrequest
     - vostok.clusterclient.transport.sockets
     - vostok.clusterclient.transport.native
-    - vostok.clusterclient.core
-    - vostok.devtools
-    - vostok.devtools.ilrepack.bin
     - vostok.commons.environment/src
 
 full-build > notests:
   build:
     target: Vostok.ClusterClient.Transport.sln
     configuration: Release
+  
   deps:
-    - vostok.clusterclient.transport.tests/full-build
     - vostok.logging.console
+    - vostok.clusterclient.transport.tests
