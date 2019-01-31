@@ -1,20 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <RootNamespace>Vostok.Clusterclient.Transport.Adapter</RootNamespace>
     <DotnetCementRefsExclude>true</DotnetCementRefsExclude>
   </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="..\Vostok.ClusterClient.Transport\UniversalTransportSettings.cs" />
     <Compile Include="..\Vostok.ClusterClient.Transport\Translator.cs" />
   </ItemGroup>
+
   <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
     <ILRepackExecutable>$(MSBuildThisFileDirectory)..\..\vostok.devtools.ilrepack.bin\net40\ILRepack.exe</ILRepackExecutable>
   </PropertyGroup>
+
   <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
     <ILRepackExecutable>dotnet $(MSBuildThisFileDirectory)../../vostok.devtools.ilrepack.bin/netcoreapp2.1/ILRepack.Core.dll</ILRepackExecutable>
   </PropertyGroup>
+
   <Target Name="RepackAssemblies" AfterTargets="Build" Condition="'$(Configuration)' == 'Release' Or '$(Configuration)' == 'NoTests'">
     <ItemGroup>
       <MergeAssemblies Include="$(ProjectDir)$(OutputPath)$(AssemblyName).dll" />
@@ -22,18 +27,22 @@
     </ItemGroup>
     <Exec Command="$(ILRepackExecutable) /internalize /lib:&quot;$(PubDirWithoutSlash)&quot; /out:$(ProjectDir)$(OutputPath)$(AssemblyName).Merged.dll @(MergeAssemblies->'%(RelativeDir)%(FileName)%(Extension)', ' ')" />
   </Target>
+
   <ItemGroup>
     <Reference Include="Vostok.ClusterClient.Core">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\vostok.clusterclient.core\Vostok.ClusterClient.Core\bin\Release\netstandard2.0\Vostok.ClusterClient.Core.dll</HintPath>
     </Reference>
+    
     <Reference Include="Vostok.ClusterClient.Transport.Sockets">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\vostok.clusterclient.transport.sockets\Vostok.ClusterClient.Transport.Sockets\bin\Release\netcoreapp2.1\Vostok.ClusterClient.Transport.Sockets.dll</HintPath>
     </Reference>
+
     <Reference Include="Vostok.Logging.Abstractions">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\vostok.logging.abstractions\Vostok.Logging.Abstractions\bin\Release\netstandard2.0\Vostok.Logging.Abstractions.dll</HintPath>
     </Reference>
   </ItemGroup>
+
 </Project>

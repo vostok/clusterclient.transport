@@ -8,25 +8,9 @@
     </PropertyGroup>
     
     <ItemGroup>
-        <Reference Include="Vostok.ClusterClient.Transport.Webrequest">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>..\..\vostok.clusterclient.transport.webrequest\Vostok.ClusterClient.Transport.Webrequest\bin\Release\netstandard2.0\Vostok.ClusterClient.Transport.Webrequest.dll</HintPath>
-        </Reference>
-        <Reference Include="Vostok.ClusterClient.Core">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>..\..\vostok.clusterclient.core\Vostok.ClusterClient.Core\bin\Release\netstandard2.0\Vostok.ClusterClient.Core.dll</HintPath>
-        </Reference>
-        <Reference Include="Vostok.Logging.Abstractions">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>..\..\vostok.logging.abstractions\Vostok.Logging.Abstractions\bin\Release\netstandard2.0\Vostok.Logging.Abstractions.dll</HintPath>
-        </Reference>
-    </ItemGroup>
-    
-    <ItemGroup>
         <Compile Include="..\Vostok.ClusterClient.Transport\UniversalTransportSettings.cs" />
         <Compile Include="..\Vostok.ClusterClient.Transport\Translator.cs" />
     </ItemGroup>
-
 
     <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
         <ILRepackExecutable>$(MSBuildThisFileDirectory)..\..\vostok.devtools.ilrepack.bin\net40\ILRepack.exe</ILRepackExecutable>
@@ -44,4 +28,21 @@
         <Exec Command="$(ILRepackExecutable) /internalize /lib:&quot;$(PubDirWithoutSlash)&quot; /out:$(ProjectDir)$(OutputPath)$(AssemblyName).Merged.dll @(MergeAssemblies->'%(RelativeDir)%(FileName)%(Extension)', ' ')" />
     </Target>
     
+    <ItemGroup>
+        <Reference Include="Vostok.ClusterClient.Transport.Webrequest">
+            <SpecificVersion>False</SpecificVersion>
+            <HintPath>..\..\vostok.clusterclient.transport.webrequest\Vostok.ClusterClient.Transport.Webrequest\bin\Release\netstandard2.0\Vostok.ClusterClient.Transport.Webrequest.dll</HintPath>
+        </Reference>
+        
+        <Reference Include="Vostok.ClusterClient.Core">
+            <SpecificVersion>False</SpecificVersion>
+            <HintPath>..\..\vostok.clusterclient.core\Vostok.ClusterClient.Core\bin\Release\netstandard2.0\Vostok.ClusterClient.Core.dll</HintPath>
+        </Reference>
+
+        <Reference Include="Vostok.Logging.Abstractions">
+            <SpecificVersion>False</SpecificVersion>
+            <HintPath>..\..\vostok.logging.abstractions\Vostok.Logging.Abstractions\bin\Release\netstandard2.0\Vostok.Logging.Abstractions.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
 </Project>

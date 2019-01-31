@@ -1,31 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
+
   <Import Project="..\..\vostok.devtools\library-common-props\Main-Project.props" />
   <Import Project="..\..\vostok.devtools\git-commit-to-assembly-title\Vostok.Tools.GitCommit2AssemblyTitle.props" />
+
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Configurations>Debug;Release</Configurations>
     <LangVersion>7.2</LangVersion>
     <RootNamespace>Vostok.Clusterclient.Transport</RootNamespace>
   </PropertyGroup>
+
   <PropertyGroup>
     <VersionPrefix>0.0.1</VersionPrefix>
   </PropertyGroup>
+
   <PropertyGroup>
     <Title>Vostok.ClusterClient.Transport</Title>
-    <Description>Vostok.ClusterClient.Transport</Description>
+    <Description>Universal transport implementation targeting netstandard2.0 and intended to be used by library developers.</Description>
   </PropertyGroup>
+
   <PropertyGroup>
     <PackageProjectUrl>https://github.com/vostok/clusterclient.transport</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/vostok/clusterclient.transport/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>vostok vostok.clusterclient</PackageTags>
     <RepositoryUrl>https://github.com/vostok/clusterclient.transport</RepositoryUrl>
   </PropertyGroup>
+
   <ItemGroup>
     <Reference Include="Vostok.ClusterClient.Core">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\vostok.clusterclient.core\Vostok.ClusterClient.Core\bin\Release\netstandard2.0\Vostok.ClusterClient.Core.dll</HintPath>
     </Reference>
+
     <Reference Include="Vostok.Logging.Abstractions">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\vostok.logging.abstractions\Vostok.Logging.Abstractions\bin\Release\netstandard2.0\Vostok.Logging.Abstractions.dll</HintPath>
@@ -47,4 +54,5 @@
     <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Adapter.Sockets\bin\Release\netcoreapp2.1\Vostok.ClusterClient.Transport.Adapter.Sockets.Merged.dll" />
     <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Adapter.Native\bin\Release\netcoreapp2.0\Vostok.ClusterClient.Transport.Adapter.Native.Merged.dll" />
   </ItemGroup>
+  
 </Project>
