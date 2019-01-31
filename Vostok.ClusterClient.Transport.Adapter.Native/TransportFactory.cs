@@ -10,12 +10,15 @@ namespace Vostok.Clusterclient.Transport.Adapter
         public static ITransport Create(object rawSettings, ILog log)
         {
             var settings = Translator.Translate<UniversalTransportSettings>(rawSettings);
+
             var transportSettings = new NativeTransportSettings
             {
                 AllowAutoRedirect = settings.AllowAutoRedirect,
                 RequestAbortTimeout = settings.RequestAbortTimeout,
                 UseResponseStreaming = settings.UseResponseStreaming,
-                MaxResponseBodySize = settings.MaxResponseBodySize
+                MaxResponseBodySize = settings.MaxResponseBodySize,
+                MaxConnectionsPerEndpoint = settings.MaxConnectionsPerEndpoint,
+                Proxy = settings.Proxy
             };
 
             return new NativeTransport(transportSettings, log);
