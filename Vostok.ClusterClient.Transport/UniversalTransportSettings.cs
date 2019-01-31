@@ -2,6 +2,9 @@ using System;
 
 namespace Vostok.Clusterclient.Transport
 {
+    /// <summary>
+    /// A class that represents <see cref="UniversalTransport" /> settings.
+    /// </summary>
     public class UniversalTransportSettings
     {
         /// <summary>
@@ -40,19 +43,5 @@ namespace Vostok.Clusterclient.Transport
         ///     transmission is not received.
         /// </summary>
         public TimeSpan TcpKeepAliveInterval { get; set; } = TimeSpan.FromSeconds(1);
-
-        internal UniversalTransportSettings Clone()
-        {
-            return new UniversalTransportSettings
-            {
-                TcpKeepAliveEnabled = TcpKeepAliveEnabled,
-                TcpKeepAliveInterval = TcpKeepAliveInterval,
-                TcpKeepAliveTime = TcpKeepAliveTime,
-                AllowAutoRedirect = AllowAutoRedirect,
-                RequestAbortTimeout = RequestAbortTimeout,
-                UseResponseStreaming = UseResponseStreaming,
-                MaxResponseBodySize = MaxResponseBodySize
-            };
-        }
     }
 }

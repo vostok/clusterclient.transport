@@ -21,7 +21,7 @@ namespace Vostok.Clusterclient.Transport
         /// <inheritdoc cref="UniversalTransport" />
         public UniversalTransport(UniversalTransportSettings settings, ILog log)
         {
-            this.settings = settings.Clone();
+            this.settings = settings;
             this.log = log;
         }
 
