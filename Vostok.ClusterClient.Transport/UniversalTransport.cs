@@ -1,33 +1,36 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Clusterclient.Core.Transport;
 using Vostok.Logging.Abstractions;
 
 namespace Vostok.Clusterclient.Transport
 {
-    /// <inheritdoc />
     /// <summary>
-    /// Provider universal ClusterClient transport which internally uses different runtime-dependent implementations.
+    /// Universal transport which internally uses different runtime-dependent implementations.
     /// </summary>
+    [PublicAPI]
     public class UniversalTransport : ITransport
     {
+        private static readonly UniversalTransportSettings DefaultSettings = new UniversalTransportSettings();
+
         private readonly UniversalTransportSettings settings;
         private readonly ILog log;
         private readonly object sync = new object();
-        private ITransport implementation;
+        private volatile ITransport implementation;
 
         /// <inheritdoc cref="UniversalTransport" />
-        public UniversalTransport(UniversalTransportSettings settings, ILog log)
+        public UniversalTransport([NotNull] UniversalTransportSettings settings, [NotNull] ILog log)
         {
-            this.settings = settings;
-            this.log = log;
+            this.settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            this.log = (log ?? throw new ArgumentNullException(nameof(log))).ForContext<UniversalTransport>();
         }
 
         /// <inheritdoc cref="UniversalTransport" />
-        public UniversalTransport(ILog log)
-            : this(new UniversalTransportSettings(), log)
+        public UniversalTransport([NotNull] ILog log)
+            : this(DefaultSettings, log)
         {
         }
 
