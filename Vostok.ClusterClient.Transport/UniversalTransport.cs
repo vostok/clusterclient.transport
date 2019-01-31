@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -16,9 +17,10 @@ namespace Vostok.Clusterclient.Transport
     {
         private static readonly UniversalTransportSettings DefaultSettings = new UniversalTransportSettings();
 
+        private readonly object sync = new object();
         private readonly UniversalTransportSettings settings;
         private readonly ILog log;
-        private readonly object sync = new object();
+
         private volatile ITransport implementation;
 
         /// <inheritdoc cref="UniversalTransport" />
@@ -35,22 +37,26 @@ namespace Vostok.Clusterclient.Transport
         }
 
         /// <inheritdoc />
-        public TransportCapabilities Capabilities => implementation.Capabilities;
+        public TransportCapabilities Capabilities 
+            => ObtainImplementation().Capabilities;
 
         /// <inheritdoc />
         public Task<Response> SendAsync(Request request, TimeSpan? connectionTimeout, TimeSpan timeout, CancellationToken cancellationToken)
-        {
-            // ReSharper disable once InvertIf
-            if (implementation == null)
-            {
-                lock (sync)
-                {
-                    if (implementation == null)
-                        implementation = TransportFactory.Create(settings, log);
-                }
-            }
+            => ObtainImplementation().SendAsync(request, connectionTimeout, timeout, cancellationToken);
 
-            return implementation.SendAsync(request, connectionTimeout, timeout, cancellationToken);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private ITransport ObtainImplementation()
+        {
+            if (implementation != null)
+                return implementation;
+
+            lock (sync)
+            {
+                if (implementation != null)
+                    return implementation;
+
+                return implementation = TransportFactory.Create(settings, log);
+            }
         }
     }
 }
