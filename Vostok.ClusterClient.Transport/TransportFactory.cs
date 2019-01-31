@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq.Expressions;
 using System.Reflection;
 using Vostok.Clusterclient.Core.Transport;
@@ -28,45 +29,34 @@ namespace Vostok.Clusterclient.Transport
 
         private static Func<UniversalTransportSettings, ILog, ITransport> BuildFactory(ILog log)
         {
-            try
-            {
-                var assembly = GetTransportAssembly(log);
+            var assembly = GetTransportAssembly(log);
+            var type = assembly.GetType("Vostok.Clusterclient.Transport.Adapter.TransportFactory");
+            var method = type.GetMethod("Create", BindingFlags.Static | BindingFlags.Public);
 
-                var type = assembly.GetType("Vostok.Clusterclient.Transport.Adapter.TransportFactory");
-                var method = type.GetMethod("Create", BindingFlags.Static | BindingFlags.Public);
+            var settingsParameter = Expression.Parameter(typeof(object));
+            var logParameter = Expression.Parameter(typeof(ILog));
 
-                var settingsParam = Expression.Parameter(typeof(object));
-                var logParam = Expression.Parameter(typeof(ILog));
-
-                return Expression.Lambda<Func<object, ILog, ITransport>>(
-                        Expression.Call(method, settingsParam, logParam),
-                        settingsParam,
-                        logParam)
-                    .Compile();
-            }
-            catch (Exception e)
-            {
-                log.Error(e, $"An exception has occured during {nameof(UniversalTransport)} initialization.");
-                throw;
-            }
+            return Expression.Lambda<Func<object, ILog, ITransport>>(
+                    Expression.Call(method, settingsParameter, logParameter),
+                    settingsParameter,
+                    logParameter)
+                .Compile();
         }
 
         private static Assembly GetTransportAssembly(ILog log)
         {
-            Assembly assembly;
             if (RuntimeDetector.IsDotNetCore21AndNewer)
-                assembly = LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.Sockets.Merged.dll");
-            else if (RuntimeDetector.IsDotNetCore20)
-                assembly = LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.Native.Merged.dll");
-            else if (RuntimeDetector.IsDotNetFramework)
-                assembly = LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.Webrequest.Merged.dll");
-            else
-            {
-                assembly = LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.Webrequest.Merged.dll");
-                log.ForContext<UniversalTransport>().Debug("Unknown .NET runtime. Use WebRequest-based transport as fallback.");
-            }
+                return LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.Sockets.Merged.dll");
 
-            return assembly;
+            if (RuntimeDetector.IsDotNetCore20)
+                return LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.Native.Merged.dll");
+
+            if (RuntimeDetector.IsDotNetFramework)
+                return LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.Webrequest.Merged.dll");
+
+            log.Warn("Unknown .NET runtime. Will fall back to HttpWebRequest-based transport.");
+
+            return LoadAssemblyFromResource("Vostok.ClusterClient.Transport.Adapter.Webrequest.Merged.dll");
         }
 
         private static Assembly LoadAssemblyFromResource(string libName)
@@ -74,14 +64,18 @@ namespace Vostok.Clusterclient.Transport
             const string nameSpace = "Vostok.Clusterclient.Transport";
 
             var assembly = Assembly.GetExecutingAssembly();
-            var resName = $"{nameSpace}.{libName}";
+            var resourceName = $"{nameSpace}.{libName}";
 
-            using (var input = assembly.GetManifestResourceStream(resName))
+            using (var input = assembly.GetManifestResourceStream(resourceName))
             {
-                var size = input.Length;
-                var bytes = new byte[size];
-                input.Read(bytes, 0, bytes.Length);
-                return Assembly.Load(bytes);
+                if (input == null)
+                    throw new InvalidOperationException($"Resource with name '{resourceName}' was not found.");
+
+                var buffer = new MemoryStream((int)input.Length);
+
+                input.CopyTo(buffer);
+
+                return Assembly.Load(buffer.ToArray());
             }
         }
     }
