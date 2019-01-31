@@ -1,11 +1,15 @@
 using System;
 using System.Net;
+using JetBrains.Annotations;
 
 namespace Vostok.Clusterclient.Transport
 {
     /// <summary>
     /// A class that represents <see cref="UniversalTransport" /> settings.
     /// </summary>
+    #if ANNOTATIONS_FOR_SETTINGS
+    [PublicAPI]
+    #endif
     public class UniversalTransportSettings
     {
         /// <summary>
