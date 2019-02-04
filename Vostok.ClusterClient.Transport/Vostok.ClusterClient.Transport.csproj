@@ -58,9 +58,9 @@
   </Target>
   
   <ItemGroup>
-    <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Adapter.Webrequest\publish\Vostok.ClusterClient.Transport.Adapter.Webrequest.Merged.dll" />
-    <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Adapter.Sockets\publish\Vostok.ClusterClient.Transport.Adapter.Sockets.Merged.dll" />
-    <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Adapter.Native\publish\Vostok.ClusterClient.Transport.Adapter.Native.Merged.dll" />
+    <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Adapter.Webrequest\bin\Release\netstandard2.0\publish\Vostok.ClusterClient.Transport.Adapter.Webrequest.Merged.dll" />
+    <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Adapter.Sockets\bin\Release\netcoreapp2.1\publish\Vostok.ClusterClient.Transport.Adapter.Sockets.Merged.dll" />
+    <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Adapter.Native\bin\Release\netcoreapp2.0\publish\Vostok.ClusterClient.Transport.Adapter.Native.Merged.dll" />
   </ItemGroup>
   
 </Project>
