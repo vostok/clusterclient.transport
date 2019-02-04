@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <AssemblyName>Vostok.ClusterClient.Transport.Adapter.Webrequest</AssemblyName>
         <TargetFramework>netstandard2.0</TargetFramework>
         <RootNamespace>Vostok.Clusterclient.Transport.Adapter</RootNamespace>
         <DotnetCementRefsExclude>true</DotnetCementRefsExclude>
+        <IsPackable>false</IsPackable>
     </PropertyGroup>
     
     <ItemGroup>

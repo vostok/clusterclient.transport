@@ -4,6 +4,7 @@
         <TargetFramework>netcoreapp2.0</TargetFramework>
         <RootNamespace>Vostok.Clusterclient.Transport.Adapter</RootNamespace>
         <DotnetCementRefsExclude>true</DotnetCementRefsExclude>
+        <IsPackable>false</IsPackable>
     </PropertyGroup>
     
     <ItemGroup>
