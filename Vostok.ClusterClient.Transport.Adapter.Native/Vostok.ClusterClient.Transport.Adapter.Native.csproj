@@ -15,12 +15,12 @@
         <ILRepackExecutable>dotnet $(MSBuildThisFileDirectory)../../vostok.devtools.ilrepack.bin/netcoreapp2.1/ILRepack.Core.dll</ILRepackExecutable>
     </PropertyGroup>
 
-    <Target Name="RepackAssemblies" AfterTargets="Build" Condition="'$(Configuration)' == 'Release' Or '$(Configuration)' == 'NoTests'">
+    <Target Name="RepackAssemblies" AfterTargets="Publish" Condition="'$(Configuration)' == 'Release' Or '$(Configuration)' == 'NoTests'">
         <ItemGroup>
-            <MergeAssemblies Include="$(ProjectDir)$(OutputPath)$(AssemblyName).dll" />
-            <MergeAssemblies Include="$(ProjectDir)$(OutputPath)Vostok.ClusterClient.Transport.Native.dll" />
+            <MergeAssemblies Include="$(PublishDir)$(AssemblyName).dll" />
+            <MergeAssemblies Include="$(PublishDir)Vostok.ClusterClient.Transport.Native.dll" />
         </ItemGroup>
-        <Exec Command="$(ILRepackExecutable) /internalize /lib:&quot;$(PubDirWithoutSlash)&quot; /out:$(ProjectDir)$(OutputPath)$(AssemblyName).Merged.dll @(MergeAssemblies->'%(RelativeDir)%(FileName)%(Extension)', ' ')" />
+        <Exec Command="$(ILRepackExecutable) /internalize /lib:&quot;$(PubDirWithoutSlash)&quot; /out:$(PublishDir)$(AssemblyName).Merged.dll @(MergeAssemblies->'%(RelativeDir)%(FileName)%(Extension)', ' ')" />
     </Target>
 
     <ItemGroup>
