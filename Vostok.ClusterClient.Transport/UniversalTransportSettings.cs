@@ -7,9 +7,9 @@ namespace Vostok.Clusterclient.Transport
     /// <summary>
     /// A class that represents <see cref="UniversalTransport" /> settings.
     /// </summary>
-    #if ANNOTATIONS_FOR_SETTINGS
+#if ANNOTATIONS_FOR_SETTINGS
     [PublicAPI]
-    #endif
+#endif
     public class UniversalTransportSettings
     {
         /// <summary>
