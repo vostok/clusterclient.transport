@@ -1,3 +1,7 @@
+## 0.1.3 (03-03-2019): 
+
+UniversalTransport now supports composite request bodies.
+
 ## 0.1.2 (06-02-2019): 
 
 Added SetupUniversalTransport() extension for IClusterClientConfiguration.
