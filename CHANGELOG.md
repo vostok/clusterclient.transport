@@ -1,3 +1,9 @@
+## 0.1.4 (14-03-2019):
+
+Updated underlying transport implementations.
+Fixed bug with incorrect response code after request cancellation with Webrequest transport.
+UniversalTransport now supports composite request bodies with Sockets transport.
+
 ## 0.1.3 (03-03-2019): 
 
 UniversalTransport now supports composite request bodies.
