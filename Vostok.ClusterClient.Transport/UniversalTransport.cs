@@ -27,7 +27,7 @@ namespace Vostok.Clusterclient.Transport
         public UniversalTransport([NotNull] UniversalTransportSettings settings, [NotNull] ILog log)
         {
             this.settings = settings ?? throw new ArgumentNullException(nameof(settings));
-            this.log = (log ?? throw new ArgumentNullException(nameof(log))).ForContext<UniversalTransport>();
+            this.log = log ?? throw new ArgumentNullException(nameof(log));
         }
 
         /// <inheritdoc cref="UniversalTransport" />
