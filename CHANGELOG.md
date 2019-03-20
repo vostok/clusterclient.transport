@@ -1,3 +1,7 @@
+## 0.1.4 (20-03-2019): 
+
+UniversalTransportSettings now expose a configurable response buffer factory function.
+
 ## 0.1.3 (03-03-2019): 
 
 UniversalTransport now supports composite request bodies.
