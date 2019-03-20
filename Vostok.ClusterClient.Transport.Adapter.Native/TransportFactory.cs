@@ -1,6 +1,7 @@
 ﻿using Vostok.Clusterclient.Core.Transport;
 using Vostok.Clusterclient.Transport.Native;
 using Vostok.Logging.Abstractions;
+#pragma warning disable 618
 
 // ReSharper disable once CheckNamespace
 namespace Vostok.Clusterclient.Transport.Adapter
@@ -14,11 +15,12 @@ namespace Vostok.Clusterclient.Transport.Adapter
             var transportSettings = new NativeTransportSettings
             {
                 AllowAutoRedirect = settings.AllowAutoRedirect,
-                RequestAbortTimeout = settings.RequestAbortTimeout,
-                UseResponseStreaming = settings.UseResponseStreaming,
-                MaxResponseBodySize = settings.MaxResponseBodySize,
+                BufferFactory = settings.BufferFactory,
                 MaxConnectionsPerEndpoint = settings.MaxConnectionsPerEndpoint,
-                Proxy = settings.Proxy
+                MaxResponseBodySize = settings.MaxResponseBodySize,
+                Proxy = settings.Proxy,
+                RequestAbortTimeout = settings.RequestAbortTimeout,
+                UseResponseStreaming = settings.UseResponseStreaming
             };
 
             return new NativeTransport(transportSettings, log);

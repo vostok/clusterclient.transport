@@ -16,8 +16,10 @@ namespace Vostok.Clusterclient.Transport.Tests
             {
                 UseResponseStreaming = settings.UseResponseStreaming,
                 AllowAutoRedirect = settings.AllowAutoRedirect,
-                MaxResponseBodySize = settings.MaxResponseBodySize
+                MaxResponseBodySize = settings.MaxResponseBodySize,
+                BufferFactory = settings.BufferFactory,
             };
+
             return new UniversalTransport(transportSettings, log);
         }
 

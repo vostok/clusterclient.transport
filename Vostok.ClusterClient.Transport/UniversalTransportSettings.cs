@@ -62,5 +62,10 @@ namespace Vostok.Clusterclient.Transport
         /// keep-alive transmission is not received.
         /// </summary>
         public TimeSpan TcpKeepAliveInterval { get; set; } = TimeSpan.FromSeconds(1);
+
+        /// <summary>
+        /// Gets or sets a delegate used to create response body buffers for given sizes.
+        /// </summary>
+        public Func<int, byte[]> BufferFactory { get; set; } = size => new byte[size];
     }
 }
