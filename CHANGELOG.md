@@ -1,4 +1,4 @@
-## 0.1.4 (20-03-2019): 
+## 0.1.5 (20-03-2019): 
 
 UniversalTransportSettings now expose a configurable response buffer factory function.
 
