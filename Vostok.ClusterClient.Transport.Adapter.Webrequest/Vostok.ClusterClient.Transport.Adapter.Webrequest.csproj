@@ -34,7 +34,7 @@
     <ItemGroup>
         <Reference Include="Vostok.ClusterClient.Transport.Webrequest">
             <SpecificVersion>False</SpecificVersion>
-            <HintPath>Vostok.ClusterClient.Transport.Webrequest.dll</HintPath>
+            <HintPath>..\..\vostok.clusterclient.transport.webrequest\Vostok.ClusterClient.Transport.Webrequest\bin\Release\netstandard2.0\Vostok.ClusterClient.Transport.Webrequest.dll</HintPath>
         </Reference>
 
         <Reference Include="Vostok.ClusterClient.Core">
