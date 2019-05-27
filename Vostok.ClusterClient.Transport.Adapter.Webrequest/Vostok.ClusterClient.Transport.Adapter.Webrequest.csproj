@@ -5,10 +5,10 @@
         <RootNamespace>Vostok.Clusterclient.Transport.Adapter</RootNamespace>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
-    
+
     <ItemGroup>
-        <Compile Include="..\Vostok.ClusterClient.Transport\UniversalTransportSettings.cs" />
-        <Compile Include="..\Vostok.ClusterClient.Transport\Translator.cs" />
+        <Compile Include="..\Vostok.ClusterClient.Transport\UniversalTransportSettings.cs"/>
+        <Compile Include="..\Vostok.ClusterClient.Transport\Translator.cs"/>
     </ItemGroup>
 
     <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
@@ -19,20 +19,24 @@
         <ILRepackExecutable>dotnet $(MSBuildThisFileDirectory)../../vostok.devtools.ilrepack.bin/netcoreapp2.1/ILRepack.Core.dll</ILRepackExecutable>
     </PropertyGroup>
 
-    <Target Name="RepackAssemblies" AfterTargets="Publish" Condition="'$(Configuration)' == 'Release' Or '$(Configuration)' == 'NoTests'">
-        <ItemGroup>
-            <MergeAssemblies Include="$(PublishDir)$(AssemblyName).dll" />
-            <MergeAssemblies Include="$(PublishDir)Vostok.ClusterClient.Transport.Webrequest.dll" />
-        </ItemGroup>
-        <Exec Command="$(ILRepackExecutable) /internalize /lib:&quot;$(PubDirWithoutSlash)&quot; /out:$(PublishDir)$(AssemblyName).Merged.dll @(MergeAssemblies->'%(RelativeDir)%(FileName)%(Extension)', ' ')" />
+    <Target Name="FixFor2019" BeforeTargets="Build">
+        <Copy SourceFiles="..\..\vostok.clusterclient.transport.webrequest\Vostok.ClusterClient.Transport.Webrequest\bin\Release\netstandard2.0\Vostok.ClusterClient.Transport.Webrequest.dll" DestinationFolder="$(ProjectDir)"/>
     </Target>
     
+    <Target Name="RepackAssemblies" AfterTargets="Publish" Condition="'$(Configuration)' == 'Release' Or '$(Configuration)' == 'NoTests'">
+        <ItemGroup>
+            <MergeAssemblies Include="$(PublishDir)$(AssemblyName).dll"/>
+            <MergeAssemblies Include="$(PublishDir)Vostok.ClusterClient.Transport.Webrequest.dll"/>
+        </ItemGroup>
+        <Exec Command="$(ILRepackExecutable) /internalize /lib:&quot;$(PubDirWithoutSlash)&quot; /out:$(PublishDir)$(AssemblyName).Merged.dll @(MergeAssemblies->'%(RelativeDir)%(FileName)%(Extension)', ' ')"/>
+    </Target>
+
     <ItemGroup>
         <Reference Include="Vostok.ClusterClient.Transport.Webrequest">
             <SpecificVersion>False</SpecificVersion>
             <HintPath>..\..\vostok.clusterclient.transport.webrequest\Vostok.ClusterClient.Transport.Webrequest\bin\Release\netstandard2.0\Vostok.ClusterClient.Transport.Webrequest.dll</HintPath>
         </Reference>
-        
+
         <Reference Include="Vostok.ClusterClient.Core">
             <SpecificVersion>False</SpecificVersion>
             <HintPath>..\..\vostok.clusterclient.core\Vostok.ClusterClient.Core\bin\Release\netstandard2.0\Vostok.ClusterClient.Core.dll</HintPath>
