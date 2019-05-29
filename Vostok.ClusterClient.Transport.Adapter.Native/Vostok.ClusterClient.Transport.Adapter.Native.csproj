@@ -15,6 +15,10 @@
         <ILRepackExecutable>dotnet $(MSBuildThisFileDirectory)../../vostok.devtools.ilrepack.bin/netcoreapp2.1/ILRepack.Core.dll</ILRepackExecutable>
     </PropertyGroup>
 
+    <Target Name="FixForNetCoreSDK2_2_300" BeforeTargets="Build">
+        <Copy SourceFiles="..\..\vostok.clusterclient.transport.native\Vostok.ClusterClient.Transport.Native\bin\Release\netcoreapp2.0\Vostok.ClusterClient.Transport.Native.dll" DestinationFolder="$(ProjectDir)" Retries="10"/>
+    </Target>
+
     <Target Name="RepackAssemblies" AfterTargets="Publish" Condition="'$(Configuration)' == 'Release' Or '$(Configuration)' == 'NoTests'">
         <ItemGroup>
             <MergeAssemblies Include="$(PublishDir)$(AssemblyName).dll" />
