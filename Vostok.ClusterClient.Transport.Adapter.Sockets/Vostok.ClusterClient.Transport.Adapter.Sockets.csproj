@@ -19,10 +19,6 @@
   <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
     <ILRepackExecutable>dotnet $(MSBuildThisFileDirectory)../../vostok.devtools.ilrepack.bin/netcoreapp2.1/ILRepack.Core.dll</ILRepackExecutable>
   </PropertyGroup>
-  
-  <Target Name="FixForNetCoreSDK2_2_300" BeforeTargets="Build">
-    <Copy SourceFiles="..\..\vostok.clusterclient.transport.sockets\Vostok.ClusterClient.Transport.Sockets\bin\Release\netcoreapp2.1\Vostok.ClusterClient.Transport.Sockets.dll" DestinationFolder="$(ProjectDir)" Retries="10"/>
-  </Target>
 
   <Target Name="RepackAssemblies" AfterTargets="Publish" Condition="'$(Configuration)' == 'Release' Or '$(Configuration)' == 'NoTests'">
     <ItemGroup>
