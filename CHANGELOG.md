@@ -1,3 +1,7 @@
+## 0.1.6 (14-08-2019):
+
+Fixed a bug where a network error while reading content could cause the transport to return a response with headers or partial body.
+
 ## 0.1.5 (20-03-2019): 
 
 UniversalTransportSettings now expose a configurable response buffer factory function.
