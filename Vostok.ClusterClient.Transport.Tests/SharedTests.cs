@@ -92,4 +92,8 @@ namespace Vostok.Clusterclient.Transport.Tests
     internal class StatusCodeReceivingTests : StatusCodeReceivingTests<Config>
     {
     }
+
+    internal class NetworkErrorsHandlingTests : NetworkErrorsHandlingTests<Config>
+    {
+    }
 }
