@@ -1,3 +1,7 @@
+## 0.1.7 (15-08-2019):
+
+Fixed reception of Content-Length header without body in response to a HEAD request.
+
 ## 0.1.6 (14-08-2019):
 
 Fixed a bug where a network error while reading content could cause the transport to return a response with headers or partial body.
