@@ -14,10 +14,12 @@ namespace Vostok.Clusterclient.Transport.Adapter
             var transportSettings = new WebRequestTransportSettings
             {
                 AllowAutoRedirect = settings.AllowAutoRedirect,
+                ArpCacheWarmupEnabled = false,
                 BufferFactory = settings.BufferFactory,
                 ConnectionIdleTimeout = settings.ConnectionIdleTimeout,
                 MaxConnectionsPerEndpoint = settings.MaxConnectionsPerEndpoint,
                 MaxResponseBodySize = settings.MaxResponseBodySize,
+                Pipelined = false,
                 Proxy = settings.Proxy,
                 RequestAbortTimeout = settings.RequestAbortTimeout,
                 TcpKeepAliveEnabled = settings.TcpKeepAliveEnabled,

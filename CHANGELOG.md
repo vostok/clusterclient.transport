@@ -1,3 +1,7 @@
+## 0.1.8 (04.12.2019)
+
+Explicitly disabled ARP cache warmup for WebRequestTransport and SocketTransport implementations.
+
 ## 0.1.7 (15-08-2019):
 
 Fixed reception of Content-Length header without body in response to a HEAD request.

@@ -13,6 +13,7 @@ namespace Vostok.Clusterclient.Transport.Adapter
             var transportSettings = new SocketsTransportSettings
             {
                 AllowAutoRedirect = settings.AllowAutoRedirect,
+                ArpCacheWarmupEnabled = false,
                 BufferFactory = settings.BufferFactory,
                 ConnectionIdleTimeout = settings.ConnectionIdleTimeout,
                 MaxConnectionsPerEndpoint = settings.MaxConnectionsPerEndpoint,
