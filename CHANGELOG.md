@@ -1,3 +1,7 @@
+## 0.1.9 (07.12.2018)
+
+Incorporated changes from release 0.1.6 of SocketTransport.
+
 ## 0.1.8 (04.12.2019)
 
 Explicitly disabled ARP cache warmup for WebRequestTransport and SocketTransport implementations.
