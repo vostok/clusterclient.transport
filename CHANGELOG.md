@@ -1,4 +1,8 @@
-## 0.1.9 (07.12.2018)
+## 0.1.10 (18.01.2020)
+
+Incorporated latest changes in SocketTransport (0.1.7) and WebRequestTransport (0.1.7).
+
+## 0.1.9 (07.12.2019)
 
 Incorporated changes from release 0.1.6 of SocketTransport.
 
