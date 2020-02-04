@@ -1,3 +1,8 @@
+## 0.1.11 (04.02.2020):
+
+* Improved detection of connection errors in SocketTransport.
+* Implemented https://github.com/vostok/clusterclient.transport/issues/1
+
 ## 0.1.10 (18.01.2020)
 
 Incorporated latest changes in SocketTransport (0.1.7) and WebRequestTransport (0.1.7).
