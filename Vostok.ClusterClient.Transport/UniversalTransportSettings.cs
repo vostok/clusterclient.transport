@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using JetBrains.Annotations;
 
 namespace Vostok.Clusterclient.Transport
@@ -67,5 +68,10 @@ namespace Vostok.Clusterclient.Transport
         /// Gets or sets a delegate used to create response body buffers for given sizes.
         /// </summary>
         public Func<int, byte[]> BufferFactory { get; set; } = size => new byte[size];
+
+        /// <summary>
+        /// Gets or sets a list of client certificats for SSL connections.
+        /// </summary>
+        public X509Certificate2[] ClientCertificates { get; set; }
     }
 }

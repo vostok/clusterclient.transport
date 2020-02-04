@@ -1,4 +1,5 @@
-﻿using Vostok.Clusterclient.Core.Transport;
+﻿using System.Security.Cryptography.X509Certificates;
+using Vostok.Clusterclient.Core.Transport;
 using Vostok.Clusterclient.Transport.Sockets;
 using Vostok.Logging.Abstractions;
 
@@ -10,6 +11,7 @@ namespace Vostok.Clusterclient.Transport.Adapter
         public static ITransport Create(object rawSettings, ILog log)
         {
             var settings = Translator.Translate<UniversalTransportSettings>(rawSettings);
+
             var transportSettings = new SocketsTransportSettings
             {
                 AllowAutoRedirect = settings.AllowAutoRedirect,
@@ -23,8 +25,11 @@ namespace Vostok.Clusterclient.Transport.Adapter
                 TcpKeepAliveEnabled = settings.TcpKeepAliveEnabled,
                 TcpKeepAliveInterval = settings.TcpKeepAliveInterval,
                 TcpKeepAliveTime = settings.TcpKeepAliveTime,
-                UseResponseStreaming = settings.UseResponseStreaming
+                UseResponseStreaming = settings.UseResponseStreaming,
             };
+
+            if (settings.ClientCertificates != null)
+                transportSettings.CustomTuning = handler => handler.SslOptions.ClientCertificates = new X509Certificate2Collection(settings.ClientCertificates);
 
             return new SocketsTransport(transportSettings, log);
         }

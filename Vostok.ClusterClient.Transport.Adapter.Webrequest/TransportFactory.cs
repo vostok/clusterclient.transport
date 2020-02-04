@@ -16,6 +16,7 @@ namespace Vostok.Clusterclient.Transport.Adapter
                 AllowAutoRedirect = settings.AllowAutoRedirect,
                 ArpCacheWarmupEnabled = false,
                 BufferFactory = settings.BufferFactory,
+                ClientCertificates = settings.ClientCertificates,
                 ConnectionIdleTimeout = settings.ConnectionIdleTimeout,
                 MaxConnectionsPerEndpoint = settings.MaxConnectionsPerEndpoint,
                 MaxResponseBodySize = settings.MaxResponseBodySize,
