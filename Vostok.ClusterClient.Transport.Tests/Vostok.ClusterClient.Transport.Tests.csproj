@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\..\vostok.devtools\library-common-props\Test-Project.props" />
   <Import Project="..\..\vostok.devtools\git-commit-to-assembly-title\Vostok.Tools.GitCommit2AssemblyTitle.props" />
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;net471</TargetFrameworks>
-    <TargetFrameworks Condition="'$(OS)' != 'Windows_NT'">netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net471;netcoreapp2.0;netcoreapp2.1;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks Condition="'$(OS)' != 'Windows_NT'">netcoreapp2.0;netcoreapp2.1;netcoreapp3.1</TargetFrameworks>
     <LangVersion>7.2</LangVersion>
     <RootNamespace>Vostok.Clusterclient.Transport.Tests</RootNamespace>
   </PropertyGroup>
@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\vostok.clusterclient.transport.tests\Vostok.ClusterClient.Transport.Tests.Shared\Vostok.ClusterClient.Transport.Tests.Shared.csproj" />
     <ProjectReference Include="..\Vostok.ClusterClient.Transport\Vostok.ClusterClient.Transport.csproj" />
   </ItemGroup>
 
@@ -36,6 +35,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\vostok.logging.console\Vostok.Logging.Console\bin\Release\netstandard2.0\Vostok.Logging.Console.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Web" Condition="'$(TargetFramework)' == 'net471'" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\vostok.commons.threading\Vostok.Commons.Threading\ThreadSafeRandom.cs" Link="Commons\ThreadSafeRandom.cs" />
+    <Compile Include="..\..\vostok.commons.testing\Vostok.Commons.Testing\AssertionAssertions.cs" Link="Commons\AssertionAssertions.cs" />
+    <Compile Include="..\..\vostok.commons.testing\Vostok.Commons.Testing\ExceptionAssertions.cs" Link="Commons\ExceptionAssertions.cs" />
   </ItemGroup>
 
 </Project>

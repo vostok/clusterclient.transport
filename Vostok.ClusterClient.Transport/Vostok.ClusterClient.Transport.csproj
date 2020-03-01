@@ -9,6 +9,7 @@
     <Configurations>Debug;Release</Configurations>
     <LangVersion>7.2</LangVersion>
     <RootNamespace>Vostok.Clusterclient.Transport</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -17,7 +18,7 @@
 
   <PropertyGroup>
     <Title>Vostok.ClusterClient.Transport</Title>
-    <Description>Universal transport implementation targeting netstandard2.0 and intended to be used by library developers.</Description>
+    <Description>Universal transport implementation targeting netstandard2.0 and a set of runtime-specific implementations.</Description>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -26,14 +27,6 @@
     <PackageTags>vostok vostok.clusterclient</PackageTags>
     <PackageReleaseNotes>https://github.com/vostok/clusterclient.transport/blob/master/CHANGELOG.md</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/vostok/clusterclient.transport</RepositoryUrl>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD2_0;ANNOTATIONS_FOR_SETTINGS</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DefineConstants>TRACE;RELEASE;NETSTANDARD;NETSTANDARD2_0;ANNOTATIONS_FOR_SETTINGS</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -49,19 +42,23 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Compile Include="..\..\vostok.commons.collections\Vostok.Commons.Collections\BufferPool.cs" Link="Commons\BufferPool.cs" />
+    <Compile Include="..\..\vostok.commons.collections\Vostok.Commons.Collections\RecyclingBoundedCache.cs" Link="Commons\RecyclingBoundedCache.cs" />
     <Compile Include="..\..\vostok.commons.environment\Vostok.Commons.Environment\RuntimeDetector.cs" Link="Commons\RuntimeDetector.cs" />
+    <Compile Include="..\..\vostok.commons.helpers\Vostok.Commons.Helpers\Network\*.cs" LinkBase="Commons\" />
+    <Compile Include="..\..\vostok.commons.time\Vostok.Commons.Time\TimeBudget.cs" Link="Commons\TimeBudget.cs" />
+    <Compile Include="..\..\vostok.commons.time\Vostok.Commons.Time\TimeSpanFormatting.cs" Link="Commons\TimeSpanFormatting.cs" />
+    <Compile Include="..\..\vostok.commons.time\Vostok.Commons.Time\TimeSpanConversions.cs" Link="Commons\TimeSpanConversions.cs" />
   </ItemGroup>
-  
-  <Target Name="BuildTransports" BeforeTargets="BeforeBuild">
-    <Exec Command="dotnet publish -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Adapter.Webrequest" />
-    <Exec Command="dotnet publish -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Adapter.Sockets" />
-    <Exec Command="dotnet publish -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Adapter.Native" />
-  </Target>
-  
+
   <ItemGroup>
-    <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Adapter.Webrequest\bin\Release\netstandard2.0\publish\Vostok.ClusterClient.Transport.Adapter.Webrequest.Merged.dll" />
-    <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Adapter.Sockets\bin\Release\netcoreapp2.1\publish\Vostok.ClusterClient.Transport.Adapter.Sockets.Merged.dll" />
-    <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Adapter.Native\bin\Release\netcoreapp2.0\publish\Vostok.ClusterClient.Transport.Adapter.Native.Merged.dll" />
+    <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Core20\bin\Release\netcoreapp2.0\Vostok.ClusterClient.Transport.Core20.dll" />
+    <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Core21\bin\Release\netcoreapp2.1\Vostok.ClusterClient.Transport.Core21.dll" />
   </ItemGroup>
-  
+
+  <Target Name="BuildCoreAssemblies" BeforeTargets="BeforeBuild">
+    <Exec Command="dotnet build -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Core20" />
+    <Exec Command="dotnet build -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Core21" />
+  </Target>
+
 </Project>

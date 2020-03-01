@@ -8,9 +8,7 @@ namespace Vostok.Clusterclient.Transport
     /// <summary>
     /// A class that represents <see cref="UniversalTransport" /> settings.
     /// </summary>
-#if ANNOTATIONS_FOR_SETTINGS
     [PublicAPI]
-#endif
     public class UniversalTransportSettings
     {
         /// <summary>
@@ -73,5 +71,63 @@ namespace Vostok.Clusterclient.Transport
         /// Gets or sets a list of client certificats for SSL connections.
         /// </summary>
         public X509Certificate2[] ClientCertificates { get; set; }
+
+        [NotNull]
+        public SocketsTransportSettings ToSocketsTransportSettings()
+        {
+            return new SocketsTransportSettings
+            {
+                AllowAutoRedirect = AllowAutoRedirect,
+                ArpCacheWarmupEnabled = false,
+                BufferFactory = BufferFactory,
+                ClientCertificates = ClientCertificates,
+                ConnectionIdleTimeout = ConnectionIdleTimeout,
+                MaxConnectionsPerEndpoint = MaxConnectionsPerEndpoint,
+                MaxResponseBodySize = MaxResponseBodySize,
+                Proxy = Proxy,
+                RequestAbortTimeout = RequestAbortTimeout,
+                TcpKeepAliveEnabled = TcpKeepAliveEnabled,
+                TcpKeepAliveInterval = TcpKeepAliveInterval,
+                TcpKeepAliveTime = TcpKeepAliveTime,
+                UseResponseStreaming = UseResponseStreaming
+            };
+        }
+
+        [NotNull]
+        public WebRequestTransportSettings ToWebRequestTransportSettings()
+        {
+            return new WebRequestTransportSettings
+            {
+                AllowAutoRedirect = AllowAutoRedirect,
+                ArpCacheWarmupEnabled = false,
+                BufferFactory = BufferFactory,
+                ClientCertificates = ClientCertificates,
+                ConnectionIdleTimeout = ConnectionIdleTimeout,
+                MaxConnectionsPerEndpoint = MaxConnectionsPerEndpoint,
+                MaxResponseBodySize = MaxResponseBodySize,
+                Pipelined = false,
+                Proxy = Proxy,
+                RequestAbortTimeout = RequestAbortTimeout,
+                TcpKeepAliveEnabled = TcpKeepAliveEnabled,
+                TcpKeepAliveInterval = TcpKeepAliveInterval,
+                TcpKeepAliveTime = TcpKeepAliveTime,
+                UseResponseStreaming = UseResponseStreaming
+            };
+        }
+
+        [NotNull]
+        public NativeTransportSettings ToNativeTransportSettings()
+        {
+            return new NativeTransportSettings
+            {
+                AllowAutoRedirect = AllowAutoRedirect,
+                BufferFactory = BufferFactory,
+                MaxConnectionsPerEndpoint = MaxConnectionsPerEndpoint,
+                MaxResponseBodySize = MaxResponseBodySize,
+                Proxy = Proxy,
+                RequestAbortTimeout = RequestAbortTimeout,
+                UseResponseStreaming = UseResponseStreaming
+            };
+        }
     }
 }
