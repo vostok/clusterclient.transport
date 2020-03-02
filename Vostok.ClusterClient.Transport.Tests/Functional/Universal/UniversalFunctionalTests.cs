@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Vostok.Clusterclient.Transport.Tests.Functional.Common;
+using Vostok.Commons.Environment;
 
 namespace Vostok.Clusterclient.Transport.Tests.Functional.Universal
 {
@@ -24,7 +25,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Universal
             {
             }
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            if (!RuntimeDetector.IsDotNetCore20 || RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 base.Should_timeout_on_connection_to_a_blackhole_by_connect_timeout();
         }
     }
