@@ -1,4 +1,6 @@
-﻿using Vostok.Clusterclient.Transport.Tests.Functional.Common;
+﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
+using Vostok.Clusterclient.Transport.Tests.Functional.Common;
 
 namespace Vostok.Clusterclient.Transport.Tests.Functional.Universal
 {
@@ -16,6 +18,15 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Universal
 
     internal class ConnectionTimeoutTests : ConnectionTimeoutTests<UniversalTestConfig>
     {
+        public override void Should_timeout_on_connection_to_a_blackhole_by_connect_timeout()
+        {
+            while (!Debugger.IsAttached)
+            {
+            }
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                base.Should_timeout_on_connection_to_a_blackhole_by_connect_timeout();
+        }
     }
 
     internal class ContentReceivingTests : ContentReceivingTests<UniversalTestConfig>
