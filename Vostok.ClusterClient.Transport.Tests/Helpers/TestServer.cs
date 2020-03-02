@@ -43,8 +43,15 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
 
         public void Dispose()
         {
-            listener.Stop();
-            listener.Close();
+            try
+            {
+                listener.Stop();
+                listener.Close();
+            }
+            catch
+            {
+                // ignore
+            }
         }
 
         private string Host { get; }
