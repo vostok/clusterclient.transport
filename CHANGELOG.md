@@ -1,3 +1,8 @@
+## 0.1.12 (03.03.2020):
+
+* Gathered all transport implementations in this module + retargeted everything to netstandard2.0.
+* UniversalTransport no longer breaks down after ILRepack.
+
 ## 0.1.11 (04.02.2020):
 
 * Improved detection of connection errors in SocketTransport.
