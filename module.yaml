@@ -11,14 +11,14 @@ notests *default:
     - module vostok.logging.abstractions
 
   deps:
-    - vostok.devtools
-    - vostok.devtools.ilrepack.bin
-    - vostok.logging.abstractions
-    - vostok.clusterclient.core
-    - vostok.clusterclient.transport.webrequest
-    - vostok.clusterclient.transport.sockets
-    - vostok.clusterclient.transport.native
     - vostok.commons.environment/src
+    - vostok.commons.collections/src
+    - vostok.commons.helpers/src
+    - vostok.commons.time/src
+    - vostok.commons.threading/src
+    - vostok.clusterclient.core
+    - vostok.devtools
+    - vostok.logging.abstractions
 
 full-build > notests:
   build:
@@ -26,5 +26,5 @@ full-build > notests:
     configuration: Release
   
   deps:
+    - vostok.commons.testing/src
     - vostok.logging.console
-    - vostok.clusterclient.transport.tests

@@ -1,18 +1,14 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2011
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vostok.ClusterClient.Transport", "Vostok.ClusterClient.Transport\Vostok.ClusterClient.Transport.csproj", "{41337F4D-B146-48A0-A8B8-BAF3C5EBA514}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vostok.ClusterClient.Transport.Tests", "Vostok.ClusterClient.Transport.Tests\Vostok.ClusterClient.Transport.Tests.csproj", "{87C54CC1-C3B8-4730-B55D-5DB6F9C3ABA3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vostok.ClusterClient.Transport.Adapter.Webrequest", "Vostok.ClusterClient.Transport.Adapter.Webrequest\Vostok.ClusterClient.Transport.Adapter.Webrequest.csproj", "{90E06421-82F2-42AF-BEFC-A81CDFB4616E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vostok.ClusterClient.Transport.Core20", "Vostok.ClusterClient.Transport.Core20\Vostok.ClusterClient.Transport.Core20.csproj", "{97D6CE62-5B73-473E-83E9-28DAA95A55B8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vostok.ClusterClient.Transport.Adapter.Sockets", "Vostok.ClusterClient.Transport.Adapter.Sockets\Vostok.ClusterClient.Transport.Adapter.Sockets.csproj", "{896C030E-98B4-44DE-AE26-DB55E586C06E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vostok.ClusterClient.Transport.Tests.Shared", "..\vostok.clusterclient.transport.tests\Vostok.ClusterClient.Transport.Tests.Shared\Vostok.ClusterClient.Transport.Tests.Shared.csproj", "{AFEB1BB8-E806-4446-B493-C94F8F625A7D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vostok.ClusterClient.Transport.Adapter.Native", "Vostok.ClusterClient.Transport.Adapter.Native\Vostok.ClusterClient.Transport.Adapter.Native.csproj", "{5331104D-1F44-432B-AEC0-F8000C61B598}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vostok.ClusterClient.Transport.Core21", "Vostok.ClusterClient.Transport.Core21\Vostok.ClusterClient.Transport.Core21.csproj", "{20E2A532-5886-467F-891D-E2D06EA09C0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,26 +28,18 @@ Global
 		{87C54CC1-C3B8-4730-B55D-5DB6F9C3ABA3}.NoTests|Any CPU.ActiveCfg = Release|Any CPU
 		{87C54CC1-C3B8-4730-B55D-5DB6F9C3ABA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87C54CC1-C3B8-4730-B55D-5DB6F9C3ABA3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{90E06421-82F2-42AF-BEFC-A81CDFB4616E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90E06421-82F2-42AF-BEFC-A81CDFB4616E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90E06421-82F2-42AF-BEFC-A81CDFB4616E}.NoTests|Any CPU.ActiveCfg = Debug|Any CPU
-		{90E06421-82F2-42AF-BEFC-A81CDFB4616E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90E06421-82F2-42AF-BEFC-A81CDFB4616E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{896C030E-98B4-44DE-AE26-DB55E586C06E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{896C030E-98B4-44DE-AE26-DB55E586C06E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{896C030E-98B4-44DE-AE26-DB55E586C06E}.NoTests|Any CPU.ActiveCfg = Debug|Any CPU
-		{896C030E-98B4-44DE-AE26-DB55E586C06E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{896C030E-98B4-44DE-AE26-DB55E586C06E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AFEB1BB8-E806-4446-B493-C94F8F625A7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AFEB1BB8-E806-4446-B493-C94F8F625A7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AFEB1BB8-E806-4446-B493-C94F8F625A7D}.NoTests|Any CPU.ActiveCfg = Debug|Any CPU
-		{AFEB1BB8-E806-4446-B493-C94F8F625A7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AFEB1BB8-E806-4446-B493-C94F8F625A7D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5331104D-1F44-432B-AEC0-F8000C61B598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5331104D-1F44-432B-AEC0-F8000C61B598}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5331104D-1F44-432B-AEC0-F8000C61B598}.NoTests|Any CPU.ActiveCfg = Debug|Any CPU
-		{5331104D-1F44-432B-AEC0-F8000C61B598}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5331104D-1F44-432B-AEC0-F8000C61B598}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97D6CE62-5B73-473E-83E9-28DAA95A55B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97D6CE62-5B73-473E-83E9-28DAA95A55B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97D6CE62-5B73-473E-83E9-28DAA95A55B8}.NoTests|Any CPU.ActiveCfg = Debug|Any CPU
+		{97D6CE62-5B73-473E-83E9-28DAA95A55B8}.NoTests|Any CPU.Build.0 = Debug|Any CPU
+		{97D6CE62-5B73-473E-83E9-28DAA95A55B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97D6CE62-5B73-473E-83E9-28DAA95A55B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20E2A532-5886-467F-891D-E2D06EA09C0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20E2A532-5886-467F-891D-E2D06EA09C0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20E2A532-5886-467F-891D-E2D06EA09C0D}.NoTests|Any CPU.ActiveCfg = Debug|Any CPU
+		{20E2A532-5886-467F-891D-E2D06EA09C0D}.NoTests|Any CPU.Build.0 = Debug|Any CPU
+		{20E2A532-5886-467F-891D-E2D06EA09C0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20E2A532-5886-467F-891D-E2D06EA09C0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
