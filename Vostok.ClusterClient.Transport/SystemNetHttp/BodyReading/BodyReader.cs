@@ -34,6 +34,7 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.BodyReading
             try
             {
                 var contentLength = message.Content.Headers.ContentLength;
+                var streaming = useStreaming(contentLength);
                 if (contentLength.HasValue)
                 {
                     if (contentLength.Value == 0L)
@@ -41,7 +42,7 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.BodyReading
 
                     var maximumSize = maxBodySize();
 
-                    if (contentLength.Value > maximumSize || contentLength.Value > int.MaxValue)
+                    if (contentLength.Value > maximumSize || !streaming && contentLength.Value > int.MaxValue)
                     {
                         LogBodyTooLarge(Math.Min(int.MaxValue, maximumSize ?? long.MaxValue), contentLength.Value);
                         return new BodyReadResult(ResponseCode.InsufficientStorage);
@@ -50,7 +51,7 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.BodyReading
 
                 var bodyStream = await message.Content.ReadAsStreamAsync().ConfigureAwait(false);
 
-                if (useStreaming(contentLength))
+                if (streaming)
                     return new BodyReadResult(bodyStream);
 
                 using (bodyStream)
