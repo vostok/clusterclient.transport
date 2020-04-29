@@ -28,8 +28,9 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
             }
         }
 
-        [Test]
-        public void Should_read_large_response_body()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void Should_read_large_response_body(bool specifyContentLength)
         {
             var serverBuffer = new byte[1024 * 1024];
             var clientBuffer = new byte[1024 * 1024];
@@ -40,6 +41,10 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
                 ctx =>
                 {
                     ctx.Response.StatusCode = 200;
+
+                    if (specifyContentLength)
+                        ctx.Response.ContentLength64 = serverBuffer.Length * (long) iterations;
+
                     for (var i = 0; i < iterations; ++i)
                         ctx.Response.OutputStream.Write(serverBuffer, 0, serverBuffer.Length);
                 }))
