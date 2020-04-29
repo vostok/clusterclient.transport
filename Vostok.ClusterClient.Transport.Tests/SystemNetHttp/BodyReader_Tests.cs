@@ -84,6 +84,29 @@ namespace Vostok.Clusterclient.Transport.Tests.SystemNetHttp
         }
 
         [Test]
+        public void Should_not_return_an_error_when_content_length_exceeds_int_max_value_but_streaming_is_on()
+        {
+            useStreaming = true;
+            message.Content.Headers.ContentLength = int.MaxValue + 1L;
+
+            var result = Read();
+
+            result.Content.Should().BeNull();
+            result.Stream.Should().NotBeNull();
+            result.ErrorCode.Should().BeNull();
+
+            stream.Position.Should().Be(0);
+
+            var buffer = new byte[content.Length];
+
+            result.Stream.Read(buffer, 0, buffer.Length).Should().Be(buffer.Length);
+
+            buffer.Should().Equal(content);
+
+            stream.Position.Should().Be(content.Length);
+        }
+
+        [Test]
         public void Should_immediately_return_an_error_when_content_length_exceeds_configured_limit()
         {
             maxBodySize = content.Length - 1;
