@@ -1,3 +1,7 @@
+## 0.1.13 (29.04.2020):
+
+Fixed SocketsTransport not being able to read response bodies larger than 2 GB when response does not use chunked transfer encoding. 
+
 ## 0.1.12 (03.03.2020):
 
 * Gathered all transport implementations in this module + retargeted everything to netstandard2.0.
