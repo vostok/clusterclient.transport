@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -71,7 +72,7 @@ namespace Vostok.Clusterclient.Transport
                 {
                     state.Request = RequestMessageFactory.Create(request, token, log);
                     if (state.Request.Content is GenericContent content && socketTuner.CanTune)
-                        state.Request.Content = new SocketTuningContent(content, socketTuner, log);
+                        SetSocketTuningContent(state.Request, content);
 
                     var handler = handlerProvider.Obtain(connectionTimeout);
 
@@ -104,6 +105,15 @@ namespace Vostok.Clusterclient.Transport
 
                 return errorResponse;
             }
+        }
+
+        private void SetSocketTuningContent(HttpRequestMessage request, GenericContent content)
+        {
+            var headers = request.Content.Headers;
+            request.Content = new SocketTuningContent(content, socketTuner, log);
+
+            foreach (var header in headers)
+                request.Content.Headers.Add(header.Key, header.Value);
         }
     }
 }
