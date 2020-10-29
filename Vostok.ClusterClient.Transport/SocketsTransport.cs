@@ -111,9 +111,7 @@ namespace Vostok.Clusterclient.Transport
         {
             var headers = request.Content.Headers;
             request.Content = new SocketTuningContent(content, socketTuner, log);
-
-            foreach (var header in headers)
-                request.Content.Headers.Add(header.Key, header.Value);
+            HttpContentHelper.SetHttpContentHeaders(request.Content, headers, log);
         }
     }
 }
