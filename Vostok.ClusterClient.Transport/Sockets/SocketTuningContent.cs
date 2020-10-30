@@ -16,6 +16,8 @@ namespace Vostok.Clusterclient.Transport.Sockets
             this.content = content;
             this.tuner = tuner;
             this.log = log;
+
+            CopyHeaders();
         }
 
         public override long? Length => content.Length;
@@ -27,6 +29,15 @@ namespace Vostok.Clusterclient.Transport.Sockets
             tuner.Tune(SocketAccessor.GetSocket(target, log));
 
             return content.Copy(target);
+        }
+
+        private void CopyHeaders()
+        {
+            if (ContentHeadersHelper.TryCopyByReference(content, this))
+                return;
+            
+            foreach (var pair in content.Headers)
+                Headers.Add(pair.Key, pair.Value);
         }
     }
 }
