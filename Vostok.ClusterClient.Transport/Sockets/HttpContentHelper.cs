@@ -127,6 +127,9 @@ namespace Vostok.Clusterclient.Transport.Sockets
 
         private static void CopyHeaders(HttpContent targetContent, HttpContentHeaders headers)
         {
+            if (headers == null)
+                return;
+
             foreach (var header in headers)
                 targetContent.Headers.Add(header.Key, header.Value);
         }
