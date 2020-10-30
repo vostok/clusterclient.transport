@@ -13,7 +13,7 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Header
     internal static class RequestHeadersUnlocker
     {
         private static readonly object Sync = new object();
-        private static readonly Action<HttpHeaders> Empty = delegate { };
+        private static readonly Action<HttpHeaders> Empty = delegate {};
         private static volatile Action<HttpHeaders> unlocker;
 
         public static bool TryUnlockRestrictedHeaders(HttpHeaders headers, ILog log)
@@ -38,9 +38,9 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Header
                         unlocker = unlockAction;
                         return;
                     }
-                }
 
-                unlocker = Empty;
+                    unlocker = Empty;
+                }
             }
         }
 
@@ -70,8 +70,8 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Header
             {
                 if (RuntimeDetector.IsDotNetCore21AndNewer)
                 {
-                    var allowLambda = NetCore20Utils.CreateAssignment(typeof(HttpHeaders).GetField("_allowedHeaderTypes", BindingFlags.Instance | BindingFlags.NonPublic), (int) HeaderType.Custom);
-                    var treatLambda = NetCore20Utils.CreateAssignment(typeof(HttpHeaders).GetField("_treatAsCustomHeaderTypes", BindingFlags.Instance | BindingFlags.NonPublic), (int) HeaderType.All);
+                    var allowLambda = NetCore20Utils.CreateAssignment(typeof(HttpHeaders).GetField("_allowedHeaderTypes", BindingFlags.Instance | BindingFlags.NonPublic), (int)HeaderType.Custom);
+                    var treatLambda = NetCore20Utils.CreateAssignment(typeof(HttpHeaders).GetField("_treatAsCustomHeaderTypes", BindingFlags.Instance | BindingFlags.NonPublic), (int)HeaderType.All);
 
                     return h =>
                     {
