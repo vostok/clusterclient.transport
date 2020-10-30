@@ -1,3 +1,7 @@
+## 0.1.14 (30.10.2020):
+
+Fixed lost headers on SocketTuningContent creation.
+
 ## 0.1.13 (29.04.2020):
 
 Fixed SocketsTransport not being able to read response bodies larger than 2 GB when response does not use chunked transfer encoding. 
