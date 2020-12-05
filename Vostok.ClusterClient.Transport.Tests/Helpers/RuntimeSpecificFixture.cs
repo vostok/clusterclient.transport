@@ -8,6 +8,9 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
         [SetUp]
         public void CheckRuntime()
         {
+            if (!RunOnCore50 && RuntimeDetector.IsDotNet50AndNewer)
+                Assert.Pass();
+
             if (!RunOnCore31 && RuntimeDetector.IsDotNetCore30AndNewer)
                 Assert.Pass();
 
@@ -35,5 +38,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
         private bool RunOnCore21 => SupportedRuntimes.HasFlag(Runtime.Core21);
 
         private bool RunOnCore31 => SupportedRuntimes.HasFlag(Runtime.Core31);
+
+        private bool RunOnCore50 => SupportedRuntimes.HasFlag(Runtime.Core50);
     }
 }

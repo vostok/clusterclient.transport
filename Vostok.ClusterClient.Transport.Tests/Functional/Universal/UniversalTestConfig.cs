@@ -15,7 +15,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Universal
         {
             get
             {
-                var runtimes = Runtime.Framework | Runtime.Core21 | Runtime.Core31;
+                var runtimes = Runtime.Framework | Runtime.Core21 | Runtime.Core31 | Runtime.Core50;
 
                 if (Environment.GetEnvironmentVariable("APPVEYOR") == null)
                     runtimes |= Runtime.Core20;

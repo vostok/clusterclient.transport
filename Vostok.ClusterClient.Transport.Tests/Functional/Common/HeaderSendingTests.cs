@@ -1,7 +1,10 @@
-﻿using FluentAssertions;
+﻿using System;
+using System.Text;
+using FluentAssertions;
 using NUnit.Framework;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Clusterclient.Transport.Tests.Helpers;
+using Vostok.Commons.Environment;
 
 namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
 {
@@ -46,6 +49,29 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
                 Send(request);
 
                 server.LastRequest.Headers[headerName].Should().Be(headerValue);
+            }
+        }
+
+        [Test]
+        public void Should_correctly_transfer_a_non_ascii_header_to_server()
+        {
+            if (!RuntimeDetector.IsDotNet50AndNewer)
+                return;
+
+            var responseBuilder = new StringBuilder();
+
+            responseBuilder.AppendLine("HTTP/1.1 200 OK");
+            responseBuilder.AppendLine("Connection: close");
+            responseBuilder.AppendLine("Content-Length: 0");
+            responseBuilder.AppendLine();
+
+            using (var server = SocketTestServer.StartNew(responseBuilder.ToString()))
+            {
+                var request = Request.Post(server.Url).WithHeader("Custom-Header", "кириллица");
+
+                Send(request);
+
+                server.LastRequest.Should().Contain("Custom-Header: кириллица");
             }
         }
 

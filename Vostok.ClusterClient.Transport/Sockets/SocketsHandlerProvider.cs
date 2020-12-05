@@ -7,6 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using Vostok.Clusterclient.Transport.Helpers;
 using Vostok.Commons.Collections;
+using Vostok.Commons.Environment;
 
 namespace Vostok.Clusterclient.Transport.Sockets
 {
@@ -43,8 +44,9 @@ namespace Vostok.Clusterclient.Transport.Sockets
                 settings.MaxConnectionsPerEndpoint,
                 settings.ClientCertificates);
 
-        private static HttpMessageHandler CreateHandler(GlobalCacheKey key) 
-            => NetCore21Utils.CreateSocketsHandler(
+        private static HttpMessageHandler CreateHandler(GlobalCacheKey key)
+        {
+            var handler = NetCore21Utils.CreateSocketsHandler(
                 key.Proxy,
                 key.AllowAutoRedirect,
                 key.ConnectionTimeout,
@@ -52,6 +54,12 @@ namespace Vostok.Clusterclient.Transport.Sockets
                 key.ConnectionLifetime,
                 key.MaxConnectionsPerEndpoint,
                 key.ClientCertificates);
+
+            if (RuntimeDetector.IsDotNet50AndNewer)
+                NetCore50Utils.TuneHandler(handler);
+
+            return handler;
+        }
 
         private readonly struct GlobalCacheKey
         {
