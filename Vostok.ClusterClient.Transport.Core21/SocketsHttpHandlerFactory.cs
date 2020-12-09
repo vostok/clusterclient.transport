@@ -43,8 +43,7 @@ namespace Vostok.Clusterclient.Transport.Core21
             };
 
             if (clientCertificates != null)
-                foreach (var cert in clientCertificates)
-                    handler.SslOptions.ClientCertificates.Add(cert);
+                handler.SslOptions.ClientCertificates = new X509Certificate2Collection(clientCertificates);
 
             return handler;
         }
