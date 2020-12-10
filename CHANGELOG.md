@@ -1,3 +1,7 @@
+## 0.1.15 (10.12.2020):
+
+Fixed NRE in ssl options configuration.
+
 ## 0.1.14 (30.10.2020):
 
 Fixed lost headers on SocketTuningContent creation.
