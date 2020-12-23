@@ -105,9 +105,9 @@ namespace Vostok.Clusterclient.Transport.Tests.Sockets
         }
 
         [Test]
-        public void Should_return_connection_failure_response_for_IOException_without_inner_exceptions()
+        public void Should_return_receive_failure_response_for_IOException_without_inner_exceptions()
         {
-            Handle(new HttpRequestException("", new IOException())).Code.Should().Be(ResponseCode.ConnectFailure);
+            Handle(new HttpRequestException("", new IOException())).Code.Should().Be(ResponseCode.ReceiveFailure);
         }
 
         [Test]
