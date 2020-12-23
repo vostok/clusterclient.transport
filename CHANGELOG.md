@@ -1,3 +1,7 @@
+## 0.1.16 (23.12.2020):
+
+Added support for UTF-8 header values on .NET 5+
+
 ## 0.1.15 (10.12.2020):
 
 Fixed NRE in ssl options configuration.
