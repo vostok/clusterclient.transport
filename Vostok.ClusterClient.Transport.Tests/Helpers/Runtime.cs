@@ -9,6 +9,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
         Framework = 1 << 1,
         Core20 = 1 << 2,
         Core21 = 1 << 3,
-        Core31 = 1 << 4
+        Core31 = 1 << 4,
+        Core50 = 1 << 5
     }
 }
