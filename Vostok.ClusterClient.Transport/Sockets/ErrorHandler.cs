@@ -63,8 +63,14 @@ namespace Vostok.Clusterclient.Transport.Sockets
                 if (error is OperationCanceledException)
                     return (Responses.ConnectFailure, connectionError: error);
 
-                if (error is SocketException socketError && IsConnectionFailure(socketError.SocketErrorCode))
-                    return (Responses.ConnectFailure, connectionError: socketError);
+                if (error is SocketException socketError)
+                {
+                    if (IsConnectionEstablishmentFailure(socketError.SocketErrorCode))
+                        return (Responses.ConnectFailure, connectionError: socketError);
+
+                    if (IsConnectionAbortFailure(socketError.SocketErrorCode))
+                        return (Responses.ReceiveFailure, connectionError: socketError);
+                }
 
                 // todo (avk, 24.12.2020): 'IOException with no InnerException' also happens on connection establishment and corresponding request can be safely retried
                 if (error is IOException ioError && ioError.InnerException == null)
@@ -74,7 +80,7 @@ namespace Vostok.Clusterclient.Transport.Sockets
             }
         }
 
-        private static bool IsConnectionFailure(SocketError code)
+        private static bool IsConnectionEstablishmentFailure(SocketError code)
         {
             switch (code)
             {
@@ -89,8 +95,6 @@ namespace Vostok.Clusterclient.Transport.Sockets
                 case SocketError.AddressAlreadyInUse:
 
                 case SocketError.ConnectionRefused:
-                case SocketError.ConnectionAborted:
-                case SocketError.ConnectionReset:
 
                 case SocketError.TimedOut:
                 case SocketError.TryAgain:
@@ -98,6 +102,22 @@ namespace Vostok.Clusterclient.Transport.Sockets
                 case SocketError.TooManyOpenSockets:
                 case SocketError.NoBufferSpaceAvailable:
                 case SocketError.DestinationAddressRequired:
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        private static bool IsConnectionAbortFailure(SocketError code)
+        {
+            switch (code)
+            {
+                case SocketError.ConnectionAborted:
+                case SocketError.ConnectionReset:
+
+                case SocketError.Interrupted:
+                case SocketError.OperationAborted:
                     return true;
 
                 default:

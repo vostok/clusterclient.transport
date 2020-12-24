@@ -89,8 +89,6 @@ namespace Vostok.Clusterclient.Transport.Tests.Sockets
         [TestCase(SocketError.AddressNotAvailable)]
         [TestCase(SocketError.AddressAlreadyInUse)]
         [TestCase(SocketError.ConnectionRefused)]
-        [TestCase(SocketError.ConnectionAborted)]
-        [TestCase(SocketError.ConnectionReset)]
         [TestCase(SocketError.TimedOut)]
         [TestCase(SocketError.TryAgain)]
         [TestCase(SocketError.SystemNotReady)]
@@ -102,6 +100,17 @@ namespace Vostok.Clusterclient.Transport.Tests.Sockets
             Handle(new HttpRequestException("", new SocketException((int)code))).Code.Should().Be(ResponseCode.ConnectFailure);
 
             Handle(new HttpRequestException("", new IOException("", new SocketException((int)code)))).Code.Should().Be(ResponseCode.ConnectFailure);
+        }
+
+        [TestCase(SocketError.ConnectionAborted)]
+        [TestCase(SocketError.ConnectionReset)]
+        [TestCase(SocketError.Interrupted)]
+        [TestCase(SocketError.OperationAborted)]
+        public void Should_return_receive_failure_response_for_inner_SocketException_with_given_code(SocketError code)
+        {
+            Handle(new HttpRequestException("", new SocketException((int)code))).Code.Should().Be(ResponseCode.ReceiveFailure);
+
+            Handle(new HttpRequestException("", new IOException("", new SocketException((int)code)))).Code.Should().Be(ResponseCode.ReceiveFailure);
         }
 
         [Test]
