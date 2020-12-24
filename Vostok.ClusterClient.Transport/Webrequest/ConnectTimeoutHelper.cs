@@ -76,10 +76,8 @@ namespace Vostok.Clusterclient.Transport.Webrequest
                 WrapLog(log).Error(savedError, "Failed to build connection checker lambda");
         }
 
-        /// <summary>
-        /// Builds the following lambda:
-        /// (HttpWebRequest request) => request._SubmitWriteStream != null && request._SubmitWriteStream.InternalSocket != null && request._SubmitWriteStream.InternalSocket.Connected
-        /// </summary>
+        // Builds the following lambda:
+        // (HttpWebRequest request) => request._SubmitWriteStream != null && request._SubmitWriteStream.InternalSocket != null && request._SubmitWriteStream.InternalSocket.Connected
         private static Func<HttpWebRequest, bool> BuildSocketConnectedChecker()
         {
             var request = Expression.Parameter(typeof(HttpWebRequest));
