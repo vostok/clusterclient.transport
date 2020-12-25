@@ -39,11 +39,11 @@ namespace Vostok.Clusterclient.Transport.Sockets
                     return Responses.SendFailure;
 
                 default:
-                    var connectionError = TryDetectConnectionError(error);
-                    if (connectionError != null)
+                    var (connectionErrorResponse, connectionError) = TryClassifyConnectionError(error);
+                    if (connectionErrorResponse != null)
                     {
                         LogConnectionFailure(request, connectionError, connectionTimeout);
-                        return Responses.ConnectFailure;
+                        return connectionErrorResponse;
                     }
 
                     break;
@@ -53,28 +53,34 @@ namespace Vostok.Clusterclient.Transport.Sockets
             return Responses.UnknownFailure;
         }
 
-        [CanBeNull]
-        private static Exception TryDetectConnectionError(Exception error)
+        private static (Response response, Exception connectionError) TryClassifyConnectionError(Exception error)
         {
             while (true)
             {
                 if (error == null)
-                    return null;
+                    return (response: null, connectionError: null);
 
                 if (error is OperationCanceledException)
-                    return error;
+                    return (Responses.ConnectFailure, connectionError: error);
 
-                if (error is SocketException socketError && IsConnectionFailure(socketError.SocketErrorCode))
-                    return error;
+                if (error is SocketException socketError)
+                {
+                    if (IsConnectionEstablishmentFailure(socketError.SocketErrorCode))
+                        return (Responses.ConnectFailure, connectionError: socketError);
 
+                    if (IsConnectionAbortFailure(socketError.SocketErrorCode))
+                        return (Responses.ReceiveFailure, connectionError: socketError);
+                }
+
+                // todo (avk, 24.12.2020): 'IOException with no InnerException' also happens on connection establishment and corresponding request can be safely retried
                 if (error is IOException ioError && ioError.InnerException == null)
-                    return error;
+                    return (Responses.ReceiveFailure, connectionError: ioError);
 
                 error = error.InnerException;
             }
         }
 
-        private static bool IsConnectionFailure(SocketError code)
+        private static bool IsConnectionEstablishmentFailure(SocketError code)
         {
             switch (code)
             {
@@ -89,8 +95,6 @@ namespace Vostok.Clusterclient.Transport.Sockets
                 case SocketError.AddressAlreadyInUse:
 
                 case SocketError.ConnectionRefused:
-                case SocketError.ConnectionAborted:
-                case SocketError.ConnectionReset:
 
                 case SocketError.TimedOut:
                 case SocketError.TryAgain:
@@ -105,9 +109,25 @@ namespace Vostok.Clusterclient.Transport.Sockets
             }
         }
 
-        private void LogConnectionFailure(Request request, Exception error, TimeSpan? connectionTimeout)
+        private static bool IsConnectionAbortFailure(SocketError code)
         {
-            if (error is OperationCanceledException)
+            switch (code)
+            {
+                case SocketError.ConnectionAborted:
+                case SocketError.ConnectionReset:
+
+                case SocketError.Interrupted:
+                case SocketError.OperationAborted:
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        private void LogConnectionFailure(Request request, Exception connectionError, TimeSpan? connectionTimeout)
+        {
+            if (connectionError is OperationCanceledException)
             {
                 log.Warn("Connection attempt timed out. Target = '{Target}'. Timeout = {ConnectionTimeout}.", new
                 {
@@ -118,7 +138,7 @@ namespace Vostok.Clusterclient.Transport.Sockets
                 return;
             }
 
-            if (error is SocketException socketError)
+            if (connectionError is SocketException socketError)
             {
                 log.Warn("Connection failure. Target = '{Target}'. Socket code = {SocketErrorCode}. Timeout = {ConnectionTimeout}.", new
                 {
@@ -130,7 +150,7 @@ namespace Vostok.Clusterclient.Transport.Sockets
                 return;
             }
 
-            log.Warn(error, "Connection failure. Target = '{Target}'.", request.Url.Authority);
+            log.Warn(connectionError, "Connection failure. Target = '{Target}'.", request.Url.Authority);
         }
 
         private void LogUserStreamFailure(Request request, Exception error)
