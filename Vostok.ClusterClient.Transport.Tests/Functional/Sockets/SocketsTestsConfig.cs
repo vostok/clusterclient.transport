@@ -10,6 +10,6 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Sockets
         public ITransport CreateTransport(UniversalTransportSettings settings, ILog log) 
             => new SocketsTransport(settings.ToSocketsTransportSettings(), log);
 
-        public Runtime Runtimes => Runtime.Core21 | Runtime.Core31 | Runtime.Core50;
+        public Runtime Runtimes => Runtime.Framework | Runtime.Core20 | Runtime.Core21 | Runtime.Core31 | Runtime.Core50;
     }
 }

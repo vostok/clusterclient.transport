@@ -7,9 +7,10 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Configurations>Debug;Release</Configurations>
-    <LangVersion>7.2</LangVersion>
+    <LangVersion>latest</LangVersion>
     <RootNamespace>Vostok.Clusterclient.Transport</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -57,10 +58,28 @@
     <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Core50\bin\Release\net5.0\Vostok.ClusterClient.Transport.Core50.dll" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Memory" Version="4.5.4" PrivateAssets="all" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" PrivateAssets="all" />
+  </ItemGroup>
+
   <Target Name="BuildCoreAssemblies" BeforeTargets="BeforeBuild">
     <Exec Command="dotnet build -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Core20" />
     <Exec Command="dotnet build -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Core21" />
     <Exec Command="dotnet build -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Core50" />
+  </Target>
+
+  <Target Name="RepackAssemblies" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+    <PropertyGroup>
+      <ILRepackExecutable>dotnet --roll-forward Major "$(MSBuildThisFileDirectory)../../vostok.devtools.ilrepack.bin/netcoreapp2.1/ILRepack.Core.dll"</ILRepackExecutable>
+      <BinPath>$(ProjectDir)$(OutputPath)</BinPath>
+      <ResultAssembly>$(BinPath)$(AssemblyName).dll</ResultAssembly>
+    </PropertyGroup>
+    <ItemGroup>
+      <MergeAssemblies Include="$(BinPath)System.*.dll" />
+    </ItemGroup>
+    <Exec WorkingDirectory="$(BinPath)" Command="$(ILRepackExecutable) /internalize /renameInternalized /out:$(ResultAssembly) $(ResultAssembly) @(MergeAssemblies->'%(RelativeDir)%(FileName)%(Extension)', ' ')" />
+    <Delete Files="@(MergeAssemblies)" />
   </Target>
 
 </Project>

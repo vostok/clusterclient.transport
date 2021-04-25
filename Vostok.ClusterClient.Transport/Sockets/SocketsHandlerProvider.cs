@@ -46,6 +46,40 @@ namespace Vostok.Clusterclient.Transport.Sockets
 
         private static HttpMessageHandler CreateHandler(GlobalCacheKey key)
         {
+            if (RuntimeDetector.IsDotNetCore21AndNewer)
+            {
+                return CreateDotNetHandler(key);
+            }
+
+            var handler = new StandardSocketsHttpHandler
+            {
+                Proxy = key.Proxy,
+                UseProxy = key.Proxy != null,
+                ConnectTimeout = key.ConnectionTimeout,
+                AllowAutoRedirect = key.AllowAutoRedirect,
+                PooledConnectionIdleTimeout = key.ConnectionIdleTimeout,
+                PooledConnectionLifetime = key.ConnectionLifetime,
+                MaxConnectionsPerServer = key.MaxConnectionsPerEndpoint,
+                AutomaticDecompression = DecompressionMethods.None,
+                MaxResponseHeadersLength = 64 * 1024,
+                MaxAutomaticRedirections = 3,
+                UseCookies = false,
+                SslOptions =
+                {
+                    CertificateRevocationCheckMode = X509RevocationMode.NoCheck,
+                    RemoteCertificateValidationCallback = (_, __, ___, ____) => true,
+                }
+            };
+
+            if (key.ClientCertificates != null)
+                handler.SslOptions.ClientCertificates = new X509Certificate2Collection(key.ClientCertificates);
+
+            return handler;
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static HttpMessageHandler CreateDotNetHandler(GlobalCacheKey key)
+        {
             var handler = NetCore21Utils.CreateSocketsHandler(
                 key.Proxy,
                 key.AllowAutoRedirect,
