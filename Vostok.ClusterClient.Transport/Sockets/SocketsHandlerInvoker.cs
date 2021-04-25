@@ -2,9 +2,11 @@
 using System.Linq.Expressions;
 using System.Net.Http;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Vostok.Clusterclient.Transport.Helpers;
+using Vostok.Commons.Environment;
 using Invoker = System.Func<System.Net.Http.HttpMessageHandler, System.Net.Http.HttpRequestMessage, System.Threading.CancellationToken, System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage>>;
 
 // ReSharper disable AssignNullToNotNullAttribute
@@ -21,13 +23,13 @@ namespace Vostok.Clusterclient.Transport.Sockets
             try
             {
                 invoker = BuildInvoker();
-
+        
                 CanInvokeDirectly = true;
             }
             catch (Exception error)
             {
                 Console.Out.WriteLine(error);
-
+        
                 invoker = (handler, message, token) => new HttpClient(handler).SendAsync(message, HttpCompletionOption.ResponseHeadersRead, token);
             }
         }
@@ -46,14 +48,24 @@ namespace Vostok.Clusterclient.Transport.Sockets
 
         private static Invoker BuildInvoker()
         {
+            if (RuntimeDetector.IsDotNetCore21AndNewer)
+                return BuildInvokerForDotNetHandler();
+
+            return (handler, message, ctx) => handler is StandardSocketsHttpHandler sshh
+                ? sshh.SendRequestAsync(message, ctx)
+                : new HttpMessageInvoker(handler).SendAsync(message, ctx);
+        }
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static Invoker BuildInvokerForDotNetHandler()
+        {
             var handlerParameter = Expression.Parameter(typeof(HttpMessageHandler));
             var socketHandler = Expression.Convert(handlerParameter, NetCore21Utils.SocketHandlerType);
             var messageParameter = Expression.Parameter(typeof(HttpRequestMessage));
             var tokenParameter = Expression.Parameter(typeof(CancellationToken));
-
+        
             var sendMethod = NetCore21Utils.SocketHandlerType.GetMethod(nameof(SendAsync), BindingFlags.Instance | BindingFlags.NonPublic);
             var sendMethodCall = Expression.Call(socketHandler, sendMethod, messageParameter, tokenParameter);
-
+        
             return Expression.Lambda<Invoker>(sendMethodCall, handlerParameter, messageParameter, tokenParameter).Compile();
         }
     }

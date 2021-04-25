@@ -18,6 +18,7 @@ notests *default:
     - vostok.commons.threading/src
     - vostok.clusterclient.core
     - vostok.devtools
+    - vostok.devtools.ilrepack.bin
     - vostok.logging.abstractions
 
 full-build > notests:

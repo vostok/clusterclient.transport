@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
@@ -68,6 +70,17 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Header
         {
             try
             {
+                if (RuntimeDetector.IsDotNetFramework)
+                {
+                    var httpHeadersParameter = Expression.Parameter(typeof(HttpHeaders));
+                    var httpHeaderParserType = typeof(HttpHeaders).Assembly.GetType("System.Net.Http.Headers.HttpHeaderParser");
+                    var firstParamType = typeof(Dictionary<,>).MakeGenericType(typeof(string), httpHeaderParserType);
+                    var secondParamType = typeof(HashSet<string>);
+                    var setConfiguration = typeof(HttpHeaders).GetMethod("SetConfiguration", BindingFlags.Instance|BindingFlags.NonPublic);
+                    var call = Expression.Call(httpHeadersParameter, setConfiguration, Expression.New(firstParamType), Expression.New(secondParamType));
+                    return Expression.Lambda<Action<HttpHeaders>>(call, httpHeadersParameter).Compile();
+                }
+
                 if (RuntimeDetector.IsDotNetCore21AndNewer)
                 {
                     var allowLambda = NetCore20Utils.CreateAssignment(typeof(HttpHeaders).GetField("_allowedHeaderTypes", BindingFlags.Instance | BindingFlags.NonPublic), (int)HeaderType.Custom);
