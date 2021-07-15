@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
+using NSubstitute;
 using NUnit.Framework;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Clusterclient.Transport.Tests.Helpers;
@@ -86,6 +87,46 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
             }
         }
 
+        [TestCase(1)]
+        [TestCase(10)]
+        [TestCase(500)]
+        [TestCase(4096)]
+        [TestCase(1024 * 1024)]
+        [TestCase(4 * 1024 * 1024)]
+        public void Should_be_able_to_send_content_producer_of_given_size_with_known_length(int size)
+        {
+            using (var server = TestServer.StartNew(ctx => ctx.Response.StatusCode = 200))
+            {
+                var contentProducer = ContentProducerFactory.BuildRandomStreamContentProducer(size, length: size);
+                
+                var request = Request.Put(server.Url).WithContent(contentProducer);
+
+                Send(request).EnsureSuccessStatusCode();
+
+                server.LastRequest.Body.Should().Equal(contentProducer.data.ToArray());
+            }
+        }
+
+        [TestCase(1)]
+        [TestCase(10)]
+        [TestCase(500)]
+        [TestCase(4096)]
+        [TestCase(1024 * 1024)]
+        [TestCase(4 * 1024 * 1024)]
+        public void Should_be_able_to_send_content_producer_of_given_size_with_unknown_length(int size)
+        {
+            using (var server = TestServer.StartNew(ctx => ctx.Response.StatusCode = 200))
+            {
+                var contentProducer = ContentProducerFactory.BuildRandomStreamContentProducer(size);
+
+                var request = Request.Put(server.Url).WithContent(contentProducer);
+
+                Send(request).EnsureSuccessStatusCode();
+
+                server.LastRequest.Body.Should().Equal(contentProducer.data.ToArray());
+            }
+        }
+
         [Test]
         public void Should_be_able_to_send_a_really_large_request_body()
         {
@@ -131,6 +172,21 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
                 Action action = () => Send(request);
 
                 action.Should().ThrowExactly<StreamAlreadyUsedException>().Which.ShouldBePrinted();
+            }
+        }
+
+        [Test]
+        public void Should_propagate_content_reuse_exceptions()
+        {
+            using (var server = TestServer.StartNew(ctx => ctx.Response.StatusCode = 200))
+            {
+                var contentProducer = new ReusableContentProducer(Substitute.For<IContentProducer>());
+                var request = Request.Put(server.Url).WithContent(contentProducer);
+
+                Action action = () => Send(request);
+
+                action();
+                action.Should().ThrowExactly<ContentAlreadyUsedException>().Which.ShouldBePrinted();
             }
         }
 

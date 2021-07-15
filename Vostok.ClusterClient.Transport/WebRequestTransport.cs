@@ -220,6 +220,10 @@ namespace Vostok.Clusterclient.Transport
             {
                 throw;
             }
+            catch (ContentAlreadyUsedException)
+            {
+                throw;
+            }
             catch (Exception error)
             {
                 if (cancellationToken.IsCancellationRequested)
@@ -283,7 +287,11 @@ namespace Vostok.Clusterclient.Transport
                         bytesRead = await bodyStream.ReadAsync(buffer, 0, bytesToRead, cancellationToken)
                             .ConfigureAwait(false);
                     }
-                    catch (StreamAlreadyUsedException) // todo patrofimov надо что-то такое же для продьюсера?
+                    catch (StreamAlreadyUsedException)
+                    {
+                        throw;
+                    }
+                    catch (ContentAlreadyUsedException)
                     {
                         throw;
                     }
@@ -311,8 +319,8 @@ namespace Vostok.Clusterclient.Transport
 
         private async Task SendBodyFromContentProducerAsync(IContentProducer contentProducer, WebRequestState state, CancellationToken cancellationToken)
         {
-            var contentConsumer = new ContentConsumer(state, cancellationToken);
-            await contentProducer.Produce(contentConsumer, cancellationToken).ConfigureAwait(false);
+            var requestWrappingStream = new BufferingStreamWrapper(state.RequestStream);
+            await contentProducer.ProduceAsync(requestWrappingStream, cancellationToken).ConfigureAwait(false);
         }
 
         private async Task<HttpActionStatus> GetResponseAsync(Request request, WebRequestState state)
