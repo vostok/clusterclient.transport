@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NSubstitute;
+using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Clusterclient.Transport.Tests.Helpers;
@@ -98,7 +99,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
             using (var server = TestServer.StartNew(ctx => ctx.Response.StatusCode = 200))
             {
                 var contentProducer = ContentProducerFactory.BuildRandomStreamContentProducer(size, length: size);
-                
+
                 var request = Request.Put(server.Url).WithContent(contentProducer);
 
                 Send(request).EnsureSuccessStatusCode();
@@ -153,7 +154,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
                 var content2 = ThreadSafeRandom.NextBytes(ThreadSafeRandom.Next(5000));
                 var content3 = ThreadSafeRandom.NextBytes(ThreadSafeRandom.Next(10000));
 
-                var request = Request.Put(server.Url).WithContent(new[] { content1, content2, content3 });
+                var request = Request.Put(server.Url).WithContent(new[] {content1, content2, content3});
 
                 Send(request);
 
@@ -180,13 +181,16 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
         {
             using (var server = TestServer.StartNew(ctx => ctx.Response.StatusCode = 200))
             {
-                var contentProducer = new ReusableContentProducer(Substitute.For<IContentProducer>());
+                var exception = new ContentAlreadyUsedException("aaa");
+
+                var contentProducer = Substitute.For<IContentProducer>();
+                contentProducer.ProduceAsync(default, default).ThrowsForAnyArgs(exception);
+
                 var request = Request.Put(server.Url).WithContent(contentProducer);
 
                 Action action = () => Send(request);
 
-                action();
-                action.Should().ThrowExactly<ContentAlreadyUsedException>().Which.ShouldBePrinted();
+                action.Should().ThrowExactly<ContentAlreadyUsedException>().Which.Should().BeSameAs(exception);
             }
         }
 

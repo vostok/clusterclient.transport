@@ -319,8 +319,8 @@ namespace Vostok.Clusterclient.Transport
 
         private async Task SendBodyFromContentProducerAsync(IContentProducer contentProducer, WebRequestState state, CancellationToken cancellationToken)
         {
-            var requestWrappingStream = new BufferingStreamWrapper(state.RequestStream);
-            await contentProducer.ProduceAsync(requestWrappingStream, cancellationToken).ConfigureAwait(false);
+            var wrapper = new BufferingStreamWrapper(state.RequestStream);
+            await contentProducer.ProduceAsync(wrapper, cancellationToken).ConfigureAwait(false);
         }
 
         private async Task<HttpActionStatus> GetResponseAsync(Request request, WebRequestState state)

@@ -28,8 +28,8 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Contents
         {
             try
             {
-                var bufferedBodyStream = new BufferingStreamWrapper(target);
-                return contentProducer.ProduceAsync(bufferedBodyStream, cancellationToken);
+                var wrapper = new BufferingStreamWrapper(target);
+                return contentProducer.ProduceAsync(wrapper, cancellationToken);
             }
             catch (ContentAlreadyUsedException)
             {

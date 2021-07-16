@@ -7,7 +7,7 @@ notests *default:
 
   install:
     - Vostok.ClusterClient.Transport/bin/Release/netstandard2.0/Vostok.ClusterClient.Transport.dll
-    - module vostok.clusterclient.core@content-producing
+    - module vostok.clusterclient.core
     - module vostok.logging.abstractions
 
   deps:
@@ -16,7 +16,7 @@ notests *default:
     - vostok.commons.helpers/src
     - vostok.commons.time/src
     - vostok.commons.threading/src
-    - vostok.clusterclient.core
+    - vostok.clusterclient.core@content-producing
     - vostok.devtools
     - vostok.logging.abstractions
 
