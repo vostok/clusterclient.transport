@@ -34,6 +34,14 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Contents
             {
                 throw;
             }
+            catch (ContentAlreadyUsedException)
+            {
+                throw;
+            }
+            catch (UserContentProducerException)
+            {
+                throw;
+            }
             catch (Exception error)
             {
                 throw new BodySendException($"Failed to send body content of type '{GetType().Name}' with length {Length?.ToString() ?? "???"}.", error);

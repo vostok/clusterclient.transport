@@ -25,11 +25,16 @@ namespace Vostok.Clusterclient.Transport.Native
             switch (error)
             {
                 case StreamAlreadyUsedException _:
+                case ContentAlreadyUsedException _:
                     return null;
 
                 case UserStreamException _:
                     LogUserStreamFailure(error);
                     return Responses.StreamInputFailure;
+
+                case UserContentProducerException _:
+                    LogUserContentProducerFailure(request, error);
+                    return Responses.ContentInputFailure;
 
                 case BodySendException _:
                     log.Error(error);
@@ -53,6 +58,7 @@ namespace Vostok.Clusterclient.Transport.Native
                             {
                                 LogWin32Error(request, win32Error);
                             }
+
                             return response;
 
                         default:
@@ -70,7 +76,6 @@ namespace Vostok.Clusterclient.Transport.Native
 
                             break;
                     }
-
 
                     break;
             }
@@ -93,6 +98,9 @@ namespace Vostok.Clusterclient.Transport.Native
 
         private void LogUserStreamFailure(Exception error)
             => log.Error(error, "Failed to read from user-provided request body stream");
+
+        private void LogUserContentProducerFailure(Request request, Exception error)
+            => log.Warn(error, "Failed to read request body from user-provided content producer while sending request to '{Target}'.", request.Url.Authority);
 
         private void LogUnknownException(Exception error)
             => log.Error(error, "Unknown exception in sending request.");

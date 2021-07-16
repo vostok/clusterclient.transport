@@ -28,11 +28,16 @@ namespace Vostok.Clusterclient.Transport.Sockets
             switch (error)
             {
                 case StreamAlreadyUsedException _:
+                case ContentAlreadyUsedException _:
                     return null;
 
                 case UserStreamException _:
                     LogUserStreamFailure(request, error);
                     return Responses.StreamInputFailure;
+
+                case UserContentProducerException _:
+                    LogUserContentProducerFailure(request, error);
+                    return Responses.ContentInputFailure;
 
                 case BodySendException _:
                     LogBodySendFailure(request, error);
@@ -155,6 +160,9 @@ namespace Vostok.Clusterclient.Transport.Sockets
 
         private void LogUserStreamFailure(Request request, Exception error)
             => log.Warn(error, "Failed to read from user-provided request body stream while sending request to '{Target}'.", request.Url.Authority);
+
+        private void LogUserContentProducerFailure(Request request, Exception error)
+            => log.Warn(error, "Failed to read request body from user-provided content producer while sending request to '{Target}'.", request.Url.Authority);
 
         private void LogBodySendFailure(Request request, Exception error)
             => log.Warn(error, "Failed to send request body to '{Target}'.", request.Url.Authority);
