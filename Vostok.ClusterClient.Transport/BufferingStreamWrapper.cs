@@ -40,7 +40,7 @@ namespace Vostok.Clusterclient.Transport
 
         public override void Write(byte[] buffer, int offset, int count)
         {
-            WriteAsync(buffer, offset, count).ConfigureAwait(false).GetAwaiter().GetResult();
+            WriteAsync(buffer, offset, count).GetAwaiter().GetResult();
         }
 
         private Task WriteSmallBufferedBodyAsync(byte[] content, int offset, int count, CancellationToken cancellationToken)
