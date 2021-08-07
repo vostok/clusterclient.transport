@@ -97,9 +97,13 @@ namespace Vostok.Clusterclient.Transport.Tests.Sockets
         [TestCase(SocketError.DestinationAddressRequired)]
         public void Should_return_connection_failure_response_for_inner_SocketException_with_given_code(SocketError code)
         {
-            Handle(new HttpRequestException("", new SocketException((int)code))).Code.Should().Be(ResponseCode.ConnectFailure);
+            VerifyHandlingForInnerSocketException(code, ResponseCode.ConnectFailure);
+        }
 
-            Handle(new HttpRequestException("", new IOException("", new SocketException((int)code)))).Code.Should().Be(ResponseCode.ConnectFailure);
+        [TestCase(SocketError.Shutdown)]
+        public void Should_return_send_failure_response_for_inner_SocketException_with_given_code(SocketError code)
+        {
+            VerifyHandlingForInnerSocketException(code, ResponseCode.SendFailure);
         }
 
         [TestCase(SocketError.ConnectionAborted)]
@@ -108,9 +112,14 @@ namespace Vostok.Clusterclient.Transport.Tests.Sockets
         [TestCase(SocketError.OperationAborted)]
         public void Should_return_receive_failure_response_for_inner_SocketException_with_given_code(SocketError code)
         {
-            Handle(new HttpRequestException("", new SocketException((int)code))).Code.Should().Be(ResponseCode.ReceiveFailure);
+            VerifyHandlingForInnerSocketException(code, ResponseCode.ReceiveFailure);
+        }
 
-            Handle(new HttpRequestException("", new IOException("", new SocketException((int)code)))).Code.Should().Be(ResponseCode.ReceiveFailure);
+        private void VerifyHandlingForInnerSocketException(SocketError code, ResponseCode expectedResponse)
+        {
+            Handle(new HttpRequestException("", new SocketException((int)code))).Code.Should().Be(expectedResponse);
+
+            Handle(new HttpRequestException("", new IOException("", new SocketException((int)code)))).Code.Should().Be(expectedResponse);
         }
 
         [Test]
