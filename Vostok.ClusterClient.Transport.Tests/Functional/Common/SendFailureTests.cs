@@ -4,6 +4,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Clusterclient.Transport.Tests.Helpers;
+using Vostok.Commons.Environment;
 using Vostok.Commons.Threading;
 
 namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
@@ -14,6 +15,11 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
         [Test]
         public void Should_return_SendFailure_code_when_socket_closed_while_sending_large_body()
         {
+            if (!RuntimeDetector.IsDotNetCore21AndNewer)
+            {
+                return;
+            }
+            
             using(var server = SocketTestServer.StartNew("",
                 onBeforeRequestReading: CloseUnderliningConnection))
             {
