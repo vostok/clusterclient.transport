@@ -15,7 +15,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
         [Test]
         public void Should_return_SendFailure_code_when_socket_closed_while_sending_large_body()
         {
-            if (!RuntimeDetector.IsDotNetCore21AndNewer)
+            if (!RuntimeDetector.IsDotNet50AndNewer)
             {
                 return;
             }
