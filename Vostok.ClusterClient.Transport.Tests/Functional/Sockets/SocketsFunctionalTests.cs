@@ -17,6 +17,11 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Sockets
     internal class ConnectionFailureTests : ConnectionFailureTests<SocketsTestsConfig>
     {
     }
+    
+    
+    internal class SendFailureTests : SendFailureTests<SocketsTestsConfig>
+    {
+    }
 
     [Explicit]
     internal class ConnectionTimeoutTests : ConnectionTimeoutTests<SocketsTestsConfig>

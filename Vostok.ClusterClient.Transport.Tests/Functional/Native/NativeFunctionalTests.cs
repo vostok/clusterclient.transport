@@ -19,6 +19,11 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Native
     internal class ConnectionFailureTests : ConnectionFailureTests<NativeTestsConfig>
     {
     }
+    
+    
+    internal class SendFailureTests : SendFailureTests<NativeTestsConfig>
+    {
+    }
 
     [Explicit]
     internal class ConnectionTimeoutTests : ConnectionTimeoutTests<NativeTestsConfig>
