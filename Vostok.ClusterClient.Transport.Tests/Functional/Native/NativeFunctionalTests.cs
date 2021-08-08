@@ -20,7 +20,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Native
     {
     }
     
-    
+    [Explicit]
     internal class SendFailureTests : SendFailureTests<NativeTestsConfig>
     {
     }

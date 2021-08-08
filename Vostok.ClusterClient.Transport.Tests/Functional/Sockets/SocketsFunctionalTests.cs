@@ -18,7 +18,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Sockets
     {
     }
     
-    
+    [Explicit]
     internal class SendFailureTests : SendFailureTests<SocketsTestsConfig>
     {
     }
