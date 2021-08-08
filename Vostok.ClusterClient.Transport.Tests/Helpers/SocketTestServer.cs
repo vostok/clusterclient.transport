@@ -37,7 +37,11 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
 
         public string LastRequest { get; private set; }
 
-        public void Dispose() => listener.Stop();
+        public void Dispose()
+        {
+            listener.Server.Shutdown(SocketShutdown.Both);
+            listener.Stop();
+        }
 
         private void Start(Action<TcpClient> onBeforeRequestReading)
         {
