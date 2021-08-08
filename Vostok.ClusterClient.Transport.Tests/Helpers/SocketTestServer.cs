@@ -23,11 +23,12 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
             listener = new TcpListener(IPAddress.Any, Port);
         }
 
-        public static SocketTestServer StartNew(string response)
+        public static SocketTestServer StartNew(string response, Action<TcpClient> onBeforeRequestReading = null)
         {
             var server = new SocketTestServer(response);
 
-            server.Start();
+            onBeforeRequestReading = onBeforeRequestReading ?? (_ => {}); 
+            server.Start(onBeforeRequestReading);
 
             return server;
         }
@@ -36,9 +37,13 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
 
         public string LastRequest { get; private set; }
 
-        public void Dispose() => listener.Stop();
+        public void Dispose()
+        {
+            listener.Server.Shutdown(SocketShutdown.Both);
+            listener.Stop();
+        }
 
-        private void Start()
+        private void Start(Action<TcpClient> onBeforeRequestReading)
         {
             listener.Start();
 
@@ -53,6 +58,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
                             {
                                 using (client)
                                 {
+                                    onBeforeRequestReading(client);
                                     using (var stream = client.GetStream())
                                     {
                                         var request = string.Empty;
