@@ -1,4 +1,6 @@
+using System;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
 using Vostok.Clusterclient.Core.Model;
@@ -18,12 +20,13 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
             {
                 return;
             }
-            
-            using(var server = SocketTestServer.StartNew("",
-                onBeforeRequestReading: CloseUnderliningConnection))
+
+            var source = new TaskCompletionSource<object>();
+            using (var server = SocketTestServer.StartNew("",
+                onBeforeRequestReading: c => CloseUnderliningConnectionAndSetResult(c, source)))
             {
                 var contentLargerThanTcpPacket = ThreadSafeRandom.NextBytes(64 * 1024 + 10);
-                var stream = new SlowStream(contentLargerThanTcpPacket);
+                var stream = new BlockingOnNonZeroOffsetStream(contentLargerThanTcpPacket, source);
                 var request = Request
                     .Put(server.Url)
                     .WithContent(stream);
@@ -33,6 +36,16 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
             }
         }
 
-        private static void CloseUnderliningConnection(TcpClient client) => client.Close();
+        private static void CloseUnderliningConnectionAndSetResult(TcpClient client, TaskCompletionSource<object> taskCompletionSource)
+        {
+            try
+            {
+                client.Close();
+            }
+            finally
+            {
+                taskCompletionSource.SetResult(null);
+            }
+        }
     }
 }

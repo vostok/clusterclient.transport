@@ -1,20 +1,24 @@
-using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Vostok.Clusterclient.Transport.Tests.Helpers
 {
-    public class SlowStream : MemoryStream
+    public class BlockingOnNonZeroOffsetStream : MemoryStream
     {
-        public SlowStream(byte[] data) : base(data)
+        private readonly TaskCompletionSource<object> completionSource;
+
+        public BlockingOnNonZeroOffsetStream(byte[] data, TaskCompletionSource<object> completionSource) : base(data)
         {
-            
+            this.completionSource = completionSource;
         }
         
         public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
-            await Task.Delay(TimeSpan.FromSeconds(2), cancellationToken).ConfigureAwait(false);
+            if (offset > 0)
+            {
+                await completionSource.Task;
+            }
             return await base.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
         }
     }
