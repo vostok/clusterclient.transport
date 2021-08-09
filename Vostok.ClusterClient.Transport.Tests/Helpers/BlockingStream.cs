@@ -4,21 +4,18 @@ using System.Threading.Tasks;
 
 namespace Vostok.Clusterclient.Transport.Tests.Helpers
 {
-    public class BlockingOnNonZeroOffsetStream : MemoryStream
+    public class BlockingStream : MemoryStream
     {
-        private readonly TaskCompletionSource<object> completionSource;
+        private readonly AutoResetEvent autoResetEvent;
 
-        public BlockingOnNonZeroOffsetStream(byte[] data, TaskCompletionSource<object> completionSource) : base(data)
+        public BlockingStream(byte[] data, AutoResetEvent autoResetEvent) : base(data)
         {
-            this.completionSource = completionSource;
+            this.autoResetEvent = autoResetEvent;
         }
         
         public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
-            if (offset > 0)
-            {
-                await completionSource.Task;
-            }
+            autoResetEvent.WaitOne();
             return await base.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
         }
     }

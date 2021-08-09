@@ -1,6 +1,5 @@
-using System;
 using System.Net.Sockets;
-using System.Threading.Tasks;
+using System.Threading;
 using FluentAssertions;
 using NUnit.Framework;
 using Vostok.Clusterclient.Core.Model;
@@ -20,23 +19,26 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
             {
                 return;
             }
-
-            var source = new TaskCompletionSource<object>();
-            using (var server = SocketTestServer.StartNew("",
-                onBeforeRequestReading: c => CloseUnderliningConnectionAndSetResult(c, source)))
+            
+            using (var autoResetEvent = new AutoResetEvent(false))
             {
-                var contentLargerThanTcpPacket = ThreadSafeRandom.NextBytes(64 * 1024 + 10);
-                var stream = new BlockingOnNonZeroOffsetStream(contentLargerThanTcpPacket, source);
-                var request = Request
-                    .Put(server.Url)
-                    .WithContent(stream);
-                var response = Send(request);
+                using (var server = SocketTestServer.StartNew("",
+                    // ReSharper disable once AccessToDisposedClosure
+                    onBeforeRequestReading: c => CloseUnderliningConnectionAndSetResult(c, autoResetEvent)))
+                {
+                    var contentLargerThanTcpPacket = ThreadSafeRandom.NextBytes(64 * 1024 + 10);
+                    var stream = new BlockingStream(contentLargerThanTcpPacket, autoResetEvent);
+                    var request = Request
+                        .Put(server.Url)
+                        .WithContent(stream);
+                    var response = Send(request);
 
-                response.Code.Should().Be(ResponseCode.SendFailure);
+                    response.Code.Should().Be(ResponseCode.SendFailure);
+                }
             }
         }
 
-        private static void CloseUnderliningConnectionAndSetResult(TcpClient client, TaskCompletionSource<object> taskCompletionSource)
+        private static void CloseUnderliningConnectionAndSetResult(TcpClient client, AutoResetEvent autoResetEvent)
         {
             try
             {
@@ -44,7 +46,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
             }
             finally
             {
-                taskCompletionSource.SetResult(null);
+                autoResetEvent.Set();
             }
         }
     }
