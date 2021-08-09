@@ -40,8 +40,15 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
 
         public void Dispose()
         {
-            listener.Server.Shutdown(SocketShutdown.Both);
-            listener.Stop();
+            try
+            {
+                listener.Server.Shutdown(SocketShutdown.Both);
+                listener.Stop();
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
         }
 
         private void Start()
