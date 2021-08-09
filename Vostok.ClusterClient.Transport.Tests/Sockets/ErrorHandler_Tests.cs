@@ -115,13 +115,6 @@ namespace Vostok.Clusterclient.Transport.Tests.Sockets
             VerifyHandlingForInnerSocketException(code, ResponseCode.ReceiveFailure);
         }
 
-        private void VerifyHandlingForInnerSocketException(SocketError code, ResponseCode expectedResponse)
-        {
-            Handle(new HttpRequestException("", new SocketException((int)code))).Code.Should().Be(expectedResponse);
-
-            Handle(new HttpRequestException("", new IOException("", new SocketException((int)code)))).Code.Should().Be(expectedResponse);
-        }
-
         [Test]
         public void Should_return_receive_failure_response_for_IOException_without_inner_exceptions()
         {
@@ -132,6 +125,13 @@ namespace Vostok.Clusterclient.Transport.Tests.Sockets
         public void Should_return_unknown_failure_response_for_IOException_with_inner_exception()
         {
             Handle(new HttpRequestException("", new IOException("", new Exception()))).Code.Should().Be(ResponseCode.UnknownFailure);
+        }
+        
+        private void VerifyHandlingForInnerSocketException(SocketError code, ResponseCode expectedResponse)
+        {
+            Handle(new HttpRequestException("", new SocketException((int)code))).Code.Should().Be(expectedResponse);
+
+            Handle(new HttpRequestException("", new IOException("", new SocketException((int)code)))).Code.Should().Be(expectedResponse);
         }
 
         private Response Handle(Exception error)
