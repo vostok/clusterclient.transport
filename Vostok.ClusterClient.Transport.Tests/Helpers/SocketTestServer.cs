@@ -43,11 +43,14 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
             try
             {
                 listener.Server.Shutdown(SocketShutdown.Both);
-                listener.Stop();
             }
             catch (Exception)
             {
                 // ignored
+            }
+            finally
+            {
+                listener.Stop();
             }
         }
 
