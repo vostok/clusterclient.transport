@@ -8,15 +8,23 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
     {
         private readonly AutoResetEvent autoResetEvent;
 
-        public BlockingStream(byte[] data, AutoResetEvent autoResetEvent) : base(data)
+        public BlockingStream(byte[] data) : base(data)
         {
-            this.autoResetEvent = autoResetEvent;
+            autoResetEvent = new AutoResetEvent(false);
         }
-        
+
+        public void UnblockForOneRead() => autoResetEvent.Set();
+
         public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
             autoResetEvent.WaitOne();
             return await base.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            autoResetEvent.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

@@ -1,5 +1,4 @@
 using System.Net.Sockets;
-using System.Threading;
 using FluentAssertions;
 using NUnit.Framework;
 using Vostok.Clusterclient.Core.Model;
@@ -19,15 +18,14 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
             {
                 return;
             }
-            
-            using (var autoResetEvent = new AutoResetEvent(false))
+
+            var contentLargerThanTcpPacket = ThreadSafeRandom.NextBytes(64 * 1024 + 10);
+            using (var stream = new BlockingStream(contentLargerThanTcpPacket))
             {
                 using (var server = SocketTestServer.StartNew("",
                     // ReSharper disable once AccessToDisposedClosure
-                    onBeforeRequestReading: c => CloseUnderliningConnectionAndSetResult(c, autoResetEvent)))
+                    onBeforeRequestReading: c => CloseConnectionAndUnblockStream(c, stream)))
                 {
-                    var contentLargerThanTcpPacket = ThreadSafeRandom.NextBytes(64 * 1024 + 10);
-                    var stream = new BlockingStream(contentLargerThanTcpPacket, autoResetEvent);
                     var request = Request
                         .Put(server.Url)
                         .WithContent(stream);
@@ -38,7 +36,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
             }
         }
 
-        private static void CloseUnderliningConnectionAndSetResult(TcpClient client, AutoResetEvent autoResetEvent)
+        private static void CloseConnectionAndUnblockStream(TcpClient client, BlockingStream blockingStream)
         {
             try
             {
@@ -46,7 +44,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
             }
             finally
             {
-                autoResetEvent.Set();
+                blockingStream.UnblockForOneRead();
             }
         }
     }
