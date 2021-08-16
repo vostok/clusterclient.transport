@@ -12,9 +12,11 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
     {
         private readonly TcpListener listener;
         private readonly byte[] response;
+        private readonly Action<TcpClient> onBeforeRequestReading;
 
-        private SocketTestServer(string response)
+        private SocketTestServer(string response, Action<TcpClient> onBeforeRequestReading)
         {
+            this.onBeforeRequestReading = onBeforeRequestReading;
             this.response = Encoding.UTF8.GetBytes(response);
 
             Port = FreeTcpPortFinder.GetFreePort();
@@ -23,9 +25,9 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
             listener = new TcpListener(IPAddress.Any, Port);
         }
 
-        public static SocketTestServer StartNew(string response)
+        public static SocketTestServer StartNew(string response, Action<TcpClient> onBeforeRequestReading = null)
         {
-            var server = new SocketTestServer(response);
+            var server = new SocketTestServer(response, onBeforeRequestReading);
 
             server.Start();
 
@@ -36,7 +38,21 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
 
         public string LastRequest { get; private set; }
 
-        public void Dispose() => listener.Stop();
+        public void Dispose()
+        {
+            try
+            {
+                listener.Server.Shutdown(SocketShutdown.Both);
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            finally
+            {
+                listener.Stop();
+            }
+        }
 
         private void Start()
         {
@@ -53,6 +69,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
                             {
                                 using (client)
                                 {
+                                    onBeforeRequestReading?.Invoke(client);
                                     using (var stream = client.GetStream())
                                     {
                                         var request = string.Empty;

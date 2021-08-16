@@ -73,6 +73,9 @@ namespace Vostok.Clusterclient.Transport.Sockets
                     if (IsConnectionEstablishmentFailure(socketError.SocketErrorCode))
                         return (Responses.ConnectFailure, connectionError: socketError);
 
+                    if (IsSendFailure(socketError.SocketErrorCode))
+                        return (Responses.SendFailure, connectionError: socketError);
+
                     if (IsConnectionAbortFailure(socketError.SocketErrorCode))
                         return (Responses.ReceiveFailure, connectionError: socketError);
                 }
@@ -112,6 +115,11 @@ namespace Vostok.Clusterclient.Transport.Sockets
                 default:
                     return false;
             }
+        }
+        
+        private static bool IsSendFailure(SocketError code)
+        {
+            return code == SocketError.Shutdown;
         }
 
         private static bool IsConnectionAbortFailure(SocketError code)
