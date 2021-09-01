@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using JetBrains.Annotations;
 
@@ -91,5 +92,10 @@ namespace Vostok.Clusterclient.Transport
         /// If set to <c>true</c>, enables support for non-ASCII header values in requests and responses.
         /// </summary>
         public bool FixNonAsciiHeaders { get; set; }
+
+        /// <summary>
+        /// Gets or sets a callback method to validate the server certificate.
+        /// </summary>
+        public RemoteCertificateValidationCallback RemoteCertificateValidationCallback { get; set; } = (sender, certificate, chain, errors) => true;
     }
 }
