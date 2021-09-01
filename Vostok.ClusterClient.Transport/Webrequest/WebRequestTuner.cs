@@ -23,7 +23,6 @@ namespace Vostok.Clusterclient.Transport.Webrequest
                 HttpWebRequest.DefaultMaximumResponseHeadersLength = int.MaxValue;
 
                 ServicePointManager.CheckCertificateRevocationList = false;
-                ServicePointManager.ServerCertificateValidationCallback = (_, __, ___, ____) => true;
             }
         }
 
@@ -39,6 +38,7 @@ namespace Vostok.Clusterclient.Transport.Webrequest
             request.AllowReadStreamBuffering = false;
             request.AuthenticationLevel = AuthenticationLevel.None;
             request.AutomaticDecompression = DecompressionMethods.None;
+            request.ServerCertificateValidationCallback = settings.RemoteCertificateValidationCallback;
 
             var servicePoint = request.ServicePoint;
 
