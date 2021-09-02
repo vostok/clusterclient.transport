@@ -59,10 +59,13 @@ namespace Vostok.Clusterclient.Transport.Webrequest
                 request.Content?.Length ??
                 request.CompositeContent?.Length ??
                 request.StreamContent?.Length ??
+                request.ContentProducer?.Length ??
                 0;
 
             var streamContent = request.StreamContent;
-            if (streamContent != null && streamContent.Length == null)
+            var contentProducer = request.ContentProducer;
+            if (streamContent != null && streamContent.Length == null ||
+                contentProducer != null && contentProducer.Length == null)
             {
                 webRequest.SendChunked = true;
             }

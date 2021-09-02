@@ -97,6 +97,18 @@ namespace Vostok.Clusterclient.Transport.Tests.SystemNetHttp
         }
 
         [Test]
+        public void Should_create_a_message_with_content_producer_if_request_has_a_content_producer_body()
+        {
+            var contentProducer = ContentProducerFactory.BuildRandomStreamContentProducer(2, length: 2);
+
+            request = request.WithContent(contentProducer);
+
+            Convert();
+
+            message.Content.Should().BeOfType<ContentProducerContent>();
+        }
+
+        [Test]
         public void Should_fill_message_with_request_headers()
         {
             request = request
