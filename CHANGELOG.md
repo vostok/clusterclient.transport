@@ -1,3 +1,7 @@
+## 0.1.18 (02.09.2021)
+
+Add support of content producer mechanic from clusterclient core.
+
 ## 0.1.17 (25.12.2020):
 
 Connection error detector is now a bit more conservative about returning ConnectionFailure code to avoid cases where the calling code is led to conclude that the request has not been actually sent over the wire. ReceiveFailure may now be returned in such circumstances. 
