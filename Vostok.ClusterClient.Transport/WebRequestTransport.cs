@@ -209,10 +209,18 @@ namespace Vostok.Clusterclient.Transport
                     if (status != HttpActionStatus.Success)
                         return status;
                 }
+                else if (request.ContentProducer != null)
+                {
+                    await SendBodyFromContentProducerAsync(request.ContentProducer, state, cancellationToken).ConfigureAwait(false);
+                }
 
                 state.CloseRequestStream();
             }
             catch (StreamAlreadyUsedException)
+            {
+                throw;
+            }
+            catch (ContentAlreadyUsedException)
             {
                 throw;
             }
@@ -283,6 +291,10 @@ namespace Vostok.Clusterclient.Transport
                     {
                         throw;
                     }
+                    catch (ContentAlreadyUsedException)
+                    {
+                        throw;
+                    }
                     catch (Exception error)
                     {
                         if (cancellationToken.IsCancellationRequested)
@@ -303,6 +315,12 @@ namespace Vostok.Clusterclient.Transport
             }
 
             return HttpActionStatus.Success;
+        }
+
+        private async Task SendBodyFromContentProducerAsync(IContentProducer contentProducer, WebRequestState state, CancellationToken cancellationToken)
+        {
+            var wrapper = new BufferingStreamWrapper(state.RequestStream);
+            await contentProducer.ProduceAsync(wrapper, cancellationToken).ConfigureAwait(false);
         }
 
         private async Task<HttpActionStatus> GetResponseAsync(Request request, WebRequestState state)

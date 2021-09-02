@@ -37,9 +37,21 @@ namespace Vostok.Clusterclient.Transport.Tests.Sockets
         }
 
         [Test]
+        public void Should_not_handle_ContentAlreadyUsedException()
+        {
+            Handle(new ContentAlreadyUsedException("")).Should().BeNull();
+        }
+
+        [Test]
         public void Should_return_stream_input_failure_response_for_UserStreamException()
         {
             Handle(new UserStreamException("", null)).Code.Should().Be(ResponseCode.StreamInputFailure);
+        }
+
+        [Test]
+        public void Should_return_content_input_failure_response_for_UserContentProducerException()
+        {
+            Handle(new UserContentProducerException("", null)).Code.Should().Be(ResponseCode.ContentInputFailure);
         }
 
         [Test]
