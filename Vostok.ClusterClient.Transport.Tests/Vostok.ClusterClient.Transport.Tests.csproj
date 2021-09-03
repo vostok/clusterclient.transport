@@ -9,6 +9,7 @@
     <LangVersion>7.2</LangVersion>
     <RootNamespace>Vostok.Clusterclient.Transport.Tests</RootNamespace>
     <CheckEolTargetFramework>false</CheckEolTargetFramework>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
