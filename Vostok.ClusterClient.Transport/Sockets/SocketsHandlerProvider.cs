@@ -105,12 +105,12 @@ namespace Vostok.Clusterclient.Transport.Sockets
                 return
                     ReferenceEquals(x.Proxy, y.Proxy) &&
                     ReferenceEquals(x.ClientCertificates, y.ClientCertificates) &&
-                    ReferenceEquals(x.RemoteCertificateValidationCallback, y.RemoteCertificateValidationCallback) &&
                     x.AllowAutoRedirect == y.AllowAutoRedirect &&
                     x.ConnectionTimeout == y.ConnectionTimeout &&
                     x.ConnectionIdleTimeout == y.ConnectionIdleTimeout &&
                     x.ConnectionLifetime == y.ConnectionLifetime &&
-                    x.MaxConnectionsPerEndpoint == y.MaxConnectionsPerEndpoint;
+                    x.MaxConnectionsPerEndpoint == y.MaxConnectionsPerEndpoint &&
+                    x.RemoteCertificateValidationCallback == y.RemoteCertificateValidationCallback;
             }
 
             public int GetHashCode(GlobalCacheKey key)
