@@ -12,6 +12,8 @@ jobs:
         exclude:
           - os: ubuntu-latest
             framework: net471
+          - os: windows-latest
+            framework: netcoreapp2.0
     runs-on: ${{ matrix.os }}    
 
     steps:
