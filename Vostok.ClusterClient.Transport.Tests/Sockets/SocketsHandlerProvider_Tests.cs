@@ -93,6 +93,19 @@ namespace Vostok.Clusterclient.Transport.Tests.Sockets
         }
 
         [Test]
+        public void Should_cache_handler_by_equal_settings()
+        {
+            var universalTransportSettings = new UniversalTransportSettings();
+            var settings1 = universalTransportSettings.ToSocketsTransportSettings();
+            var settings2 = universalTransportSettings.ToSocketsTransportSettings();
+
+            var handler1 = new SocketsHandlerProvider(settings1).Obtain(null);
+            var handler2 = new SocketsHandlerProvider(settings2).Obtain(null);
+
+            handler2.Should().BeSameAs(handler1);
+        }
+
+        [Test]
         public void Should_return_different_handlers_for_different_connection_timeouts()
         {
             var handler1 = provider.Obtain(null);
@@ -113,7 +126,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Sockets
             handler2.Should().NotBeSameAs(handler1);
         }
 
-        protected override Runtime SupportedRuntimes => Runtime.Core21 | Runtime.Core31;
+        protected override Runtime SupportedRuntimes => Runtime.Core21 | Runtime.Core31 | Runtime.Core50;
 
         private T ObtainAndGetProperty<T>(TimeSpan? connectionTimeout, string propertyName)
         {
