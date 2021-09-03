@@ -1,3 +1,8 @@
+## 0.1.19 (03.09.2021)
+
+Fill duplicate of previous version (0.1.18).
+[2] Add support of content producer mechanic from clusterclient core.
+
 ## 0.1.18 (02.09.2021)
 
 Add support of content producer mechanic from clusterclient core.
