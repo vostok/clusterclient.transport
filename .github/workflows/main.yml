@@ -8,6 +8,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [windows-latest, ubuntu-latest]
+        framework: [net471, netcoreapp2.0, netcoreapp2.1, netcoreapp3.1, net5.0]
     runs-on: ${{ matrix.os }}    
 
     steps:
@@ -66,7 +67,7 @@ jobs:
         dotnet build -c Release
         
     - name: Test
-      run: dotnet test ./vostok.module -c Release "$testProjectFolder" --logger GitHubActions
+      run: dotnet test ./vostok.module -c Release "$testProjectFolder" --logger GitHubActions --framework ${{ matrix.framework }}
         
         
     
