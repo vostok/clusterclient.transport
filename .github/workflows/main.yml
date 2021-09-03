@@ -9,6 +9,9 @@ jobs:
       matrix:
         os: [windows-latest, ubuntu-latest]
         framework: [net471, netcoreapp2.0, netcoreapp2.1, netcoreapp3.1, net5.0]
+        exclude:
+          - os: ubuntu-latest
+            framework: net471
     runs-on: ${{ matrix.os }}    
 
     steps:
