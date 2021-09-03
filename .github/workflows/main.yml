@@ -42,31 +42,31 @@ jobs:
     
     - name: Checkout
       uses: actions/checkout@main
-      with:
-        path: vostok.module
         
     - name: Update deps
       run: | 
         pwd
         ls
+        pushd
+        cd ..
         ~/bin/cm init
-        cd ./vostok.module
+        pwd
+        ls
+        popd
         ~/bin/cm update-deps
       shell: bash
         
     - name: Build deps
       run: |
-        cd ./vostok.module
         ~/bin/cm build-deps
       shell: bash
     
     - name: Build
       run: |
-        cd ./vostok.module
         dotnet build -c Release
         
     - name: Test
-      run: dotnet test ./vostok.module -c Release "$testProjectFolder" --logger GitHubActions
+      run: dotnet test -c Release "$testProjectFolder" --logger GitHubActions
         
         
     
