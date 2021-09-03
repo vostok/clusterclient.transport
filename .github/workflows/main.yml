@@ -44,10 +44,8 @@ jobs:
       uses: actions/checkout@main
         
     - name: Update deps
-      run: | 
-        pwd
-        ls
-        pushd
+      run: |
+        pushd .
         cd ..
         ~/bin/cm init
         pwd
