@@ -3,11 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vostok.ClusterClient.Transport", "Vostok.ClusterClient.Transport\Vostok.ClusterClient.Transport.csproj", "{41337F4D-B146-48A0-A8B8-BAF3C5EBA514}"
-	ProjectSection(ProjectDependencies) = postProject
-		{20E2A532-5886-467F-891D-E2D06EA09C0D} = {20E2A532-5886-467F-891D-E2D06EA09C0D}
-		{EC13B951-AAC6-425E-8BC6-3DA1AB71D47E} = {EC13B951-AAC6-425E-8BC6-3DA1AB71D47E}
-		{97D6CE62-5B73-473E-83E9-28DAA95A55B8} = {97D6CE62-5B73-473E-83E9-28DAA95A55B8}
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vostok.ClusterClient.Transport.Tests", "Vostok.ClusterClient.Transport.Tests\Vostok.ClusterClient.Transport.Tests.csproj", "{87C54CC1-C3B8-4730-B55D-5DB6F9C3ABA3}"
 EndProject
@@ -15,7 +10,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vostok.ClusterClient.Transp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vostok.ClusterClient.Transport.Core21", "Vostok.ClusterClient.Transport.Core21\Vostok.ClusterClient.Transport.Core21.csproj", "{20E2A532-5886-467F-891D-E2D06EA09C0D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vostok.ClusterClient.Transport.Core50", "Vostok.ClusterClient.Transport.Core50\Vostok.ClusterClient.Transport.Core50.csproj", "{EC13B951-AAC6-425E-8BC6-3DA1AB71D47E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vostok.ClusterClient.Transport.Core50", "Vostok.ClusterClient.Transport.Core50\Vostok.ClusterClient.Transport.Core50.csproj", "{EC13B951-AAC6-425E-8BC6-3DA1AB71D47E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
