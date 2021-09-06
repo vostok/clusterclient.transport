@@ -67,6 +67,9 @@ jobs:
       - name: Build
         run: |
           dotnet build -c Release
-          
+      
+      - name: Debug
+        run: echo "::debug::Set the Octocat variable"
+      
       - name: Test
         run: dotnet test -c Release "$testProjectFolder" --logger GitHubActions --framework ${{ matrix.framework }}
