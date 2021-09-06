@@ -52,15 +52,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Core20\bin\Release\netcoreapp2.0\Vostok.ClusterClient.Transport.Core20.dll" />
-    <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Core21\bin\Release\netcoreapp2.1\Vostok.ClusterClient.Transport.Core21.dll" />
-    <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Core50\bin\Release\net5.0\Vostok.ClusterClient.Transport.Core50.dll" />
+    <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Core20\bin\$(Configuration)\netcoreapp2.0\Vostok.ClusterClient.Transport.Core20.dll" />
+    <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Core21\bin\$(Configuration)\netcoreapp2.1\Vostok.ClusterClient.Transport.Core21.dll" />
+    <EmbeddedResource Include="..\Vostok.ClusterClient.Transport.Core50\bin\$(Configuration)\net5.0\Vostok.ClusterClient.Transport.Core50.dll" />
   </ItemGroup>
-
-  <Target Name="BuildCoreAssemblies" BeforeTargets="BeforeBuild">
-    <Exec Command="dotnet build -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Core20" />
-    <Exec Command="dotnet build -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Core21" />
-    <Exec Command="dotnet build -c Release" WorkingDirectory="$(ProjectDir)..\Vostok.ClusterClient.Transport.Core50" />
-  </Target>
 
 </Project>
