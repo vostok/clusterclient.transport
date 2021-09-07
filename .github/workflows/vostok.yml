@@ -74,5 +74,7 @@ jobs:
           - os: windows-latest
             framework: netcoreapp2.0
     runs-on: ${{ matrix.os }}
+    
+    steps:
       - name: Test
         run: dotnet test -c Release "$testProjectFolder" --logger GitHubActions --framework ${{ matrix.framework }}
