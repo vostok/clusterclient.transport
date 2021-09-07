@@ -63,6 +63,7 @@ jobs:
           dotnet build -c Release
           
   test:
+    needs: build
     strategy:
       fail-fast: false
       matrix:
