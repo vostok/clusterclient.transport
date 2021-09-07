@@ -84,5 +84,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     
     steps:
+      - name: Uncache results
+        uses: actions/cache@v2
+        with:
+          path: ${{ github.workspace }}/*Tests
+          key: ${{ github.repository }}-${{ github.sha }}
+    
       - name: Test
         run: dotnet test -c Release "$testProjectFolder" --logger GitHubActions --framework ${{ matrix.framework }}
