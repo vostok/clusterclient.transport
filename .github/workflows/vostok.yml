@@ -68,8 +68,12 @@ jobs:
         run: |
           dotnet build -c Release
       
-      - name: Debug
-        run: echo "::debug::Set the Octocat variable"
+      - name: Cache results
+        uses: actions/cache@v2
+        with:
+          path: ${{ github.workspace }}/*Tests
+          key: ${{ github.repository }}-${{ github.sha }}
+        if: runner.os == 'Windows'
       
       - name: Test
         run: dotnet test -c Release "$testProjectFolder" --logger GitHubActions --framework ${{ matrix.framework }}
