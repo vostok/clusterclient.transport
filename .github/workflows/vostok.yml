@@ -11,9 +11,6 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps: 
-      - name: Test
-        uses: KungA/vostok.ci@main
-    
       - name: Install .NET
         uses: actions/setup-dotnet@main
         
@@ -65,12 +62,8 @@ jobs:
         run: |
           dotnet build -c Release
                 
-      - name: Cache results
-        uses: actions/cache@v2
-        with:
-          path: ${{ github.workspace }}/*.Tests
-          key: ${{ github.repository }}-${{ github.sha }}
-        if: runner.os == 'Windows'
+      - name: Test
+          uses: KungA/vostok.ci@main
           
   test:
     needs: build
