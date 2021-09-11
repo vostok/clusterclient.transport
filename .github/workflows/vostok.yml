@@ -63,7 +63,7 @@ jobs:
           dotnet build -c Release
                 
       - name: Test
-          uses: KungA/vostok.ci@main
+        uses: KungA/vostok.ci@main
           
   test:
     needs: build
