@@ -58,7 +58,7 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.BodyReading
                 {
                     return await (contentLength.HasValue
                         ? ReadWithKnownLengthAsync(bodyStream, (int)contentLength.Value, cancellationToken)
-                        : ReadWithUnknownLengthAsync(bodyStream, cancellationToken)).ConfigureAwait(false);
+                        : ReadWithUnknownLengthAsync(bodyStream, cancellationToken));
                 }
             }
             catch (OperationCanceledException)
