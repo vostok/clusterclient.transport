@@ -58,6 +58,21 @@ namespace Vostok.Clusterclient.Transport.Tests.Native
 
             handler2.Should().BeSameAs(handler1);
         }
+        
+        [Test]
+        public void Should_return_different_handlers_for_different_certificate_validation_callback()
+        {
+            var universalTransportSettings = new UniversalTransportSettings();
+            var settings1 = universalTransportSettings.ToNativeTransportSettings();
+            var settings2 = universalTransportSettings.ToNativeTransportSettings();
+
+            settings1.RemoteCertificateValidationCallback = (message, certificate2, arg3, arg4) => true;
+            
+            var handler1 = new HttpClientProvider(settings1, log).Obtain(connectionTimeout);
+            var handler2 = new HttpClientProvider(settings2, log).Obtain(connectionTimeout);
+
+            handler2.Should().NotBeSameAs(handler1);
+        }
 
         protected override Runtime SupportedRuntimes => Runtime.Core20;
     }
