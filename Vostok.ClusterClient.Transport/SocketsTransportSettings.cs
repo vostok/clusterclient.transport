@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using JetBrains.Annotations;
 
@@ -81,5 +82,10 @@ namespace Vostok.Clusterclient.Transport
         /// Gets or sets a delegate used to create response body buffers for given sizes.
         /// </summary>
         public Func<int, byte[]> BufferFactory { get; set; } = size => new byte[size];
+
+        /// <summary>
+        /// Gets or sets a callback method to validate the server certificate.
+        /// </summary>
+        public RemoteCertificateValidationCallback RemoteCertificateValidationCallback { get; set; } = (sender, certificate, chain, errors) => true;
     }
 }
