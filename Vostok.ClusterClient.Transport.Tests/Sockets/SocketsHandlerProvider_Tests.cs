@@ -106,6 +106,20 @@ namespace Vostok.Clusterclient.Transport.Tests.Sockets
         }
 
         [Test]
+        public void Should_return_different_handlers_for_different_certificate_validation_callback()
+        {
+            var universalTransportSettings = new UniversalTransportSettings();
+            var settings1 = universalTransportSettings.ToSocketsTransportSettings();
+            var settings2 = universalTransportSettings.ToSocketsTransportSettings();
+
+            settings1.RemoteCertificateValidationCallback = (sender, certificate, chain, errors) => true;
+            var handler1 = new SocketsHandlerProvider(settings1).Obtain(null);
+            var handler2 = new SocketsHandlerProvider(settings2).Obtain(null);
+
+            handler2.Should().NotBeSameAs(handler1);
+        }
+
+        [Test]
         public void Should_return_different_handlers_for_different_connection_timeouts()
         {
             var handler1 = provider.Obtain(null);
