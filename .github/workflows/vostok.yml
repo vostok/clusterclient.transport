@@ -52,5 +52,3 @@ jobs:
          uses: KungA/vostok.ci@master
          with:
            type: publish
-           
-           
