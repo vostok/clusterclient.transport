@@ -37,7 +37,7 @@ jobs:
     runs-on: ${{ matrix.os }}
    
     steps:
-       - name: Build
+       - name: Test
          uses: KungA/vostok.ci@master
          with:
            type: test
