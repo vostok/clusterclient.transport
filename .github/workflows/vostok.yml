@@ -5,7 +5,7 @@ on: [push, workflow_dispatch]
 jobs:
   build:
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         os: [windows-latest, ubuntu-latest]        
     runs-on: ${{ matrix.os }}
@@ -17,8 +17,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@main
         
-      - name: Test
+      - name: Build
         uses: KungA/vostok.ci@master
+        with:
+          type: build
+          
+  test:
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+        runtime: [net471, netcoreapp2.0, netcoreapp2.1, netcoreapp3.1, net5.0]
+        exclude:
+          - os: ubuntu-latest
+            runtime: net471
+          - os: windows-latest
+            runtime: netcoreapp2.0
+    runs-on: ${{ matrix.os }}
+   
+    steps:
+       - name: Build
+         uses: KungA/vostok.ci@master
+         with:
+           type: test
+   
+#     - name: Test
+#       run: dotnet test -c Release --logger GitHubActions --framework ${{ matrix.framework }} --no-build
         
 #      - name: Download Cement
 #        run: | 
