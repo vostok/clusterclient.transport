@@ -44,7 +44,7 @@ jobs:
            framework: ${{ matrix.framework }}
            
   publish:
-    needs: build    
+    needs: test    
     runs-on: windows-latest
    
     steps:
