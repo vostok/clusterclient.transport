@@ -28,12 +28,12 @@ jobs:
       fail-fast: false
       matrix:
         os: [windows-latest, ubuntu-latest]
-        runtime: [net471, netcoreapp2.0, netcoreapp2.1, netcoreapp3.1, net5.0]
+        framework: [net471, netcoreapp2.0, netcoreapp2.1, netcoreapp3.1, net5.0]
         exclude:
           - os: ubuntu-latest
-            runtime: net471
+            framework: net471
           - os: windows-latest
-            runtime: netcoreapp2.0
+            framework: netcoreapp2.0
     runs-on: ${{ matrix.os }}
    
     steps:
@@ -41,6 +41,7 @@ jobs:
          uses: KungA/vostok.ci@master
          with:
            type: test
+           framework: ${{ matrix.framework }}
    
 #     - name: Test
 #       run: dotnet test -c Release --logger GitHubActions --framework ${{ matrix.framework }} --no-build
