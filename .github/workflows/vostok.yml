@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@main
         
       - name: Test
-        uses: KungA/vostok.ci@main
+        uses: KungA/vostok.ci@master
         
 #      - name: Download Cement
 #        run: | 
