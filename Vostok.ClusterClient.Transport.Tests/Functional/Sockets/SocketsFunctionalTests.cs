@@ -87,4 +87,9 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Sockets
     internal class StatusCodeReceivingTests : StatusCodeReceivingTests<SocketsTestsConfig>
     {
     }
+
+    [Explicit]
+    internal class RemoteCertificateValidationTests : RemoteCertificateValidationTests<SocketsTestsConfig>
+    {
+    }
 }

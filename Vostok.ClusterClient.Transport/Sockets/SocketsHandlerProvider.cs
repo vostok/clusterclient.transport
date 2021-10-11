@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Net.Security;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
@@ -42,7 +43,8 @@ namespace Vostok.Clusterclient.Transport.Sockets
                 settings.ConnectionIdleTimeout,
                 settings.ConnectionLifetime,
                 settings.MaxConnectionsPerEndpoint,
-                settings.ClientCertificates);
+                settings.ClientCertificates,
+                settings.RemoteCertificateValidationCallback);
 
         private static HttpMessageHandler CreateHandler(GlobalCacheKey key)
         {
@@ -53,7 +55,8 @@ namespace Vostok.Clusterclient.Transport.Sockets
                 key.ConnectionIdleTimeout,
                 key.ConnectionLifetime,
                 key.MaxConnectionsPerEndpoint,
-                key.ClientCertificates);
+                key.ClientCertificates,
+                key.RemoteCertificateValidationCallback);
 
             if (RuntimeDetector.IsDotNet50AndNewer)
                 NetCore50Utils.TuneHandler(handler);
@@ -70,6 +73,7 @@ namespace Vostok.Clusterclient.Transport.Sockets
             public readonly TimeSpan ConnectionLifetime;
             public readonly int MaxConnectionsPerEndpoint;
             public readonly X509Certificate2[] ClientCertificates;
+            public readonly RemoteCertificateValidationCallback RemoteCertificateValidationCallback;
 
             public GlobalCacheKey(
                 IWebProxy proxy,
@@ -78,7 +82,8 @@ namespace Vostok.Clusterclient.Transport.Sockets
                 TimeSpan connectionIdleTimeout,
                 TimeSpan connectionLifetime,
                 int maxConnectionsPerEndpoint,
-                X509Certificate2[] clientCertificates)
+                X509Certificate2[] clientCertificates,
+                RemoteCertificateValidationCallback remoteCertificateValidationCallback)
             {
                 Proxy = proxy;
                 AllowAutoRedirect = allowAutoRedirect;
@@ -87,6 +92,7 @@ namespace Vostok.Clusterclient.Transport.Sockets
                 ConnectionLifetime = connectionLifetime;
                 MaxConnectionsPerEndpoint = maxConnectionsPerEndpoint;
                 ClientCertificates = clientCertificates;
+                RemoteCertificateValidationCallback = remoteCertificateValidationCallback;
             }
         }
 
@@ -103,7 +109,8 @@ namespace Vostok.Clusterclient.Transport.Sockets
                     x.ConnectionTimeout == y.ConnectionTimeout &&
                     x.ConnectionIdleTimeout == y.ConnectionIdleTimeout &&
                     x.ConnectionLifetime == y.ConnectionLifetime &&
-                    x.MaxConnectionsPerEndpoint == y.MaxConnectionsPerEndpoint;
+                    x.MaxConnectionsPerEndpoint == y.MaxConnectionsPerEndpoint &&
+                    x.RemoteCertificateValidationCallback == y.RemoteCertificateValidationCallback;
             }
 
             public int GetHashCode(GlobalCacheKey key)
@@ -117,6 +124,7 @@ namespace Vostok.Clusterclient.Transport.Sockets
                     hashCode = (hashCode * 397) ^ key.ConnectionLifetime.GetHashCode();
                     hashCode = (hashCode * 397) ^ key.MaxConnectionsPerEndpoint;
                     hashCode = (hashCode * 397) ^ (key.ClientCertificates != null ? key.ClientCertificates.GetHashCode() : 0);
+                    hashCode = (hashCode * 397) ^ (key.RemoteCertificateValidationCallback != null ? key.RemoteCertificateValidationCallback.GetHashCode() : 0);
                     return hashCode;
                 }
             }

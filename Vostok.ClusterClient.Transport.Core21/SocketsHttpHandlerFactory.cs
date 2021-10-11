@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using JetBrains.Annotations;
 
@@ -20,7 +21,8 @@ namespace Vostok.Clusterclient.Transport.Core21
             TimeSpan connectionIdleTimeout,
             TimeSpan connectionLifetime,
             int maxConnectionsPerEndpoint,
-            X509Certificate2[] clientCertificates)
+            X509Certificate2[] clientCertificates,
+            RemoteCertificateValidationCallback remoteCertificateValidationCallback)
         {
             var handler = new SocketsHttpHandler
             {
@@ -38,7 +40,7 @@ namespace Vostok.Clusterclient.Transport.Core21
                 SslOptions =
                 {
                     CertificateRevocationCheckMode = X509RevocationMode.NoCheck,
-                    RemoteCertificateValidationCallback = (_, __, ___, ____) => true,
+                    RemoteCertificateValidationCallback = remoteCertificateValidationCallback
                 }
             };
 

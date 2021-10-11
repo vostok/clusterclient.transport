@@ -32,13 +32,10 @@ namespace Vostok.Clusterclient.Transport.Native
             handler.UseDefaultCredentials = false;
             handler.PreAuthenticate = false;
 
-            // (alexkir, 13.10.2017) we can safely pass callbacks only on Windows; see https://github.com/dotnet/corefx/pull/19908
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                handler.ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true;
+            handler.ServerCertificateCustomValidationCallback = settings.RemoteCertificateValidationCallback;
 
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 WinHttpHandlerTuner.Tune(handler, connectionTimeout, log);
-            }
 
             return handler;
         }
