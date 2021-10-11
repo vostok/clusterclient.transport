@@ -37,11 +37,14 @@ jobs:
     runs-on: ${{ matrix.os }}
    
     steps:
-       - name: Test
-         uses: KungA/vostok.ci@master
-         with:
-           type: test
-           framework: ${{ matrix.framework }}
+      - name: Install .NET
+        uses: actions/setup-dotnet@main
+    
+      - name: Test
+        uses: KungA/vostok.ci@master
+        with:
+          type: test
+          framework: ${{ matrix.framework }}
            
   publish:
     needs: test    
