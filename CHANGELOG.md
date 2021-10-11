@@ -1,3 +1,7 @@
+## 0.1.21 (30.09.2021)
+
+Added RemoteCertificateValidationCallback for all underlying transports.
+
 ## 0.1.19 (03.09.2021)
 
 Fill duplicate of previous version (0.1.18).
