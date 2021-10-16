@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using FluentAssertions;
 using FluentAssertions.Extensions;
 using NUnit.Framework;
 using Vostok.Clusterclient.Transport.Tests.Helpers;
@@ -24,6 +25,8 @@ namespace Vostok.Clusterclient.Transport.Tests.Webrequest
         [Test]
         public void Should_successfully_tune_http_web_request()
         {
+            1.Should().Be(2);
+            
             var request = WebRequest.CreateHttp("http://kontur.ru/");
 
             WebRequestTuner.Tune(request, 1.Seconds(), new WebRequestTransportSettings());
