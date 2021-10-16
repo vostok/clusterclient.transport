@@ -47,8 +47,6 @@ jobs:
       
       - name: Checkout
         uses: actions/checkout@main
-        with:
-          path: vostok.${{ github.repository_name }}
       
       - name: Init
         run: |
