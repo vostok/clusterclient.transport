@@ -16,6 +16,8 @@ jobs:
         
       - name: Checkout
         uses: actions/checkout@main
+        with:
+          path: vostok.module
         
       - name: Build
         uses: KungA/vostok.ci@master
