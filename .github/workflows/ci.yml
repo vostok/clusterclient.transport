@@ -19,6 +19,8 @@ jobs:
         
       - name: Build
         uses: KungA/vostok.ci@master
+        with:
+          references: ${{ matrix.references }}
 
   test:
     needs: build
@@ -39,6 +41,7 @@ jobs:
       - name: Test
         uses: KungA/vostok.ci@master
         with:
+          references: ${{ matrix.references }}
           framework: ${{ matrix.framework }}
            
   publish:
