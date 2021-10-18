@@ -19,9 +19,7 @@ jobs:
         
       - name: Build
         uses: KungA/vostok.ci@master
-        with:
-          type: build
-          
+
   test:
     needs: build
     strategy:
@@ -41,7 +39,6 @@ jobs:
       - name: Test
         uses: KungA/vostok.ci@master
         with:
-          type: test
           framework: ${{ matrix.framework }}
            
   publish:
@@ -51,5 +48,3 @@ jobs:
     steps:
        - name: Publish
          uses: KungA/vostok.ci@master
-         with:
-           type: publish
