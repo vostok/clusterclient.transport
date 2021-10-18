@@ -39,9 +39,6 @@ jobs:
     runs-on: ${{ matrix.os }}
    
     steps:
-      - name: Install .NET
-        uses: actions/setup-dotnet@main
-    
       - name: Test
         uses: KungA/vostok.ci@master
         with:
