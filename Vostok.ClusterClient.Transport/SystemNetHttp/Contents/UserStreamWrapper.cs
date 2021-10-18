@@ -57,7 +57,7 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Contents
         {
             try
             {
-                return await stream.ReadAsync(buffer, offset, count, cancellationToken);
+                return await stream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
             }
             catch (OperationCanceledException)
             {
