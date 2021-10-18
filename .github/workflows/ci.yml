@@ -11,9 +11,6 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps: 
-      - name: Install .NET
-        uses: actions/setup-dotnet@main
-        
       - name: Checkout
         uses: actions/checkout@main
         with:
