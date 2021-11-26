@@ -4,6 +4,7 @@
   <Import Project="..\..\vostok.devtools\git-commit-to-assembly-title\Vostok.Tools.GitCommit2AssemblyTitle.props" />
 
   <PropertyGroup>
+    <TargetFrameworks />
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Vostok.Clusterclient.Transport.Core50</RootNamespace>
   </PropertyGroup>
