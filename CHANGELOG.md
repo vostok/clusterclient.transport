@@ -1,3 +1,7 @@
+## 0.1.22 (06-12-2021):
+
+Added `net6.0` target.
+
 ## 0.1.21 (30.09.2021)
 
 Added RemoteCertificateValidationCallback for all underlying transports.
