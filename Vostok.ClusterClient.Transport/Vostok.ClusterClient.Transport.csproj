@@ -6,7 +6,6 @@
 
   <PropertyGroup>
     <Configurations>Debug;Release</Configurations>
-    <LangVersion>7.2</LangVersion>
     <RootNamespace>Vostok.Clusterclient.Transport</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
