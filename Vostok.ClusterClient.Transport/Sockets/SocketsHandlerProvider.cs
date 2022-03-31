@@ -116,7 +116,7 @@ namespace Vostok.Clusterclient.Transport.Sockets
                     x.ConnectionLifetime == y.ConnectionLifetime &&
                     x.MaxConnectionsPerEndpoint == y.MaxConnectionsPerEndpoint &&
                     x.RemoteCertificateValidationCallback == y.RemoteCertificateValidationCallback &&
-                    ReferenceEquals(x.Credentials, y.Credentials);
+                    x.Credentials == y.Credentials;
             }
 
             public int GetHashCode(GlobalCacheKey key)
