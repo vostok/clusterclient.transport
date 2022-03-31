@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using FluentAssertions;
 using NUnit.Framework;
 using Vostok.Clusterclient.Transport.Native;
@@ -58,7 +59,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Native
 
             handler2.Should().BeSameAs(handler1);
         }
-        
+
         [Test]
         public void Should_return_different_handlers_for_different_certificate_validation_callback()
         {
@@ -67,7 +68,57 @@ namespace Vostok.Clusterclient.Transport.Tests.Native
             var settings2 = universalTransportSettings.ToNativeTransportSettings();
 
             settings1.RemoteCertificateValidationCallback = (message, certificate2, arg3, arg4) => true;
-            
+
+            var handler1 = new HttpClientProvider(settings1, log).Obtain(connectionTimeout);
+            var handler2 = new HttpClientProvider(settings2, log).Obtain(connectionTimeout);
+
+            handler2.Should().NotBeSameAs(handler1);
+        }
+
+        [Test]
+        public void Should_cache_handler_with_equal_credentials()
+        {
+            var universalTransportSettings = new UniversalTransportSettings();
+            var settings1 = universalTransportSettings.ToNativeTransportSettings();
+            var settings2 = universalTransportSettings.ToNativeTransportSettings();
+
+            settings1.Credentials = new NetworkCredential("u1", "p1");
+            settings2.Credentials = new NetworkCredential("u1", "p1");
+
+            var handler1 = new HttpClientProvider(settings1, log).Obtain(connectionTimeout);
+            var handler2 = new HttpClientProvider(settings2, log).Obtain(connectionTimeout);
+
+            handler2.Should().BeSameAs(handler1);
+        }
+
+        [Test]
+        public void Should_cache_handler_with_equal_credentials2()
+        {
+            var universalTransportSettings = new UniversalTransportSettings();
+            var settings1 = universalTransportSettings.ToNativeTransportSettings();
+            var settings2 = universalTransportSettings.ToNativeTransportSettings();
+
+            var credentials = new NetworkCredential("u1", "p1");
+
+            settings1.Credentials = credentials;
+            settings2.Credentials = credentials;
+
+            var handler1 = new HttpClientProvider(settings1, log).Obtain(connectionTimeout);
+            var handler2 = new HttpClientProvider(settings2, log).Obtain(connectionTimeout);
+
+            handler2.Should().BeSameAs(handler1);
+        }
+
+        [Test]
+        public void Should_return_different_handlers_for_different_credentials()
+        {
+            var universalTransportSettings = new UniversalTransportSettings();
+            var settings1 = universalTransportSettings.ToNativeTransportSettings();
+            var settings2 = universalTransportSettings.ToNativeTransportSettings();
+
+            settings1.Credentials = new NetworkCredential("u1", "p1");
+            settings2.Credentials = new NetworkCredential("u1", "p2");
+
             var handler1 = new HttpClientProvider(settings1, log).Obtain(connectionTimeout);
             var handler2 = new HttpClientProvider(settings2, log).Obtain(connectionTimeout);
 

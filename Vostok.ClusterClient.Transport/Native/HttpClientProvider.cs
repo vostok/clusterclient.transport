@@ -60,7 +60,7 @@ namespace Vostok.Clusterclient.Transport.Native
                    x.AllowAutoRedirects == y.AllowAutoRedirects &&
                    x.MaxConnectionsPerEndpoint == y.MaxConnectionsPerEndpoint &&
                    x.RemoteCertificateValidationCallback == y.RemoteCertificateValidationCallback &&
-                   ReferenceEquals(x.Credentials, y.Credentials);
+                   x.Credentials == y.Credentials;
 
             public int GetHashCode(CacheKey item)
             {
