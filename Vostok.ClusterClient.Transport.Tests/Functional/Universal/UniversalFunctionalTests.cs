@@ -21,7 +21,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Universal
     internal class SendFailureTests : SendFailureTests<UniversalTestConfig>
     {
     }
-    
+
     internal class ConnectionTimeoutTests : ConnectionTimeoutTests<UniversalTestConfig>
     {
         public override void Should_timeout_on_connection_to_a_blackhole_by_connect_timeout()
@@ -82,7 +82,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Universal
     internal class StatusCodeReceivingTests : StatusCodeReceivingTests<UniversalTestConfig>
     {
     }
-    
+
     internal class RemoteCertificateValidationTests : RemoteCertificateValidationTests<UniversalTestConfig>
     {
     }
