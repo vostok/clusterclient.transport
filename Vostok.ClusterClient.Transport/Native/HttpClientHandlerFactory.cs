@@ -33,6 +33,7 @@ namespace Vostok.Clusterclient.Transport.Native
             handler.PreAuthenticate = false;
 
             handler.ServerCertificateCustomValidationCallback = settings.RemoteCertificateValidationCallback;
+            handler.Credentials = settings.Credentials;
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 WinHttpHandlerTuner.Tune(handler, connectionTimeout, log);
@@ -61,7 +62,7 @@ namespace Vostok.Clusterclient.Transport.Native
                 var handlerType = typeof(HttpClientHandler);
 
                 var ctor = handlerType
-                    .GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, new[] { typeof(bool) }, null);
+                    .GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, new[] {typeof(bool)}, null);
 
                 if (ctor == null)
                     return () => new HttpClientHandler();

@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
+using NUnit.Framework;
 using Vostok.Clusterclient.Transport.Tests.Functional.Common;
 using Vostok.Commons.Environment;
 
@@ -83,6 +84,11 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Universal
     }
     
     internal class RemoteCertificateValidationTests : RemoteCertificateValidationTests<UniversalTestConfig>
+    {
+    }
+
+    [Explicit]
+    internal class CredentialsTests : CredentialsTests<UniversalTestConfig>
     {
     }
 }

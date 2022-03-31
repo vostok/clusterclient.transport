@@ -92,4 +92,9 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Webrequest
     internal class RemoteCertificateValidationTests : RemoteCertificateValidationTests<WebRequestTestConfig>
     {
     }
+
+    [Explicit]
+    internal class CredentialsTests : CredentialsTests<WebRequestTestConfig>
+    {
+    }
 }

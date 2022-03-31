@@ -92,4 +92,9 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Sockets
     internal class RemoteCertificateValidationTests : RemoteCertificateValidationTests<SocketsTestsConfig>
     {
     }
+
+    [Explicit]
+    internal class CredentialsTests : CredentialsTests<SocketsTestsConfig>
+    {
+    }
 }
