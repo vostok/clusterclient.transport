@@ -87,5 +87,10 @@ namespace Vostok.Clusterclient.Transport
         /// Gets or sets a callback method to validate the server certificate.
         /// </summary>
         public RemoteCertificateValidationCallback RemoteCertificateValidationCallback { get; set; } = (sender, certificate, chain, errors) => true;
+
+        /// <summary>
+        /// Gets or sets credentials for Web client authentication.
+        /// </summary>
+        public ICredentials Credentials { get; set; }
     }
 }

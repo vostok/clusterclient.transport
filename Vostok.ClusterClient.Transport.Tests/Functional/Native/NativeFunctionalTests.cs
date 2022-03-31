@@ -103,4 +103,9 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Native
     internal class RemoteCertificateValidationTests : RemoteCertificateValidationTests<NativeTestsConfig>
     {
     }
+
+    [Explicit]
+    internal class CredentialsTests : CredentialsTests<NativeTestsConfig>
+    {
+    }
 }
