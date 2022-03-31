@@ -13,5 +13,4 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
         public NameValueCollection Query { get; set; }
         public UserIdentity UserIdentity { get; set; }
     }
-
 }
