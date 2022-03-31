@@ -147,22 +147,6 @@ namespace Vostok.Clusterclient.Transport.Tests.Sockets
             var settings1 = universalTransportSettings.ToSocketsTransportSettings();
             var settings2 = universalTransportSettings.ToSocketsTransportSettings();
 
-            settings1.Credentials = new NetworkCredential("u1", "p1");
-            settings2.Credentials = new NetworkCredential("u1", "p1");
-
-            var handler1 = new SocketsHandlerProvider(settings1).Obtain(null);
-            var handler2 = new SocketsHandlerProvider(settings2).Obtain(null);
-
-            handler2.Should().BeSameAs(handler1);
-        }
-
-        [Test]
-        public void Should_cache_handler_with_equal_credentials2()
-        {
-            var universalTransportSettings = new UniversalTransportSettings();
-            var settings1 = universalTransportSettings.ToSocketsTransportSettings();
-            var settings2 = universalTransportSettings.ToSocketsTransportSettings();
-
             var credentials = new NetworkCredential("u1", "p1");
 
             settings1.Credentials = credentials;
