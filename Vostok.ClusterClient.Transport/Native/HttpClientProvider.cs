@@ -28,7 +28,7 @@ namespace Vostok.Clusterclient.Transport.Native
             => Cache.Obtain(CreateCacheKey(connectionTimeout), key => new HttpClient(HttpClientHandlerFactory.Build(settings, key.ConnectionTimeout, log), true));
 
         private CacheKey CreateCacheKey(TimeSpan? connectionTimeout)
-            => new CacheKey(settings.Proxy, connectionTimeout, settings.AllowAutoRedirect, settings.MaxConnectionsPerEndpoint, settings.RemoteCertificateValidationCallback);
+            => new CacheKey(settings.Proxy, connectionTimeout, settings.AllowAutoRedirect, settings.MaxConnectionsPerEndpoint, settings.RemoteCertificateValidationCallback, settings.Credentials);
 
         private struct CacheKey
         {
@@ -37,14 +37,16 @@ namespace Vostok.Clusterclient.Transport.Native
             public readonly bool AllowAutoRedirects;
             public readonly int MaxConnectionsPerEndpoint;
             public readonly RemoteCertificateValidationCallback RemoteCertificateValidationCallback;
+            public readonly ICredentials Credentials;
 
-            public CacheKey(IWebProxy proxy, TimeSpan? connectionTimeout, bool allowAutoRedirects, int maxConnectionsPerEndpoint, RemoteCertificateValidationCallback remoteCertificateValidationCallback)
+            public CacheKey(IWebProxy proxy, TimeSpan? connectionTimeout, bool allowAutoRedirects, int maxConnectionsPerEndpoint, RemoteCertificateValidationCallback remoteCertificateValidationCallback, ICredentials credentials)
             {
                 Proxy = proxy;
                 ConnectionTimeout = connectionTimeout;
                 AllowAutoRedirects = allowAutoRedirects;
                 MaxConnectionsPerEndpoint = maxConnectionsPerEndpoint;
                 RemoteCertificateValidationCallback = remoteCertificateValidationCallback;
+                Credentials = credentials;
             }
         }
 
@@ -57,7 +59,8 @@ namespace Vostok.Clusterclient.Transport.Native
                    x.ConnectionTimeout == y.ConnectionTimeout &&
                    x.AllowAutoRedirects == y.AllowAutoRedirects &&
                    x.MaxConnectionsPerEndpoint == y.MaxConnectionsPerEndpoint &&
-                   x.RemoteCertificateValidationCallback == y.RemoteCertificateValidationCallback;
+                   x.RemoteCertificateValidationCallback == y.RemoteCertificateValidationCallback &&
+                   Equals(x.Credentials, y.Credentials);
 
             public int GetHashCode(CacheKey item)
             {
@@ -69,6 +72,7 @@ namespace Vostok.Clusterclient.Transport.Native
                     hash = (hash * 397) ^ item.AllowAutoRedirects.GetHashCode();
                     hash = (hash * 397) ^ item.MaxConnectionsPerEndpoint;
                     hash = (hash * 397) ^ (item.RemoteCertificateValidationCallback != null ? item.RemoteCertificateValidationCallback.GetHashCode() : 0);
+                    hash = (hash * 397) ^ (item.Credentials != null ? item.Credentials.GetHashCode() : 0);
 
                     return hash;
                 }

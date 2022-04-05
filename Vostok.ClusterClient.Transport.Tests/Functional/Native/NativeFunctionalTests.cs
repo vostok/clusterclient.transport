@@ -19,7 +19,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Native
     internal class ConnectionFailureTests : ConnectionFailureTests<NativeTestsConfig>
     {
     }
-    
+
     [Explicit]
     internal class SendFailureTests : SendFailureTests<NativeTestsConfig>
     {
@@ -101,6 +101,11 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Native
 
     [Explicit]
     internal class RemoteCertificateValidationTests : RemoteCertificateValidationTests<NativeTestsConfig>
+    {
+    }
+
+    [Explicit]
+    internal class CredentialsTests : CredentialsTests<NativeTestsConfig>
     {
     }
 }
