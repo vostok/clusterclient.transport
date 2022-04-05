@@ -1,3 +1,6 @@
+## 0.1.24 (05-04-2022):
+Added Credentials settings for all underlying transports.
+
 ## 0.1.23 (06-12-2021):
 
 Added `net6.0` target.
