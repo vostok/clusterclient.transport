@@ -22,7 +22,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Webrequest
     internal class SendFailureTests : SendFailureTests<WebRequestTestConfig>
     {
     }
-    
+
     [Explicit]
     internal class ConnectionTimeoutTests : ConnectionTimeoutTests<WebRequestTestConfig>
     {
@@ -87,9 +87,14 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Webrequest
     internal class StatusCodeReceivingTests : StatusCodeReceivingTests<WebRequestTestConfig>
     {
     }
-    
+
     [Explicit]
     internal class RemoteCertificateValidationTests : RemoteCertificateValidationTests<WebRequestTestConfig>
+    {
+    }
+
+    [Explicit]
+    internal class CredentialsTests : CredentialsTests<WebRequestTestConfig>
     {
     }
 }
