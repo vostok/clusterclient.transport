@@ -11,5 +11,6 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
         public long BodySize { get; set; }
         public NameValueCollection Headers { get; set; }
         public NameValueCollection Query { get; set; }
+        public UserIdentity UserIdentity { get; set; }
     }
 }

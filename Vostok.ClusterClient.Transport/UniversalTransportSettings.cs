@@ -78,6 +78,11 @@ namespace Vostok.Clusterclient.Transport
         /// </summary>
         public RemoteCertificateValidationCallback RemoteCertificateValidationCallback { get; set; } = (sender, certificate, chain, errors) => true;
 
+        /// <summary>
+        /// Gets or sets credentials for Web client authentication.
+        /// </summary>
+        public ICredentials Credentials { get; set; }
+
         [NotNull]
         public SocketsTransportSettings ToSocketsTransportSettings()
         {
@@ -96,7 +101,8 @@ namespace Vostok.Clusterclient.Transport
                 TcpKeepAliveInterval = TcpKeepAliveInterval,
                 TcpKeepAliveTime = TcpKeepAliveTime,
                 UseResponseStreaming = UseResponseStreaming,
-                RemoteCertificateValidationCallback = RemoteCertificateValidationCallback
+                RemoteCertificateValidationCallback = RemoteCertificateValidationCallback,
+                Credentials = Credentials
             };
         }
 
@@ -119,7 +125,8 @@ namespace Vostok.Clusterclient.Transport
                 TcpKeepAliveInterval = TcpKeepAliveInterval,
                 TcpKeepAliveTime = TcpKeepAliveTime,
                 UseResponseStreaming = UseResponseStreaming,
-                RemoteCertificateValidationCallback = RemoteCertificateValidationCallback
+                RemoteCertificateValidationCallback = RemoteCertificateValidationCallback,
+                Credentials = Credentials
             };
         }
 
@@ -136,7 +143,8 @@ namespace Vostok.Clusterclient.Transport
                 RequestAbortTimeout = RequestAbortTimeout,
                 UseResponseStreaming = UseResponseStreaming,
                 RemoteCertificateValidationCallback =
-                    (message, certificate, chain, errors) => RemoteCertificateValidationCallback(message, certificate, chain, errors)
+                    (message, certificate, chain, errors) => RemoteCertificateValidationCallback(message, certificate, chain, errors),
+                Credentials = Credentials
             };
         }
     }

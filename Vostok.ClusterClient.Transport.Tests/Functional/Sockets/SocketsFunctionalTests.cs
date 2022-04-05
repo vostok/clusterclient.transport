@@ -17,7 +17,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Sockets
     internal class ConnectionFailureTests : ConnectionFailureTests<SocketsTestsConfig>
     {
     }
-    
+
     [Explicit]
     internal class SendFailureTests : SendFailureTests<SocketsTestsConfig>
     {
@@ -90,6 +90,11 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Sockets
 
     [Explicit]
     internal class RemoteCertificateValidationTests : RemoteCertificateValidationTests<SocketsTestsConfig>
+    {
+    }
+
+    [Explicit]
+    internal class CredentialsTests : CredentialsTests<SocketsTestsConfig>
     {
     }
 }
