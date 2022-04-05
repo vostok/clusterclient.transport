@@ -39,6 +39,7 @@ namespace Vostok.Clusterclient.Transport.Webrequest
             request.AuthenticationLevel = AuthenticationLevel.None;
             request.AutomaticDecompression = DecompressionMethods.None;
             request.ServerCertificateValidationCallback = settings.RemoteCertificateValidationCallback;
+            request.Credentials = settings.Credentials;
 
             var servicePoint = request.ServicePoint;
 

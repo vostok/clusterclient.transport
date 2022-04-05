@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Runtime.InteropServices;
+using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -16,17 +17,18 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
         private readonly HttpListener listener;
         private volatile ReceivedRequest lastRequest;
 
-        private TestServer()
+        private TestServer(Action<HttpListener> configureListener)
         {
             Port = FreeTcpPortFinder.GetFreePort();
             Host = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? Dns.GetHostName() : "localhost";
             listener = new HttpListener();
             listener.Prefixes.Add($"http://+:{Port}/");
+            configureListener?.Invoke(listener);
         }
 
-        public static TestServer StartNew(Action<HttpListenerContext> handle)
+        public static TestServer StartNew(Action<HttpListenerContext> handle, Action<HttpListener> configureListener = null)
         {
-            var server = new TestServer();
+            var server = new TestServer(configureListener);
 
             server.Start(handle);
 
@@ -70,7 +72,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
                         Task.Run(
                             () =>
                             {
-                                Interlocked.Exchange(ref lastRequest, DescribeReceivedRequest(context.Request));
+                                Interlocked.Exchange(ref lastRequest, DescribeReceivedRequest(context.Request, context.User?.Identity));
 
                                 handle(context);
 
@@ -80,14 +82,14 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
                 });
         }
 
-        private ReceivedRequest DescribeReceivedRequest(HttpListenerRequest request)
+        private ReceivedRequest DescribeReceivedRequest(HttpListenerRequest request, IIdentity userIdentity)
         {
             var receivedRequest = new ReceivedRequest
             {
                 Url = request.Url,
                 Method = request.HttpMethod,
                 Headers = request.Headers,
-                Query = HttpUtility.ParseQueryString(request.Url.Query)
+                Query = HttpUtility.ParseQueryString(request.Url.Query),
             };
 
             if (BufferRequestBody)
@@ -118,6 +120,12 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
                 {
                     Console.Out.WriteLine(error);
                 }
+            }
+
+            if (userIdentity != null)
+            {
+                var identity = (HttpListenerBasicIdentity)userIdentity;
+                receivedRequest.UserIdentity = new UserIdentity {Name = identity.Name, Password = identity.Password};
             }
 
             return receivedRequest;

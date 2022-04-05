@@ -140,6 +140,40 @@ namespace Vostok.Clusterclient.Transport.Tests.Sockets
             handler2.Should().NotBeSameAs(handler1);
         }
 
+        [Test]
+        public void Should_cache_handler_with_equal_credentials()
+        {
+            var universalTransportSettings = new UniversalTransportSettings();
+            var settings1 = universalTransportSettings.ToSocketsTransportSettings();
+            var settings2 = universalTransportSettings.ToSocketsTransportSettings();
+
+            var credentials = new NetworkCredential("u1", "p1");
+
+            settings1.Credentials = credentials;
+            settings2.Credentials = credentials;
+
+            var handler1 = new SocketsHandlerProvider(settings1).Obtain(null);
+            var handler2 = new SocketsHandlerProvider(settings2).Obtain(null);
+
+            handler2.Should().BeSameAs(handler1);
+        }
+
+        [Test]
+        public void Should_return_different_handlers_for_different_credentials()
+        {
+            var universalTransportSettings = new UniversalTransportSettings();
+            var settings1 = universalTransportSettings.ToSocketsTransportSettings();
+            var settings2 = universalTransportSettings.ToSocketsTransportSettings();
+
+            settings1.Credentials = new NetworkCredential("u1", "p1");
+            settings2.Credentials = new NetworkCredential("u1", "p2");
+
+            var handler1 = new SocketsHandlerProvider(settings1).Obtain(null);
+            var handler2 = new SocketsHandlerProvider(settings2).Obtain(null);
+
+            handler2.Should().NotBeSameAs(handler1);
+        }
+
         protected override Runtime SupportedRuntimes => Runtime.Core21 | Runtime.Core31 | Runtime.Core50;
 
         private T ObtainAndGetProperty<T>(TimeSpan? connectionTimeout, string propertyName)

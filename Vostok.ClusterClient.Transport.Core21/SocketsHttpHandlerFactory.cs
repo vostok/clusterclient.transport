@@ -22,7 +22,8 @@ namespace Vostok.Clusterclient.Transport.Core21
             TimeSpan connectionLifetime,
             int maxConnectionsPerEndpoint,
             X509Certificate2[] clientCertificates,
-            RemoteCertificateValidationCallback remoteCertificateValidationCallback)
+            RemoteCertificateValidationCallback remoteCertificateValidationCallback,
+            ICredentials credentials)
         {
             var handler = new SocketsHttpHandler
             {
@@ -41,7 +42,8 @@ namespace Vostok.Clusterclient.Transport.Core21
                 {
                     CertificateRevocationCheckMode = X509RevocationMode.NoCheck,
                     RemoteCertificateValidationCallback = remoteCertificateValidationCallback
-                }
+                },
+                Credentials = credentials
             };
 
             if (clientCertificates != null)
