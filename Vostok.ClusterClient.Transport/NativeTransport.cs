@@ -84,7 +84,7 @@ namespace Vostok.Clusterclient.Transport
                     var bodyReadResult = await bodyReader.ReadAsync(state.Response, token).ConfigureAwait(false);
 
                     if (bodyReadResult.ErrorCode.HasValue)
-                        return new Response(bodyReadResult.ErrorCode.Value);
+                        return new Response(bodyReadResult.ErrorCode.Value, headers: responseHeaders);
 
                     if (bodyReadResult.Stream == null)
                         return new Response(responseCode, bodyReadResult.Content, responseHeaders);
