@@ -1,3 +1,6 @@
+## 0.1.25 (14-06-2022):
+Return received headers with error response.
+
 ## 0.1.24 (05-04-2022):
 Added Credentials settings for all underlying transports.
 
