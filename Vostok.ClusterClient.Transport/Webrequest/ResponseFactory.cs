@@ -15,25 +15,26 @@ namespace Vostok.Clusterclient.Transport.Webrequest
 
         public Response BuildFailureResponse(HttpActionStatus status, WebRequestState state)
         {
+            var headers = CreateResponseHeaders(state);
             switch (status)
             {
                 case HttpActionStatus.ConnectionFailure:
-                    return new Response(ResponseCode.ConnectFailure);
+                    return new Response(ResponseCode.ConnectFailure, headers: headers);
 
                 case HttpActionStatus.SendFailure:
                     return new Response(ResponseCode.SendFailure);
 
                 case HttpActionStatus.ReceiveFailure:
-                    return new Response(ResponseCode.ReceiveFailure);
+                    return new Response(ResponseCode.ReceiveFailure, headers: headers);
 
                 case HttpActionStatus.Timeout:
-                    return new Response(ResponseCode.RequestTimeout);
+                    return new Response(ResponseCode.RequestTimeout, headers: headers);
 
                 case HttpActionStatus.RequestCanceled:
-                    return new Response(ResponseCode.Canceled);
+                    return new Response(ResponseCode.Canceled, headers: headers);
 
                 case HttpActionStatus.InsufficientStorage:
-                    return new Response(ResponseCode.InsufficientStorage);
+                    return new Response(ResponseCode.InsufficientStorage, headers: headers);
 
                 case HttpActionStatus.UserStreamFailure:
                     return new Response(ResponseCode.StreamInputFailure);

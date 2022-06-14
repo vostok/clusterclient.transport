@@ -11,7 +11,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
         where TConfig : ITransportTestConfig, new()
     {
         [Test]
-        public void Should_be_able_to_transform_response_to_clear_response_without_partial_received_headers_and_body_if_network_error_happens()
+        public void Should_return_response_with_partial_received_headers_and_without_body_if_network_error_happens()
         {
             const string customHeader = "MyCustomHeader";
             var content = ThreadSafeRandom.NextBytes(1024);
@@ -29,7 +29,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
                 var response = Send(Request.Get(server.Url));
 
                 response.Code.Should().Be(ResponseCode.ReceiveFailure);
-                response.Headers.Any(h => h.Name == customHeader).Should().Be(false);
+                response.Headers.Any(h => h.Name == customHeader).Should().Be(true);
                 response.HasContent.Should().BeFalse();
                 response.HasStream.Should().BeFalse();
             }
