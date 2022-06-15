@@ -1,7 +1,13 @@
+## 0.1.26 (15-06-2022):
+
+Update `Vostok.ClusterClient.Core` dependency.
+
 ## 0.1.25 (14-06-2022):
+
 Return received headers with error response.
 
 ## 0.1.24 (05-04-2022):
+
 Added Credentials settings for all underlying transports.
 
 ## 0.1.23 (06-12-2021):
