@@ -1,0 +1,3 @@
+static Vostok.Clusterclient.Transport.Core21.SocketsHttpHandlerFactory.Create(System.Net.IWebProxy proxy, bool allowAutoRedirect, System.TimeSpan connectionTimeout, System.TimeSpan connectionIdleTimeout, System.TimeSpan connectionLifetime, int maxConnectionsPerEndpoint, System.Security.Cryptography.X509Certificates.X509Certificate2[] clientCertificates, System.Net.Security.RemoteCertificateValidationCallback remoteCertificateValidationCallback, System.Net.ICredentials credentials) -> System.Net.Http.HttpMessageHandler
+static Vostok.Clusterclient.Transport.Core21.SocketsHttpHandlerFactory.SocketHandlerType.get -> System.Type
+Vostok.Clusterclient.Transport.Core21.SocketsHttpHandlerFactory
