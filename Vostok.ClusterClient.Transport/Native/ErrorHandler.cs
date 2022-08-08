@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Net.Http;
+using System.Security.Authentication;
 using System.Threading;
 using JetBrains.Annotations;
 using Vostok.Clusterclient.Core.Model;
@@ -60,6 +61,10 @@ namespace Vostok.Clusterclient.Transport.Native
                             }
 
                             return response;
+                        
+                        case AuthenticationException authenticationException:
+                            LogConnectionFailure(request, authenticationException);
+                            return Responses.BadRequest;
 
                         default:
                             if (CurlExceptionHelper.IsCurlException(httpError.InnerException, out var curlCode))

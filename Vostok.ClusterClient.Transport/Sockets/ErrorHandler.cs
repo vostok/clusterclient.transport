@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Net.Http;
 using System.Net.Sockets;
+using System.Security.Authentication;
 using System.Threading;
 using JetBrains.Annotations;
 using Vostok.Clusterclient.Core.Model;
@@ -83,6 +85,9 @@ namespace Vostok.Clusterclient.Transport.Sockets
                 // todo (avk, 24.12.2020): 'IOException with no InnerException' also happens on connection establishment and corresponding request can be safely retried
                 if (error is IOException ioError && ioError.InnerException == null)
                     return (Responses.ReceiveFailure, connectionError: ioError);
+
+                if (error is HttpRequestException httpRequestError && httpRequestError.InnerException is AuthenticationException authException)
+                    return (Responses.BadRequest, authException);
 
                 error = error.InnerException;
             }
