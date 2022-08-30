@@ -63,7 +63,7 @@ namespace Vostok.Clusterclient.Transport.Native
                             return response;
                         
                         case AuthenticationException authenticationException:
-                            LogConnectionFailure(request, authenticationException);
+                            LogConnectionFailureDueToAuthenticationError(request, authenticationException);
                             return Responses.BadRequest;
 
                         default:
@@ -91,6 +91,9 @@ namespace Vostok.Clusterclient.Transport.Native
 
         private void LogConnectionFailure(Request request, Exception error)
             => log.Warn(error, "Connection failure. Target = {Target}.", request.Url.Authority);
+
+        private void LogConnectionFailureDueToAuthenticationError(Request request, AuthenticationException error)
+            => log.Warn(error, "Handshake failure. Target = {Target}.", request.Url.Authority);
 
         private void LogRequestTimeout(Request request)
             => log.Warn("Request timed out. Target = {Target}.", request.Url.Authority);
