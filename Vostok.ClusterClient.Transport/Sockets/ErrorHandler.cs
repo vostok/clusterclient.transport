@@ -87,7 +87,7 @@ namespace Vostok.Clusterclient.Transport.Sockets
                     return (Responses.ReceiveFailure, connectionError: ioError);
 
                 if (error is HttpRequestException httpRequestError && httpRequestError.InnerException is AuthenticationException authException)
-                    return (Responses.BadRequest, authException);
+                    return (Responses.ConnectFailure, authException);
 
                 error = error.InnerException;
             }

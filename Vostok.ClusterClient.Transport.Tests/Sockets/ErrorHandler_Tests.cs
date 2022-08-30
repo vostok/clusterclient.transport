@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net.Http;
 using System.Net.Sockets;
+using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -138,7 +139,12 @@ namespace Vostok.Clusterclient.Transport.Tests.Sockets
         {
             Handle(new HttpRequestException("", new IOException("", new Exception()))).Code.Should().Be(ResponseCode.UnknownFailure);
         }
-        
+
+        public void Should_return_connect_failure_response_for_HttpRequestException_with_inner_AuthenticationException()
+        {
+            Handle(new HttpRequestException("", new AuthenticationException())).Code.Should().Be(ResponseCode.ConnectFailure);
+        }
+
         private void VerifyHandlingForInnerSocketException(SocketError code, ResponseCode expectedResponse)
         {
             Handle(new HttpRequestException("", new SocketException((int)code))).Code.Should().Be(expectedResponse);

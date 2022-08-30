@@ -64,7 +64,7 @@ namespace Vostok.Clusterclient.Transport.Native
                         
                         case AuthenticationException authenticationException:
                             LogConnectionFailureDueToAuthenticationError(request, authenticationException);
-                            return Responses.BadRequest;
+                            return Responses.ConnectFailure;
 
                         default:
                             if (CurlExceptionHelper.IsCurlException(httpError.InnerException, out var curlCode))
