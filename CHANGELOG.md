@@ -1,3 +1,7 @@
+## 0.1.27 (05-09-2022):
+
+Changed response codes and logging for authentication exceptions.
+
 ## 0.1.26 (15-06-2022):
 
 Update `Vostok.ClusterClient.Core` dependency.
