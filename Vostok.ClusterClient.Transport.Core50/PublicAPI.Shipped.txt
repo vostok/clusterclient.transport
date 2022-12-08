@@ -1,2 +1,0 @@
-static Vostok.Clusterclient.Transport.Core50.SocketsHttpHandlerTuner.Tune(System.Net.Http.HttpMessageHandler handler) -> void
-Vostok.Clusterclient.Transport.Core50.SocketsHttpHandlerTuner

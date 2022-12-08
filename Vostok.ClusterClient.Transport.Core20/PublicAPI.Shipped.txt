@@ -1,3 +1,0 @@
-static Vostok.Clusterclient.Transport.Core20.MethodGenerator.CreateAssignment(System.Reflection.FieldInfo field, int value) -> System.Action<object>
-static Vostok.Clusterclient.Transport.Core20.MethodGenerator.CreateNullAssignment(System.Reflection.FieldInfo field) -> System.Action<object>
-Vostok.Clusterclient.Transport.Core20.MethodGenerator
