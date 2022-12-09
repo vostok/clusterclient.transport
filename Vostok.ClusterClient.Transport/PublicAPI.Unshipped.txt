@@ -1,8 +1,0 @@
-Vostok.Clusterclient.Transport.NativeTransportSettings.DecompressionMethods.get -> System.Net.DecompressionMethods
-Vostok.Clusterclient.Transport.NativeTransportSettings.DecompressionMethods.set -> void
-Vostok.Clusterclient.Transport.SocketsTransportSettings.DecompressionMethods.get -> System.Net.DecompressionMethods
-Vostok.Clusterclient.Transport.SocketsTransportSettings.DecompressionMethods.set -> void
-Vostok.Clusterclient.Transport.UniversalTransportSettings.DecompressionMethods.get -> System.Net.DecompressionMethods
-Vostok.Clusterclient.Transport.UniversalTransportSettings.DecompressionMethods.set -> void
-Vostok.Clusterclient.Transport.WebRequestTransportSettings.DecompressionMethods.get -> System.Net.DecompressionMethods
-Vostok.Clusterclient.Transport.WebRequestTransportSettings.DecompressionMethods.set -> void
