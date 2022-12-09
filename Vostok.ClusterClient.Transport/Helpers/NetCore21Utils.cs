@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Net.Security;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
-using HandlerFactoryFunc = System.Func<System.Net.IWebProxy, bool, System.TimeSpan, System.TimeSpan, System.TimeSpan, int, System.Security.Cryptography.X509Certificates.X509Certificate2[], System.Net.Security.RemoteCertificateValidationCallback, System.Net.ICredentials, System.Net.Http.HttpMessageHandler>;
+using HandlerFactoryFunc = System.Func<System.Net.IWebProxy, bool, System.TimeSpan, System.TimeSpan, System.TimeSpan, int, System.Security.Cryptography.X509Certificates.X509Certificate2[], System.Net.Security.RemoteCertificateValidationCallback, System.Net.ICredentials, System.Net.DecompressionMethods, System.Net.Http.HttpMessageHandler>;
 
 // ReSharper disable AssignNullToNotNullAttribute
 
@@ -34,6 +34,7 @@ namespace Vostok.Clusterclient.Transport.Helpers
             var certificatesParameter = Expression.Parameter(typeof(X509Certificate2[]));
             var remoteCertificateValidationCallback = Expression.Parameter(typeof(RemoteCertificateValidationCallback));
             var credentialsParameter = Expression.Parameter(typeof(ICredentials));
+            var decompressionMethods = Expression.Parameter(typeof(DecompressionMethods));
 
             socketHandlerFactory = Expression.Lambda<HandlerFactoryFunc>(
                     Expression.Call(
@@ -46,7 +47,8 @@ namespace Vostok.Clusterclient.Transport.Helpers
                         maxConnectionsParameter,
                         certificatesParameter,
                         remoteCertificateValidationCallback,
-                        credentialsParameter),
+                        credentialsParameter,
+                        decompressionMethods),
                     proxyParameter,
                     redirectParameter,
                     timeoutParameter,
@@ -55,7 +57,8 @@ namespace Vostok.Clusterclient.Transport.Helpers
                     maxConnectionsParameter,
                     certificatesParameter,
                     remoteCertificateValidationCallback,
-                    credentialsParameter)
+                    credentialsParameter,
+                    decompressionMethods)
                 .Compile();
 
             SocketHandlerType = (Type)handlerFactoryType.GetProperty("SocketHandlerType")?.GetValue(null);
@@ -72,7 +75,8 @@ namespace Vostok.Clusterclient.Transport.Helpers
             int maxConnectionsPerEndpoint,
             X509Certificate2[] clientCertificates,
             RemoteCertificateValidationCallback remoteCertificateValidationCallback,
-            ICredentials credentials)
+            ICredentials credentials,
+            DecompressionMethods decompressionMethods)
             => socketHandlerFactory(
                 proxy,
                 allowAutoRedirect,
@@ -82,6 +86,7 @@ namespace Vostok.Clusterclient.Transport.Helpers
                 maxConnectionsPerEndpoint,
                 clientCertificates,
                 remoteCertificateValidationCallback,
-                credentials);
+                credentials,
+                decompressionMethods);
     }
 }

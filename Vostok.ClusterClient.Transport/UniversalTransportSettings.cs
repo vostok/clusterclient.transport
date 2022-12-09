@@ -83,6 +83,11 @@ namespace Vostok.Clusterclient.Transport
         /// </summary>
         public ICredentials Credentials { get; set; }
 
+        /// <summary>
+        /// Gets or sets the type of decompression that is used.
+        /// </summary>
+        public DecompressionMethods DecompressionMethods { get; set; }
+
         [NotNull]
         public SocketsTransportSettings ToSocketsTransportSettings()
         {
@@ -102,7 +107,8 @@ namespace Vostok.Clusterclient.Transport
                 TcpKeepAliveTime = TcpKeepAliveTime,
                 UseResponseStreaming = UseResponseStreaming,
                 RemoteCertificateValidationCallback = RemoteCertificateValidationCallback,
-                Credentials = Credentials
+                Credentials = Credentials,
+                DecompressionMethods = DecompressionMethods
             };
         }
 
@@ -126,7 +132,8 @@ namespace Vostok.Clusterclient.Transport
                 TcpKeepAliveTime = TcpKeepAliveTime,
                 UseResponseStreaming = UseResponseStreaming,
                 RemoteCertificateValidationCallback = RemoteCertificateValidationCallback,
-                Credentials = Credentials
+                Credentials = Credentials,
+                DecompressionMethods = DecompressionMethods
             };
         }
 
@@ -144,7 +151,8 @@ namespace Vostok.Clusterclient.Transport
                 UseResponseStreaming = UseResponseStreaming,
                 RemoteCertificateValidationCallback =
                     (message, certificate, chain, errors) => RemoteCertificateValidationCallback(message, certificate, chain, errors),
-                Credentials = Credentials
+                Credentials = Credentials,
+                DecompressionMethods = DecompressionMethods
             };
         }
     }

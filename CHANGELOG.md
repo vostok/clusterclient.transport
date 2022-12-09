@@ -1,3 +1,7 @@
+## 0.1.28 (09-12-2022):
+
+Pass an AutomaticDecompression options from public Settings
+
 ## 0.1.27 (05-09-2022):
 
 Changed response codes and logging for authentication exceptions.

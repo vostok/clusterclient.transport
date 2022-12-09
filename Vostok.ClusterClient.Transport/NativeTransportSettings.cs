@@ -57,5 +57,10 @@ namespace Vostok.Clusterclient.Transport
         /// Gets or sets credentials for Web client authentication.
         /// </summary>
         public ICredentials Credentials { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of decompression that is used.
+        /// </summary>
+        public DecompressionMethods DecompressionMethods { get; set; }
     }
 }
