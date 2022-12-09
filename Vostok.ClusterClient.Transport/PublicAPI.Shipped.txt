@@ -19,6 +19,8 @@ Vostok.Clusterclient.Transport.NativeTransportSettings.BufferFactory.get -> Syst
 Vostok.Clusterclient.Transport.NativeTransportSettings.BufferFactory.set -> void
 Vostok.Clusterclient.Transport.NativeTransportSettings.Credentials.get -> System.Net.ICredentials
 Vostok.Clusterclient.Transport.NativeTransportSettings.Credentials.set -> void
+Vostok.Clusterclient.Transport.NativeTransportSettings.DecompressionMethods.get -> System.Net.DecompressionMethods
+Vostok.Clusterclient.Transport.NativeTransportSettings.DecompressionMethods.set -> void
 Vostok.Clusterclient.Transport.NativeTransportSettings.MaxConnectionsPerEndpoint.get -> int
 Vostok.Clusterclient.Transport.NativeTransportSettings.MaxConnectionsPerEndpoint.set -> void
 Vostok.Clusterclient.Transport.NativeTransportSettings.MaxResponseBodySize.get -> long?
@@ -52,6 +54,8 @@ Vostok.Clusterclient.Transport.SocketsTransportSettings.ConnectionLifetime.get -
 Vostok.Clusterclient.Transport.SocketsTransportSettings.ConnectionLifetime.set -> void
 Vostok.Clusterclient.Transport.SocketsTransportSettings.Credentials.get -> System.Net.ICredentials
 Vostok.Clusterclient.Transport.SocketsTransportSettings.Credentials.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.DecompressionMethods.get -> System.Net.DecompressionMethods
+Vostok.Clusterclient.Transport.SocketsTransportSettings.DecompressionMethods.set -> void
 Vostok.Clusterclient.Transport.SocketsTransportSettings.MaxConnectionsPerEndpoint.get -> int
 Vostok.Clusterclient.Transport.SocketsTransportSettings.MaxConnectionsPerEndpoint.set -> void
 Vostok.Clusterclient.Transport.SocketsTransportSettings.MaxResponseBodySize.get -> long?
@@ -87,6 +91,8 @@ Vostok.Clusterclient.Transport.UniversalTransportSettings.ConnectionIdleTimeout.
 Vostok.Clusterclient.Transport.UniversalTransportSettings.ConnectionIdleTimeout.set -> void
 Vostok.Clusterclient.Transport.UniversalTransportSettings.Credentials.get -> System.Net.ICredentials
 Vostok.Clusterclient.Transport.UniversalTransportSettings.Credentials.set -> void
+Vostok.Clusterclient.Transport.UniversalTransportSettings.DecompressionMethods.get -> System.Net.DecompressionMethods
+Vostok.Clusterclient.Transport.UniversalTransportSettings.DecompressionMethods.set -> void
 Vostok.Clusterclient.Transport.UniversalTransportSettings.MaxConnectionsPerEndpoint.get -> int
 Vostok.Clusterclient.Transport.UniversalTransportSettings.MaxConnectionsPerEndpoint.set -> void
 Vostok.Clusterclient.Transport.UniversalTransportSettings.MaxResponseBodySize.get -> long?
@@ -129,6 +135,8 @@ Vostok.Clusterclient.Transport.WebRequestTransportSettings.ConnectionIdleTimeout
 Vostok.Clusterclient.Transport.WebRequestTransportSettings.ConnectionIdleTimeout.set -> void
 Vostok.Clusterclient.Transport.WebRequestTransportSettings.Credentials.get -> System.Net.ICredentials
 Vostok.Clusterclient.Transport.WebRequestTransportSettings.Credentials.set -> void
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.DecompressionMethods.get -> System.Net.DecompressionMethods
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.DecompressionMethods.set -> void
 Vostok.Clusterclient.Transport.WebRequestTransportSettings.FixNonAsciiHeaders.get -> bool
 Vostok.Clusterclient.Transport.WebRequestTransportSettings.FixNonAsciiHeaders.set -> void
 Vostok.Clusterclient.Transport.WebRequestTransportSettings.MaxConnectionsPerEndpoint.get -> int
