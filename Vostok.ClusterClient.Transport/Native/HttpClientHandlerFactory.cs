@@ -20,7 +20,7 @@ namespace Vostok.Clusterclient.Transport.Native
             var handler = handlerFactory();
 
             handler.AllowAutoRedirect = settings.AllowAutoRedirect;
-            handler.AutomaticDecompression = DecompressionMethods.None;
+            handler.AutomaticDecompression = settings.DecompressionMethods;
 
             handler.MaxAutomaticRedirections = 3;
             handler.MaxConnectionsPerServer = settings.MaxConnectionsPerEndpoint;

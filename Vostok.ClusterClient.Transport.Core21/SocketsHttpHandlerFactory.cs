@@ -23,7 +23,8 @@ namespace Vostok.Clusterclient.Transport.Core21
             int maxConnectionsPerEndpoint,
             X509Certificate2[] clientCertificates,
             RemoteCertificateValidationCallback remoteCertificateValidationCallback,
-            ICredentials credentials)
+            ICredentials credentials,
+            DecompressionMethods decompressionMethods)
         {
             var handler = new SocketsHttpHandler
             {
@@ -34,7 +35,7 @@ namespace Vostok.Clusterclient.Transport.Core21
                 PooledConnectionIdleTimeout = connectionIdleTimeout,
                 PooledConnectionLifetime = connectionLifetime,
                 MaxConnectionsPerServer = maxConnectionsPerEndpoint,
-                AutomaticDecompression = DecompressionMethods.None,
+                AutomaticDecompression = decompressionMethods,
                 MaxResponseHeadersLength = 64 * 1024,
                 MaxAutomaticRedirections = 3,
                 UseCookies = false,

@@ -37,7 +37,7 @@ namespace Vostok.Clusterclient.Transport.Webrequest
             request.AllowWriteStreamBuffering = false;
             request.AllowReadStreamBuffering = false;
             request.AuthenticationLevel = AuthenticationLevel.None;
-            request.AutomaticDecompression = DecompressionMethods.None;
+            request.AutomaticDecompression = settings.DecompressionMethods;
             request.ServerCertificateValidationCallback = settings.RemoteCertificateValidationCallback;
             request.Credentials = settings.Credentials;
 
