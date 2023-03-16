@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading;
@@ -121,8 +123,28 @@ namespace Vostok.Clusterclient.Transport.Tests.SystemNetHttp
             message.Headers.GetValues("key2").Should().ContainSingle().Which.Should().Be("value2");
         }
 
-        private void Convert()
-            => message = RequestMessageFactory.Create(request, CancellationToken.None, new SynchronousConsoleLog());
+        [Test]
+        public void Should_have_http_version_11_by_default()
+        {
+            Convert();
+
+            message.Version.Should().Be(HttpVersion.Version11);
+        }
+
+#if NETCOREAPP2_1_OR_GREATER
+        [Test]
+        public void Should_fill_http_version_with_given_version()
+        {
+            Convert(HttpVersion.Version20);
+
+            message.Version.Should().Be(HttpVersion.Version20);
+        }
+#endif
+
+        private void Convert() => Convert(HttpVersion.Version11);
+
+        private void Convert(Version httpVersion)
+            => message = RequestMessageFactory.Create(request, httpVersion, CancellationToken.None, new SynchronousConsoleLog());
 
         protected override Runtime SupportedRuntimes => Runtime.Core20 | Runtime.Core21 | Runtime.Core31;
     }

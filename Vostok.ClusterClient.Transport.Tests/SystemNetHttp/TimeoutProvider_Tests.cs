@@ -75,7 +75,7 @@ namespace Vostok.Clusterclient.Transport.Tests.SystemNetHttp
 
         private Response Send(TimeSpan timeout, TimeSpan sendLatency)
         {
-            return provider.SendWithTimeoutAsync((_, token) => Task.Run(
+            return provider.SendWithTimeoutAsync((_, _, token) => Task.Run(
                         async () =>
                         {
                             calledSender = true;
@@ -83,7 +83,7 @@ namespace Vostok.Clusterclient.Transport.Tests.SystemNetHttp
                             await Task.Delay(sendLatency, token);
                             return senderResponse;
                         }),
-                    request, timeout, cancellation.Token)
+                    request, timeout, timeout, cancellation.Token)
                 .GetAwaiter()
                 .GetResult();
         }
