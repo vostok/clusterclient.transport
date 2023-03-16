@@ -26,6 +26,7 @@ namespace Vostok.Clusterclient.Transport
         private readonly NativeTransportSettings settings;
         private readonly ILog log;
 
+        private readonly Func<Request, TimeSpan?, CancellationToken, Task<Response>> sendAsyncDelegate;
         private readonly HttpClientProvider clientProvider;
         private readonly TimeoutProvider timeoutProvider;
         private readonly ErrorHandler errorHandler;
@@ -43,6 +44,7 @@ namespace Vostok.Clusterclient.Transport
             this.settings = settings ?? throw new ArgumentNullException(nameof(settings));
             this.log = log ?? throw new ArgumentNullException(nameof(log));
 
+            sendAsyncDelegate = SendAsync;
             clientProvider = new HttpClientProvider(settings, this.log);
             timeoutProvider = new TimeoutProvider(settings.RequestAbortTimeout, this.log);
             errorHandler = new ErrorHandler(this.log);
@@ -61,7 +63,7 @@ namespace Vostok.Clusterclient.Transport
 
         /// <inheritdoc />
         public Task<Response> SendAsync(Request request, TimeSpan? connectionTimeout, TimeSpan timeout, CancellationToken token)
-            => timeoutProvider.SendWithTimeoutAsync((r, t) => SendAsync(r, connectionTimeout, t), request, timeout, token);
+            => timeoutProvider.SendWithTimeoutAsync(sendAsyncDelegate, request, connectionTimeout, timeout, token);
 
         private async Task<Response> SendAsync(Request request, TimeSpan? connectionTimeout, CancellationToken token)
         {
@@ -69,7 +71,7 @@ namespace Vostok.Clusterclient.Transport
             {
                 using (var state = new DisposableState())
                 {
-                    state.Request = RequestMessageFactory.Create(request, token, log);
+                    state.Request = RequestMessageFactory.Create(request, settings.HttpVersion, token, log);
 
                     var client = clientProvider.Obtain(connectionTimeout);
 

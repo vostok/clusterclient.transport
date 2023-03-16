@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net;
+using System.Net.Http;
 using System.Threading;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Clusterclient.Transport.SystemNetHttp.Contents;
@@ -12,11 +14,12 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Messages
     {
         private static readonly HttpMethod PatchMethod = new HttpMethod(RequestMethods.Patch);
 
-        public static HttpRequestMessage Create(Request request, CancellationToken token, ILog log)
+        public static HttpRequestMessage Create(Request request, Version httpVersion, CancellationToken token, ILog log)
         {
             var message = new HttpRequestMessage(TranslateMethod(request.Method), request.Url)
             {
-                Content = TranslateContent(request, token)
+                Content = TranslateContent(request, token),
+                Version = httpVersion
             };
 
             RequestHeadersConverter.Fill(request, message, log);
