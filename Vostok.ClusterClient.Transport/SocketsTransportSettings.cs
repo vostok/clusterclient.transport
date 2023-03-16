@@ -97,5 +97,10 @@ namespace Vostok.Clusterclient.Transport
         /// Gets or sets the type of decompression that is used.
         /// </summary>
         public DecompressionMethods DecompressionMethods { get; set; }
+
+        /// <summary>
+        /// Gets or sets the HTTP version. Doesn't work on legacy Net Frameworks.
+        /// </summary>
+        public Version HttpVersion { get; set; }
     }
 }

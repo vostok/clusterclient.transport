@@ -88,6 +88,11 @@ namespace Vostok.Clusterclient.Transport
         /// </summary>
         public DecompressionMethods DecompressionMethods { get; set; }
 
+        /// <summary>
+        /// Gets or sets the HTTP version. Versions above 1.1 do not work on legacy Net Frameworks.
+        /// </summary>
+        public Version HttpVersion { get; set; } = System.Net.HttpVersion.Version11;
+
         [NotNull]
         public SocketsTransportSettings ToSocketsTransportSettings()
         {
@@ -108,7 +113,8 @@ namespace Vostok.Clusterclient.Transport
                 UseResponseStreaming = UseResponseStreaming,
                 RemoteCertificateValidationCallback = RemoteCertificateValidationCallback,
                 Credentials = Credentials,
-                DecompressionMethods = DecompressionMethods
+                DecompressionMethods = DecompressionMethods,
+                HttpVersion = HttpVersion
             };
         }
 
@@ -152,7 +158,8 @@ namespace Vostok.Clusterclient.Transport
                 RemoteCertificateValidationCallback =
                     (message, certificate, chain, errors) => RemoteCertificateValidationCallback(message, certificate, chain, errors),
                 Credentials = Credentials,
-                DecompressionMethods = DecompressionMethods
+                DecompressionMethods = DecompressionMethods,
+                HttpVersion = HttpVersion
             };
         }
     }
