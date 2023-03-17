@@ -74,8 +74,16 @@ namespace Vostok.Clusterclient.Transport
                     state.Request = RequestMessageFactory.Create(request, token, log);
 
 #if NETCOREAPP
-                    state.Request.Version = settings.HttpVersion;
-                    state.Request.VersionPolicy = settings.HttpVersionPolicy;
+                    //(deniaa): We cant set default HTTP version by ourselves.
+                    //Netcoreapp21 has a default version of HTTP 2.0.
+                    //NetFW* and Net6 has a default version of HTTP 1.1.
+                    //So let framework choose the default version on its own if the user has not passed a specific version.
+                    if (settings.HttpVersion != null)
+                        state.Request.Version = settings.HttpVersion;
+#endif
+#if NET5_0_OR_GREATER
+                    if (settings.HttpVersionPolicy.HasValue)
+                        state.Request.VersionPolicy = settings.HttpVersionPolicy.Value;
 #endif
 
                     var client = clientProvider.Obtain(connectionTimeout);

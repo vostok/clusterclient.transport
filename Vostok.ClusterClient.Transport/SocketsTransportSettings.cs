@@ -103,14 +103,16 @@ namespace Vostok.Clusterclient.Transport
 
 #if NETCOREAPP
         /// <summary>
-        /// Gets or sets the HTTP version.
+        /// Gets or sets the HTTP version. If not defined, the default version will be used depending on the framework version.
         /// </summary>
-        public Version HttpVersion { get; set; } = System.Net.HttpVersion.Version11;
+        public Version HttpVersion { get; set; } = null;
+#endif
 
+#if NET5_0_OR_GREATER
         /// <summary>
-        /// Gets or sets the HTTP version policy.
+        /// Gets or sets the HTTP version policy. If not defined, the default policy will be used depending on the framework version.
         /// </summary>
-        public HttpVersionPolicy HttpVersionPolicy { get; set; } = HttpVersionPolicy.RequestVersionOrLower;
+        public HttpVersionPolicy? HttpVersionPolicy { get; set; } = null;
 #endif
     }
 }
