@@ -71,7 +71,12 @@ namespace Vostok.Clusterclient.Transport
             {
                 using (var state = new DisposableState())
                 {
-                    state.Request = RequestMessageFactory.Create(request, settings.HttpVersion, token, log);
+                    state.Request = RequestMessageFactory.Create(request, token, log);
+
+#if NETCOREAPP
+                    state.Request.Version = settings.HttpVersion;
+                    state.Request.VersionPolicy = settings.HttpVersionPolicy;
+#endif
 
                     var client = clientProvider.Obtain(connectionTimeout);
 

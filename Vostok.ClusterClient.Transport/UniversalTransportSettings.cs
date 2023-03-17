@@ -1,5 +1,8 @@
 using System;
 using System.Net;
+#if NETCOREAPP
+using System.Net.Http;
+#endif
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using JetBrains.Annotations;
@@ -88,10 +91,17 @@ namespace Vostok.Clusterclient.Transport
         /// </summary>
         public DecompressionMethods DecompressionMethods { get; set; }
 
+#if NETCOREAPP
         /// <summary>
-        /// Gets or sets the HTTP version. Versions above 1.1 do not work on legacy Net Frameworks.
+        /// Gets or sets the HTTP version.
         /// </summary>
         public Version HttpVersion { get; set; } = System.Net.HttpVersion.Version11;
+
+        /// <summary>
+        /// Gets or sets the HTTP version policy.
+        /// </summary>
+        public HttpVersionPolicy HttpVersionPolicy { get; set; } = HttpVersionPolicy.RequestVersionOrLower;
+#endif
 
         [NotNull]
         public SocketsTransportSettings ToSocketsTransportSettings()
@@ -114,7 +124,10 @@ namespace Vostok.Clusterclient.Transport
                 RemoteCertificateValidationCallback = RemoteCertificateValidationCallback,
                 Credentials = Credentials,
                 DecompressionMethods = DecompressionMethods,
-                HttpVersion = HttpVersion
+#if NETCOREAPP
+                HttpVersion = HttpVersion,
+                HttpVersionPolicy = HttpVersionPolicy
+#endif
             };
         }
 
@@ -159,7 +172,10 @@ namespace Vostok.Clusterclient.Transport
                     (message, certificate, chain, errors) => RemoteCertificateValidationCallback(message, certificate, chain, errors),
                 Credentials = Credentials,
                 DecompressionMethods = DecompressionMethods,
-                HttpVersion = HttpVersion
+#if NETCOREAPP
+                HttpVersion = HttpVersion,
+                HttpVersionPolicy = HttpVersionPolicy
+#endif
             };
         }
     }

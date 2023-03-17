@@ -131,20 +131,8 @@ namespace Vostok.Clusterclient.Transport.Tests.SystemNetHttp
             message.Version.Should().Be(HttpVersion.Version11);
         }
 
-#if NETCOREAPP2_1_OR_GREATER
-        [Test]
-        public void Should_fill_http_version_with_given_version()
-        {
-            Convert(HttpVersion.Version20);
-
-            message.Version.Should().Be(HttpVersion.Version20);
-        }
-#endif
-
-        private void Convert() => Convert(HttpVersion.Version11);
-
-        private void Convert(Version httpVersion)
-            => message = RequestMessageFactory.Create(request, httpVersion, CancellationToken.None, new SynchronousConsoleLog());
+        private void Convert()
+            => message = RequestMessageFactory.Create(request, CancellationToken.None, new SynchronousConsoleLog());
 
         protected override Runtime SupportedRuntimes => Runtime.Core20 | Runtime.Core21 | Runtime.Core31;
     }
