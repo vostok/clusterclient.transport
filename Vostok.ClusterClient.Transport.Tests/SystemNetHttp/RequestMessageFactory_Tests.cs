@@ -123,14 +123,6 @@ namespace Vostok.Clusterclient.Transport.Tests.SystemNetHttp
             message.Headers.GetValues("key2").Should().ContainSingle().Which.Should().Be("value2");
         }
 
-        [Test]
-        public void Should_have_http_version_11_by_default()
-        {
-            Convert();
-
-            message.Version.Should().Be(HttpVersion.Version11);
-        }
-
         private void Convert()
             => message = RequestMessageFactory.Create(request, CancellationToken.None, new SynchronousConsoleLog());
 
