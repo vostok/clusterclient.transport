@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Clusterclient.Transport.SystemNetHttp.Contents;
@@ -14,12 +12,11 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Messages
     {
         private static readonly HttpMethod PatchMethod = new HttpMethod(RequestMethods.Patch);
 
-        public static HttpRequestMessage Create(Request request, Version httpVersion, CancellationToken token, ILog log)
+        public static HttpRequestMessage Create(Request request, CancellationToken token, ILog log)
         {
             var message = new HttpRequestMessage(TranslateMethod(request.Method), request.Url)
             {
-                Content = TranslateContent(request, token),
-                Version = httpVersion
+                Content = TranslateContent(request, token)
             };
 
             RequestHeadersConverter.Fill(request, message, log);
@@ -29,27 +26,18 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Messages
 
         private static HttpMethod TranslateMethod(string method)
         {
-            switch (method)
+            return method switch
             {
-                case RequestMethods.Get:
-                    return HttpMethod.Get;
-                case RequestMethods.Post:
-                    return HttpMethod.Post;
-                case RequestMethods.Put:
-                    return HttpMethod.Put;
-                case RequestMethods.Patch:
-                    return PatchMethod;
-                case RequestMethods.Delete:
-                    return HttpMethod.Delete;
-                case RequestMethods.Head:
-                    return HttpMethod.Head;
-                case RequestMethods.Options:
-                    return HttpMethod.Options;
-                case RequestMethods.Trace:
-                    return HttpMethod.Trace;
-                default:
-                    return new HttpMethod(method);
-            }
+                RequestMethods.Get => HttpMethod.Get,
+                RequestMethods.Post => HttpMethod.Post,
+                RequestMethods.Put => HttpMethod.Put,
+                RequestMethods.Patch => PatchMethod,
+                RequestMethods.Delete => HttpMethod.Delete,
+                RequestMethods.Head => HttpMethod.Head,
+                RequestMethods.Options => HttpMethod.Options,
+                RequestMethods.Trace => HttpMethod.Trace,
+                _ => new HttpMethod(method)
+            };
         }
 
         private static HttpContent TranslateContent(Request request, CancellationToken cancellationToken)

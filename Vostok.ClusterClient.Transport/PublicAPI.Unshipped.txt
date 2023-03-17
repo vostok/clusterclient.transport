@@ -1,6 +1,0 @@
-Vostok.Clusterclient.Transport.NativeTransportSettings.HttpVersion.get -> System.Version
-Vostok.Clusterclient.Transport.NativeTransportSettings.HttpVersion.set -> void
-Vostok.Clusterclient.Transport.SocketsTransportSettings.HttpVersion.get -> System.Version
-Vostok.Clusterclient.Transport.SocketsTransportSettings.HttpVersion.set -> void
-Vostok.Clusterclient.Transport.UniversalTransportSettings.HttpVersion.get -> System.Version
-Vostok.Clusterclient.Transport.UniversalTransportSettings.HttpVersion.set -> void
