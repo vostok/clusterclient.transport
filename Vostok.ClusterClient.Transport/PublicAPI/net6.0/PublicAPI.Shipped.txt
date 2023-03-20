@@ -1,4 +1,4 @@
-static Vostok.Clusterclient.Transport.IClusterClientConfigurationExtensions.SetupNativeTransport(this Vostok.Clusterclient.Core.IClusterClientConfiguration self) -> void
+﻿static Vostok.Clusterclient.Transport.IClusterClientConfigurationExtensions.SetupNativeTransport(this Vostok.Clusterclient.Core.IClusterClientConfiguration self) -> void
 static Vostok.Clusterclient.Transport.IClusterClientConfigurationExtensions.SetupNativeTransport(this Vostok.Clusterclient.Core.IClusterClientConfiguration self, Vostok.Clusterclient.Transport.NativeTransportSettings settings) -> void
 static Vostok.Clusterclient.Transport.IClusterClientConfigurationExtensions.SetupSocketTransport(this Vostok.Clusterclient.Core.IClusterClientConfiguration self) -> void
 static Vostok.Clusterclient.Transport.IClusterClientConfigurationExtensions.SetupSocketTransport(this Vostok.Clusterclient.Core.IClusterClientConfiguration self, Vostok.Clusterclient.Transport.SocketsTransportSettings settings) -> void
@@ -21,6 +21,10 @@ Vostok.Clusterclient.Transport.NativeTransportSettings.Credentials.get -> System
 Vostok.Clusterclient.Transport.NativeTransportSettings.Credentials.set -> void
 Vostok.Clusterclient.Transport.NativeTransportSettings.DecompressionMethods.get -> System.Net.DecompressionMethods
 Vostok.Clusterclient.Transport.NativeTransportSettings.DecompressionMethods.set -> void
+Vostok.Clusterclient.Transport.NativeTransportSettings.HttpVersion.get -> System.Version
+Vostok.Clusterclient.Transport.NativeTransportSettings.HttpVersion.set -> void
+Vostok.Clusterclient.Transport.NativeTransportSettings.HttpVersionPolicy.get -> System.Net.Http.HttpVersionPolicy?
+Vostok.Clusterclient.Transport.NativeTransportSettings.HttpVersionPolicy.set -> void
 Vostok.Clusterclient.Transport.NativeTransportSettings.MaxConnectionsPerEndpoint.get -> int
 Vostok.Clusterclient.Transport.NativeTransportSettings.MaxConnectionsPerEndpoint.set -> void
 Vostok.Clusterclient.Transport.NativeTransportSettings.MaxResponseBodySize.get -> long?
@@ -56,6 +60,10 @@ Vostok.Clusterclient.Transport.SocketsTransportSettings.Credentials.get -> Syste
 Vostok.Clusterclient.Transport.SocketsTransportSettings.Credentials.set -> void
 Vostok.Clusterclient.Transport.SocketsTransportSettings.DecompressionMethods.get -> System.Net.DecompressionMethods
 Vostok.Clusterclient.Transport.SocketsTransportSettings.DecompressionMethods.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.HttpVersion.get -> System.Version
+Vostok.Clusterclient.Transport.SocketsTransportSettings.HttpVersion.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.HttpVersionPolicy.get -> System.Net.Http.HttpVersionPolicy?
+Vostok.Clusterclient.Transport.SocketsTransportSettings.HttpVersionPolicy.set -> void
 Vostok.Clusterclient.Transport.SocketsTransportSettings.MaxConnectionsPerEndpoint.get -> int
 Vostok.Clusterclient.Transport.SocketsTransportSettings.MaxConnectionsPerEndpoint.set -> void
 Vostok.Clusterclient.Transport.SocketsTransportSettings.MaxResponseBodySize.get -> long?
@@ -93,6 +101,10 @@ Vostok.Clusterclient.Transport.UniversalTransportSettings.Credentials.get -> Sys
 Vostok.Clusterclient.Transport.UniversalTransportSettings.Credentials.set -> void
 Vostok.Clusterclient.Transport.UniversalTransportSettings.DecompressionMethods.get -> System.Net.DecompressionMethods
 Vostok.Clusterclient.Transport.UniversalTransportSettings.DecompressionMethods.set -> void
+Vostok.Clusterclient.Transport.UniversalTransportSettings.HttpVersion.get -> System.Version
+Vostok.Clusterclient.Transport.UniversalTransportSettings.HttpVersion.set -> void
+Vostok.Clusterclient.Transport.UniversalTransportSettings.HttpVersionPolicy.get -> System.Net.Http.HttpVersionPolicy?
+Vostok.Clusterclient.Transport.UniversalTransportSettings.HttpVersionPolicy.set -> void
 Vostok.Clusterclient.Transport.UniversalTransportSettings.MaxConnectionsPerEndpoint.get -> int
 Vostok.Clusterclient.Transport.UniversalTransportSettings.MaxConnectionsPerEndpoint.set -> void
 Vostok.Clusterclient.Transport.UniversalTransportSettings.MaxResponseBodySize.get -> long?
