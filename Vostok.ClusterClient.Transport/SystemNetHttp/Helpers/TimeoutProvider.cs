@@ -21,7 +21,11 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Helpers
         }
 
         public async Task<Response> SendWithTimeoutAsync(
-            Func<Request, CancellationToken, Task<Response>> send, Request request, TimeSpan timeout, CancellationToken token)
+            Func<Request, TimeSpan?, CancellationToken, Task<Response>> send, 
+            Request request, 
+            TimeSpan? connectionTimeout, 
+            TimeSpan timeout, 
+            CancellationToken token)
         {
             if (token.IsCancellationRequested)
                 return Responses.Canceled;
@@ -37,7 +41,7 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Helpers
             {
                 var timeoutTask = Task.Delay(timeout, timeoutCancellation.Token);
 
-                var sendTask = send(request, requestCancellation.Token);
+                var sendTask = send(request, connectionTimeout, requestCancellation.Token);
 
                 var completedTask = await Task.WhenAny(timeoutTask, sendTask).ConfigureAwait(false);
                 if (completedTask is Task<Response> taskWithResponse)

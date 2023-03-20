@@ -62,5 +62,19 @@ namespace Vostok.Clusterclient.Transport
         /// Gets or sets the type of decompression that is used.
         /// </summary>
         public DecompressionMethods DecompressionMethods { get; set; }
+
+#if NETCOREAPP
+        /// <summary>
+        /// Gets or sets the HTTP version. If not defined, the default version will be used depending on the framework version.
+        /// </summary>
+        public Version HttpVersion { get; set; } = null;
+#endif
+
+#if NET5_0_OR_GREATER
+        /// <summary>
+        /// Gets or sets the HTTP version policy. If not defined, the default policy will be used depending on the framework version.
+        /// </summary>
+        public HttpVersionPolicy? HttpVersionPolicy { get; set; } = null;
+#endif
     }
 }
