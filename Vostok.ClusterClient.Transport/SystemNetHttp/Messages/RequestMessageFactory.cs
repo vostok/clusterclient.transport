@@ -26,27 +26,18 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Messages
 
         private static HttpMethod TranslateMethod(string method)
         {
-            switch (method)
+            return method switch
             {
-                case RequestMethods.Get:
-                    return HttpMethod.Get;
-                case RequestMethods.Post:
-                    return HttpMethod.Post;
-                case RequestMethods.Put:
-                    return HttpMethod.Put;
-                case RequestMethods.Patch:
-                    return PatchMethod;
-                case RequestMethods.Delete:
-                    return HttpMethod.Delete;
-                case RequestMethods.Head:
-                    return HttpMethod.Head;
-                case RequestMethods.Options:
-                    return HttpMethod.Options;
-                case RequestMethods.Trace:
-                    return HttpMethod.Trace;
-                default:
-                    return new HttpMethod(method);
-            }
+                RequestMethods.Get => HttpMethod.Get,
+                RequestMethods.Post => HttpMethod.Post,
+                RequestMethods.Put => HttpMethod.Put,
+                RequestMethods.Patch => PatchMethod,
+                RequestMethods.Delete => HttpMethod.Delete,
+                RequestMethods.Head => HttpMethod.Head,
+                RequestMethods.Options => HttpMethod.Options,
+                RequestMethods.Trace => HttpMethod.Trace,
+                _ => new HttpMethod(method)
+            };
         }
 
         private static HttpContent TranslateContent(Request request, CancellationToken cancellationToken)
