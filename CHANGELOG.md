@@ -1,3 +1,7 @@
+## 0.1.30 (09-12-2022):
+
+Add options to specify Http version and Http version policy.
+
 ## 0.1.28 (09-12-2022):
 
 Pass an AutomaticDecompression options from public Settings
