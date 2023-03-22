@@ -113,7 +113,7 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Header
                         {
                             log
                                 .ForContext(typeof(RequestHeadersUnlocker))
-                                .Warn($"Can't unlock HttpHeaders. Test failed on header '{name}'. Unable set header value.");
+                                .Warn($"Can't unlock HttpHeaders. Test failed on header '{name}'. Unable set header value.".ToString());
 
                             return false;
                         }
@@ -122,7 +122,7 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Header
                         {
                             log
                                 .ForContext(typeof(RequestHeadersUnlocker))
-                                .Warn($"Can't unlock HttpHeaders. Test failed on header '{name}'. Expected value: '{expectedValue}', actual: '{value}'.");
+                                .Warn($"Can't unlock HttpHeaders. Test failed on header '{name}'. Expected value: '{expectedValue}', actual: '{value}'.".ToString());
                             return false;
                         }
                     }
