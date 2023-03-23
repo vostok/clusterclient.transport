@@ -1,3 +1,7 @@
+## 0.1.32 (23-03-2023):
+
+Remove string interpolation from logs in RequestHeadersUnlocker
+
 ## 0.1.31 (09-12-2022):
 
 Add options to specify Http version and Http version policy.
