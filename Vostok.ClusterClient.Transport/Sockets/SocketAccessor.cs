@@ -10,6 +10,11 @@ using Vostok.Logging.Abstractions;
 
 namespace Vostok.Clusterclient.Transport.Sockets
 {
+    /// <summary>
+    /// This class was created to set the TcpKeepalive options directly on the Socket in the HttpMessageHandler.
+    /// But due to significant changes in System.Net.Http.HttpConnection class it can't work starting from .Net7.
+    /// There is no _socket field. But starting from .Net5 HttpMessageHandler has a special api for setting TcpKeepAlive options.
+    /// </summary>
     internal static class SocketAccessor
     {
         private static readonly Func<Stream, Socket> Empty = _ => null;
