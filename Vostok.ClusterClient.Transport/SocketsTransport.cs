@@ -85,8 +85,12 @@ namespace Vostok.Clusterclient.Transport
                         state.Request.VersionPolicy = settings.HttpVersionPolicy.Value;
 #endif
 
+#if !NET5_0_OR_GREATER
+                    // Due to significant changes in System.Net.Http.HttpConnection class SocketTuningContent can't work starting from .Net7.
+                    // But starting from .Net5 HttpMessageHandler has a special api for setting TcpKeepAlive options. See in NetCore50Utils.TuneHandler and SocketsHttpHandlerTuner.
                     if (state.Request.Content is GenericContent content && socketTuner.CanTune)
                         state.Request.Content = new SocketTuningContent(content, socketTuner, log);
+#endif
 
                     var handler = handlerProvider.Obtain(connectionTimeout);
 
