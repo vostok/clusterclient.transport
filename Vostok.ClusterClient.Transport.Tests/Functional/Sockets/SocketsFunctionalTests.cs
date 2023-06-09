@@ -34,7 +34,9 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Sockets
 
                 var transport = new SocketsTransport(new SocketsTransportSettings
                 {
-                    TcpKeepAliveEnabled = false
+                    TcpKeepAliveEnabled = true,
+                    TcpKeepAliveInterval = 60.Seconds(),
+                    TcpKeepAliveTime = 120.Seconds(),
                 }, new ConsoleLog());
                 var response = transport.SendAsync(Request.Post(server.Url).WithContent(new byte[size]), 1500.Milliseconds(), 10.Minutes(), CancellationToken.None);
 
