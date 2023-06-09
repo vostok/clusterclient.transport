@@ -40,7 +40,7 @@ namespace Vostok.Clusterclient.Transport.Core50
                         {
                             var host = context.DnsEndPoint.Host;
                             // https://github.com/dotnet/runtime/issues/24917
-                            var ips = await Dns.GetHostAddressesAsync(host);
+                            var ips = await Dns.GetHostAddressesAsync(host).ConfigureAwait(false);
                             if (ips.Length == 0)
                             {
                                 throw new Exception($"{host} DNS lookup failed");
