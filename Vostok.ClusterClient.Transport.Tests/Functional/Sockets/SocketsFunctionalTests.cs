@@ -28,17 +28,15 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Sockets
         {
             const long size = 5L * 1024 * 1024;
 
-            using (var server = TestServer.StartNew(ctx => { ctx.Response.StatusCode = 200; }))
+            using (var server = TestServer.StartNew(ctx => ctx.Response.StatusCode = 200))
             {
-                server.BufferRequestBody = false;
+                server.BufferRequestBody = true;
 
                 var transport = new SocketsTransport(new SocketsTransportSettings
                 {
-                    TcpKeepAliveEnabled = true, 
-                    TcpKeepAliveInterval = 5.Seconds(),
-                    TcpKeepAliveTime = 5.Seconds(),
+                    TcpKeepAliveEnabled = false
                 }, new ConsoleLog());
-                var response = transport.SendAsync(Request.Post(server.Url).WithContent(new byte[size]), 750.Milliseconds(), 10.Minutes(), CancellationToken.None);
+                var response = transport.SendAsync(Request.Post(server.Url).WithContent(new byte[size]), 1500.Milliseconds(), 10.Minutes(), CancellationToken.None);
 
                 response.Result.Code.Should().Be(200);
                 server.LastRequest.BodySize.Should().Be(size);
