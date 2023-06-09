@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Text;
 using JetBrains.Annotations;
+using Vostok.Commons.Threading;
 
 namespace Vostok.Clusterclient.Transport.Core50
 {
@@ -10,6 +13,7 @@ namespace Vostok.Clusterclient.Transport.Core50
     public static class SocketsHttpHandlerTuner
     {
         private static readonly Encoding HeadersEncoding = new UTF8Encoding(false);
+        private static readonly bool IsWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 
         [UsedImplicitly]
         public static void Tune(HttpMessageHandler handler, bool tcpKeepAliveEnables, TimeSpan tcpKeepAliveInterval, TimeSpan tcpKeepAliveTime)
@@ -21,7 +25,7 @@ namespace Vostok.Clusterclient.Transport.Core50
             {
                 var keepAliveTime = (int)tcpKeepAliveTime.TotalSeconds;
                 var keepAliveInterval = (int)tcpKeepAliveInterval.TotalSeconds;
-                
+
                 socketHandler.ConnectCallback = async (context, token) =>
                 {
                     var socket = new Socket(SocketType.Stream, ProtocolType.Tcp) {NoDelay = true};
@@ -32,7 +36,22 @@ namespace Vostok.Clusterclient.Transport.Core50
                         socket.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveInterval, keepAliveInterval);
                         // (deniaa, 08.06.2023): We can configure an option (SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveRetryCount, X) here, but we have no this option in transport settings model.
 
-                        await socket.ConnectAsync(context.DnsEndPoint, token).ConfigureAwait(false);
+                        if (!IsWindows)
+                        {
+                            var host = context.DnsEndPoint.Host;
+                            // https://github.com/dotnet/runtime/issues/24917
+                            var ips = await Dns.GetHostAddressesAsync(host);
+                            if (ips.Length == 0)
+                            {
+                                throw new Exception($"{host} DNS lookup failed");
+                            }
+
+                            await socket.ConnectAsync(ips[ThreadSafeRandom.Next(ips.Length)], context.DnsEndPoint.Port, token).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            await socket.ConnectAsync(context.DnsEndPoint, token).ConfigureAwait(false);
+                        }
 
                         return new NetworkStream(socket, ownsSocket: true);
                     }
