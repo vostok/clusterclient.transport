@@ -46,6 +46,11 @@ namespace Vostok.Clusterclient.Transport.Core50
                                 throw new Exception($"{host} DNS lookup failed");
                             }
 
+                            foreach (var ip in ips)
+                            {
+                                Console.WriteLine($"Host = {host}, AddressFamily = {ip.AddressFamily}, ip = {ip}, IsIPv6SiteLocal = {ip.IsIPv6SiteLocal}, IsIPv6LinkLocal = {ip.IsIPv6LinkLocal}");
+                            }
+
                             await socket.ConnectAsync(ips[ThreadSafeRandom.Next(ips.Length)], context.DnsEndPoint.Port, token).ConfigureAwait(false);
                         }
                         else
