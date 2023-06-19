@@ -53,8 +53,8 @@ namespace Vostok.Clusterclient.Transport.Core50
                             }
 
                             ips = ips.Where(x => x.AddressFamily == AddressFamily.InterNetwork).ToArray();
-
-                            await socket.ConnectAsync(ips[ThreadSafeRandom.Next(ips.Length)], context.DnsEndPoint.Port, token).ConfigureAwait(false);
+                            
+                            await socket.ConnectAsync(host, context.DnsEndPoint.Port, token).ConfigureAwait(false);
                         }
                         else
                         {
