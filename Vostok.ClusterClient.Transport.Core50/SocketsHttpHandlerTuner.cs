@@ -60,8 +60,9 @@ namespace Vostok.Clusterclient.Transport.Core50
 
                         return new NetworkStream(socket, ownsSocket: true);
                     }
-                    catch
+                    catch(Exception e)
                     {
+                        Console.Out.WriteLine(e);
                         socket.Dispose();
                         throw;
                     }
