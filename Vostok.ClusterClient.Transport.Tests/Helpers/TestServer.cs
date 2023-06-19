@@ -22,7 +22,8 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
             Port = FreeTcpPortFinder.GetFreePort();
             Host = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? Dns.GetHostName() : "localhost";
             listener = new HttpListener();
-            listener.Prefixes.Add($"http://+:{Port}/");
+            var prefix = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "+" : "127.0.0.1";
+            listener.Prefixes.Add($"http://{prefix}:{Port}/");
             configureListener?.Invoke(listener);
         }
 
@@ -31,6 +32,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Helpers
             var server = new TestServer(configureListener);
 
             server.Start(handle);
+            
 
             return server;
         }
