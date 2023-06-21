@@ -40,13 +40,15 @@ namespace Vostok.Clusterclient.Transport.Core50
                         {
                             var host = context.DnsEndPoint.Host;
                             // https://github.com/dotnet/runtime/issues/24917
-                            var ips = await Dns.GetHostAddressesAsync(host).ConfigureAwait(false);
-                            if (ips.Length == 0)
+                            var resolvedIps = await Dns.GetHostAddressesAsync(host).ConfigureAwait(false);
+
+                            var addressesToSend = FilterIPs(resolvedIps);
+                            if (addressesToSend.Count == 0)
                             {
                                 throw new Exception($"{host} DNS lookup failed");
                             }
 
-                            await socket.ConnectAsync(ips[ThreadSafeRandom.Next(ips.Length)], context.DnsEndPoint.Port, token).ConfigureAwait(false);
+                            await socket.ConnectAsync(addressesToSend[ThreadSafeRandom.Next(addressesToSend.Count)], context.DnsEndPoint.Port, token).ConfigureAwait(false);
                         }
                         else
                         {
@@ -68,6 +70,29 @@ namespace Vostok.Clusterclient.Transport.Core50
 
             socketHandler.ResponseDrainTimeout = TimeSpan.FromSeconds(3);
             socketHandler.MaxResponseDrainSize = 64 * 1024;
+        }
+
+        private static ArraySegment<IPAddress> FilterIPs(IPAddress[] resolvedIps)
+        {
+            if (resolvedIps.Length == 1)
+            {
+                return resolvedIps[0].AddressFamily is not (AddressFamily.InterNetworkV6 or AddressFamily.InterNetwork)
+                    ? new ArraySegment<IPAddress>(resolvedIps)
+                    : ArraySegment<IPAddress>.Empty;
+            }
+
+            var addresses = new IPAddress[resolvedIps.Length];
+            var count = 0;
+            foreach (var resolvedIp in resolvedIps)
+            {
+                if (resolvedIp.AddressFamily is not (AddressFamily.InterNetworkV6 or AddressFamily.InterNetwork))
+                    continue;
+
+                addresses[count] = resolvedIp;
+                count++;
+            }
+
+            return new ArraySegment<IPAddress>(addresses, 0, count);
         }
     }
 }
