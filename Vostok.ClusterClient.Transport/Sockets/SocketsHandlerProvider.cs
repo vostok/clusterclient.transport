@@ -46,7 +46,10 @@ namespace Vostok.Clusterclient.Transport.Sockets
                 settings.ClientCertificates,
                 settings.RemoteCertificateValidationCallback,
                 settings.Credentials,
-                settings.DecompressionMethods);
+                settings.DecompressionMethods,
+                settings.TcpKeepAliveEnabled,
+                settings.TcpKeepAliveInterval,
+                settings.TcpKeepAliveTime);
 
         private static HttpMessageHandler CreateHandler(GlobalCacheKey key)
         {
@@ -63,7 +66,7 @@ namespace Vostok.Clusterclient.Transport.Sockets
                 key.DecompressionMethods);
 
             if (RuntimeDetector.IsDotNet50AndNewer)
-                NetCore50Utils.TuneHandler(handler);
+                NetCore50Utils.TuneHandler(handler, key.TcpKeepAliveEnables, key.TcpKeepAliveInterval, key.TcpKeepAliveTime);
 
             return handler;
         }
@@ -80,6 +83,9 @@ namespace Vostok.Clusterclient.Transport.Sockets
             public readonly RemoteCertificateValidationCallback RemoteCertificateValidationCallback;
             public readonly ICredentials Credentials;
             public readonly DecompressionMethods DecompressionMethods;
+            public readonly bool TcpKeepAliveEnables;
+            public readonly TimeSpan TcpKeepAliveInterval;
+            public readonly TimeSpan TcpKeepAliveTime;
 
             public GlobalCacheKey(
                 IWebProxy proxy,
@@ -91,7 +97,10 @@ namespace Vostok.Clusterclient.Transport.Sockets
                 X509Certificate2[] clientCertificates,
                 RemoteCertificateValidationCallback remoteCertificateValidationCallback,
                 ICredentials credentials,
-                DecompressionMethods decompressionMethods)
+                DecompressionMethods decompressionMethods,
+                bool tcpKeepAliveEnables,
+                TimeSpan tcpKeepAliveInterval,
+                TimeSpan tcpKeepAliveTime)
             {
                 Proxy = proxy;
                 AllowAutoRedirect = allowAutoRedirect;
@@ -103,6 +112,9 @@ namespace Vostok.Clusterclient.Transport.Sockets
                 RemoteCertificateValidationCallback = remoteCertificateValidationCallback;
                 Credentials = credentials;
                 DecompressionMethods = decompressionMethods;
+                TcpKeepAliveEnables = tcpKeepAliveEnables;
+                TcpKeepAliveInterval = tcpKeepAliveInterval;
+                TcpKeepAliveTime = tcpKeepAliveTime;
             }
         }
 
@@ -122,7 +134,10 @@ namespace Vostok.Clusterclient.Transport.Sockets
                     x.MaxConnectionsPerEndpoint == y.MaxConnectionsPerEndpoint &&
                     x.RemoteCertificateValidationCallback == y.RemoteCertificateValidationCallback &&
                     Equals(x.Credentials, y.Credentials) &&
-                    x.DecompressionMethods == y.DecompressionMethods;
+                    x.DecompressionMethods == y.DecompressionMethods &&
+                    x.TcpKeepAliveEnables == y.TcpKeepAliveEnables &&
+                    x.TcpKeepAliveInterval == y.TcpKeepAliveInterval &&
+                    x.TcpKeepAliveTime == y.TcpKeepAliveTime;
             }
 
             public int GetHashCode(GlobalCacheKey key)
@@ -139,6 +154,9 @@ namespace Vostok.Clusterclient.Transport.Sockets
                     hashCode = (hashCode * 397) ^ (key.RemoteCertificateValidationCallback != null ? key.RemoteCertificateValidationCallback.GetHashCode() : 0);
                     hashCode = (hashCode * 397) ^ (key.Credentials != null ? key.Credentials.GetHashCode() : 0);
                     hashCode = (hashCode * 397) ^ key.DecompressionMethods.GetHashCode();
+                    hashCode = (hashCode * 397) ^ key.TcpKeepAliveEnables.GetHashCode();
+                    hashCode = (hashCode * 397) ^ key.TcpKeepAliveInterval.GetHashCode();
+                    hashCode = (hashCode * 397) ^ key.TcpKeepAliveTime.GetHashCode();
                     return hashCode;
                 }
             }
