@@ -9,4 +9,8 @@
     <RootNamespace>Vostok.Clusterclient.Transport.Core50</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Include="..\..\vostok.commons.threading\Vostok.Commons.Threading\ThreadSafeRandom.cs" Link="Commons\ThreadSafeRandom.cs" />
+  </ItemGroup>
+
 </Project>
