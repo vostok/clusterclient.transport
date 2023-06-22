@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using JetBrains.Annotations;
@@ -76,7 +77,7 @@ namespace Vostok.Clusterclient.Transport.Core50
         {
             if (resolvedIps.Length == 1)
             {
-                return resolvedIps[0].AddressFamily is not (AddressFamily.InterNetworkV6 or AddressFamily.InterNetwork)
+                return NotValidIp(resolvedIps[0])
                     ? ArraySegment<IPAddress>.Empty
                     : new ArraySegment<IPAddress>(resolvedIps);
             }
@@ -85,7 +86,7 @@ namespace Vostok.Clusterclient.Transport.Core50
             var count = 0;
             foreach (var resolvedIp in resolvedIps)
             {
-                if (resolvedIp.AddressFamily is not (AddressFamily.InterNetworkV6 or AddressFamily.InterNetwork))
+                if (NotValidIp(resolvedIp))
                     continue;
 
                 addresses[count] = resolvedIp;
@@ -94,5 +95,9 @@ namespace Vostok.Clusterclient.Transport.Core50
 
             return new ArraySegment<IPAddress>(addresses, 0, count);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool NotValidIp(IPAddress ip) =>
+            ip.AddressFamily is not (AddressFamily.InterNetwork);
     }
 }
