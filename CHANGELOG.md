@@ -1,3 +1,7 @@
+## 0.1.33 (22-06-2023):
+
+Now TcpKeepAlive options works on Linux since Net 5.0
+
 ## 0.1.32 (28-03-2023):
 
 Remove string interpolation from logs in RequestHeadersUnlocker
