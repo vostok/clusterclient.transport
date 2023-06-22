@@ -77,8 +77,8 @@ namespace Vostok.Clusterclient.Transport.Core50
             if (resolvedIps.Length == 1)
             {
                 return resolvedIps[0].AddressFamily is not (AddressFamily.InterNetworkV6 or AddressFamily.InterNetwork)
-                    ? new ArraySegment<IPAddress>(resolvedIps)
-                    : ArraySegment<IPAddress>.Empty;
+                    ? ArraySegment<IPAddress>.Empty
+                    : new ArraySegment<IPAddress>(resolvedIps);
             }
 
             var addresses = new IPAddress[resolvedIps.Length];
