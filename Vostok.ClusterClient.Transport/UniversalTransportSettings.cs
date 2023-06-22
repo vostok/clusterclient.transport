@@ -51,7 +51,8 @@ namespace Vostok.Clusterclient.Transport
         public bool AllowAutoRedirect { get; set; }
 
         /// <summary>
-        /// Enables/disables TCP keep-alive mechanism. Currently only works in Windows.
+        /// Enables/disables TCP keep-alive mechanism. Works on Windows. Works on Linux only since Net 5.0.
+        /// Does not work on Linux for ipv6 address targets or host targets with ipv6 addresses only.
         /// </summary>
         public bool TcpKeepAliveEnabled { get; set; }
 
