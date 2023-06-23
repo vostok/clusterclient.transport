@@ -1,4 +1,4 @@
-## 0.1.33 (22-06-2023):
+## 0.1.34 (22-06-2023):
 
 Now TcpKeepAlive options works on Linux since Net 5.0
 
