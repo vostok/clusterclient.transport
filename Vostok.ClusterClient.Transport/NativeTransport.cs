@@ -86,6 +86,10 @@ namespace Vostok.Clusterclient.Transport
                         state.Request.VersionPolicy = settings.HttpVersionPolicy.Value;
 #endif
 
+#if NET5_0_OR_GREATER
+                    settings.HeadersModifier?.Invoke(state.Request.Headers, state.Request.Content?.Headers);
+#endif
+                    
                     var client = clientProvider.Obtain(connectionTimeout);
 
                     state.Response = await client.SendAsync(state.Request, HttpCompletionOption.ResponseHeadersRead, token).ConfigureAwait(false);
