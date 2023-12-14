@@ -1,9 +1,11 @@
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using JetBrains.Annotations;
+using Vostok.Clusterclient.Core.Model;
 
 namespace Vostok.Clusterclient.Transport
 {
@@ -75,6 +77,15 @@ namespace Vostok.Clusterclient.Transport
         /// Gets or sets the HTTP version policy. If not defined, the default policy will be used depending on the framework version.
         /// </summary>
         public HttpVersionPolicy? HttpVersionPolicy { get; set; } = null;
+#endif
+        
+#if NET5_0_OR_GREATER
+        /// <summary>
+        /// Gets or sets the HTTP request headers modifier delegate. If not defined, no additional header changes will be applied.
+        /// <see cref="HttpRequestHeaders"/> and <see cref="HttpContentHeaders"/> can be null.
+        /// This delegate is applied after converting <see cref="Request"/> to <see cref="HttpRequestMessage"/> and after applying <see cref="HttpVersion"/> and <see cref="HttpVersionPolicy"/> options.
+        /// </summary>
+        public Action<HttpRequestHeaders, HttpContentHeaders> HeadersModifier { get; set; } = null;
 #endif
     }
 }
