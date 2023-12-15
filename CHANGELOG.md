@@ -1,4 +1,4 @@
-## 0.1.35 (15-12-2023):
+## 0.1.36 (15-12-2023):
 
 Add HeadersModifier delegate to ITransportSettings.
 
