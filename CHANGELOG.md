@@ -1,3 +1,7 @@
+## 0.1.35 (15-12-2023):
+
+Add HeadersModifier delegate to ITransportSettings.
+
 ## 0.1.34 (22-06-2023):
 
 Now TcpKeepAlive options works on Linux since Net 5.0
