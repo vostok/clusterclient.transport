@@ -92,6 +92,10 @@ namespace Vostok.Clusterclient.Transport
                         state.Request.Content = new SocketTuningContent(content, socketTuner, log);
 #endif
 
+#if NET5_0_OR_GREATER
+                    settings.HeadersModifier?.Invoke(state.Request.Headers, state.Request.Content?.Headers);
+#endif
+                    
                     var handler = handlerProvider.Obtain(connectionTimeout);
 
                     state.Response = await SocketsHandlerInvoker.Invoke(handler, state.Request, token).ConfigureAwait(false);

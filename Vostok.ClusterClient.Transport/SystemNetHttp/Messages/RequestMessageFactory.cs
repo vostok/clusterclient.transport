@@ -54,6 +54,10 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Messages
             if (request.ContentProducer != null)
                 return new ContentProducerContent(request.ContentProducer, cancellationToken);
 
+            // (deniaa, 14.12.2023): A special EmptyContent with the logic for setting the Content-Length: 0 header is needed for the popular scenario with server throttling.
+            // If the backend wants to respond with 429, a modern dotnet server will still read the entire body so as not to break the http 1.1 protocol. And the body can be big.
+            // Therefore, if there is a body, instead of responding with 429, the throttling module will close the TCP connection.
+            // And in order to clearly detect the absence of a body when it is not there, and not to break the connection, we always set Content-Length: 0.
             return new EmptyContent();
         }
     }
