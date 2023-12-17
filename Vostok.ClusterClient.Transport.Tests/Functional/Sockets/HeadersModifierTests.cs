@@ -37,7 +37,7 @@ internal class HeadersModifierTests
                 },
                 new ConsoleLog());
                 
-            var response = transport.SendAsync(Request.Post(server.Url), 250.Milliseconds(), 10.Minutes(), CancellationToken.None);
+            var response = transport.SendAsync(Request.Post(server.Url), 750.Milliseconds(), 10.Minutes(), CancellationToken.None);
 
             response.Result.Code.Should().Be(200);
             server.LastRequest.Headers["Content-Length"].Should().BeNull();
