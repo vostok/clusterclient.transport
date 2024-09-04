@@ -10,6 +10,7 @@
     <RootNamespace>Vostok.Clusterclient.Transport.Core20</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <CheckEolTargetFramework>false</CheckEolTargetFramework>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
 </Project>

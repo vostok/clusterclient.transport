@@ -9,6 +9,7 @@
     <Configurations>Debug;Release</Configurations>
     <RootNamespace>Vostok.Clusterclient.Transport.Core21</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
 </Project>
