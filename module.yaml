@@ -16,17 +16,15 @@ notests *default:
     - vostok.commons.helpers/src
     - vostok.commons.time/src
     - vostok.commons.threading/src
-    - vostok.clusterclient.core
-    - vostok.devtools
-    - vostok.logging.abstractions
+    - vostok.clusterclient.core@net8.0-wip
+    - vostok.devtools@net8.0
+    - vostok.logging.abstractions@net8.0-wip
 
 full-build > notests:
   build:
     target: Vostok.ClusterClient.Transport.sln
     configuration: Release
-  
+
   deps:
-    - -vostok.devtools
-    - vostok.devtools@with-net6.0
     - vostok.commons.testing/src
     - vostok.logging.console
