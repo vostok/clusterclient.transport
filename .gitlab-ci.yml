@@ -7,4 +7,4 @@ variables:
   GITHUB_REPO: 'git@github.com:vostok/clusterclient.transport'
   PUBLISH: 'NUGET_ORG'
   PUBLISH_KEY: $NUGET_ORG_VOSTOK_APIKEY
-  TARGET_FRAMEWORKS: "net6.0 net5.0 netcoreapp3.1 netcoreapp2.1 net471"
+  TARGET_FRAMEWORKS: "net8.0 net6.0 net5.0 netcoreapp3.1 netcoreapp2.1 net471"
