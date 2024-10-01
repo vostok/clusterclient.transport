@@ -16,8 +16,8 @@ notests *default:
     - vostok.commons.helpers/src
     - vostok.commons.time/src
     - vostok.commons.threading/src
-    - vostok.clusterclient.core@net8.0-wip
-    - vostok.devtools@net8.0
+    - vostok.clusterclient.core
+    - vostok.devtools
     - vostok.logging.abstractions
 
 full-build > notests:
