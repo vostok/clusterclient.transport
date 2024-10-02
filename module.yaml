@@ -24,9 +24,7 @@ full-build > notests:
   build:
     target: Vostok.ClusterClient.Transport.sln
     configuration: Release
-  
+
   deps:
-    - -vostok.devtools
-    - vostok.devtools@with-net6.0
     - vostok.commons.testing/src
     - vostok.logging.console

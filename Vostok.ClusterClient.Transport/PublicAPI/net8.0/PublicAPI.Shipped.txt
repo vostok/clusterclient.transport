@@ -1,0 +1,174 @@
+﻿static Vostok.Clusterclient.Transport.IClusterClientConfigurationExtensions.SetupNativeTransport(this Vostok.Clusterclient.Core.IClusterClientConfiguration self) -> void
+static Vostok.Clusterclient.Transport.IClusterClientConfigurationExtensions.SetupNativeTransport(this Vostok.Clusterclient.Core.IClusterClientConfiguration self, Vostok.Clusterclient.Transport.NativeTransportSettings settings) -> void
+static Vostok.Clusterclient.Transport.IClusterClientConfigurationExtensions.SetupSocketTransport(this Vostok.Clusterclient.Core.IClusterClientConfiguration self) -> void
+static Vostok.Clusterclient.Transport.IClusterClientConfigurationExtensions.SetupSocketTransport(this Vostok.Clusterclient.Core.IClusterClientConfiguration self, Vostok.Clusterclient.Transport.SocketsTransportSettings settings) -> void
+static Vostok.Clusterclient.Transport.IClusterClientConfigurationExtensions.SetupUniversalTransport(this Vostok.Clusterclient.Core.IClusterClientConfiguration self) -> void
+static Vostok.Clusterclient.Transport.IClusterClientConfigurationExtensions.SetupUniversalTransport(this Vostok.Clusterclient.Core.IClusterClientConfiguration self, Vostok.Clusterclient.Transport.UniversalTransportSettings settings) -> void
+static Vostok.Clusterclient.Transport.IClusterClientConfigurationExtensions.SetupWebRequestTransport(this Vostok.Clusterclient.Core.IClusterClientConfiguration self) -> void
+static Vostok.Clusterclient.Transport.IClusterClientConfigurationExtensions.SetupWebRequestTransport(this Vostok.Clusterclient.Core.IClusterClientConfiguration self, Vostok.Clusterclient.Transport.WebRequestTransportSettings settings) -> void
+Vostok.Clusterclient.Transport.IClusterClientConfigurationExtensions
+Vostok.Clusterclient.Transport.NativeTransport
+Vostok.Clusterclient.Transport.NativeTransport.Capabilities.get -> Vostok.Clusterclient.Core.Transport.TransportCapabilities
+Vostok.Clusterclient.Transport.NativeTransport.NativeTransport(Vostok.Clusterclient.Transport.NativeTransportSettings settings, Vostok.Logging.Abstractions.ILog log) -> void
+Vostok.Clusterclient.Transport.NativeTransport.NativeTransport(Vostok.Logging.Abstractions.ILog log) -> void
+Vostok.Clusterclient.Transport.NativeTransport.SendAsync(Vostok.Clusterclient.Core.Model.Request request, System.TimeSpan? connectionTimeout, System.TimeSpan timeout, System.Threading.CancellationToken token) -> System.Threading.Tasks.Task<Vostok.Clusterclient.Core.Model.Response>
+Vostok.Clusterclient.Transport.NativeTransportSettings
+Vostok.Clusterclient.Transport.NativeTransportSettings.AllowAutoRedirect.get -> bool
+Vostok.Clusterclient.Transport.NativeTransportSettings.AllowAutoRedirect.set -> void
+Vostok.Clusterclient.Transport.NativeTransportSettings.BufferFactory.get -> System.Func<int, byte[]>
+Vostok.Clusterclient.Transport.NativeTransportSettings.BufferFactory.set -> void
+Vostok.Clusterclient.Transport.NativeTransportSettings.Credentials.get -> System.Net.ICredentials
+Vostok.Clusterclient.Transport.NativeTransportSettings.Credentials.set -> void
+Vostok.Clusterclient.Transport.NativeTransportSettings.DecompressionMethods.get -> System.Net.DecompressionMethods
+Vostok.Clusterclient.Transport.NativeTransportSettings.DecompressionMethods.set -> void
+Vostok.Clusterclient.Transport.NativeTransportSettings.HttpVersion.get -> System.Version
+Vostok.Clusterclient.Transport.NativeTransportSettings.HttpVersion.set -> void
+Vostok.Clusterclient.Transport.NativeTransportSettings.HttpVersionPolicy.get -> System.Net.Http.HttpVersionPolicy?
+Vostok.Clusterclient.Transport.NativeTransportSettings.HttpVersionPolicy.set -> void
+Vostok.Clusterclient.Transport.NativeTransportSettings.MaxConnectionsPerEndpoint.get -> int
+Vostok.Clusterclient.Transport.NativeTransportSettings.MaxConnectionsPerEndpoint.set -> void
+Vostok.Clusterclient.Transport.NativeTransportSettings.MaxResponseBodySize.get -> long?
+Vostok.Clusterclient.Transport.NativeTransportSettings.MaxResponseBodySize.set -> void
+Vostok.Clusterclient.Transport.NativeTransportSettings.NativeTransportSettings() -> void
+Vostok.Clusterclient.Transport.NativeTransportSettings.Proxy.get -> System.Net.IWebProxy
+Vostok.Clusterclient.Transport.NativeTransportSettings.Proxy.set -> void
+Vostok.Clusterclient.Transport.NativeTransportSettings.RemoteCertificateValidationCallback.get -> System.Func<System.Net.Http.HttpRequestMessage, System.Security.Cryptography.X509Certificates.X509Certificate2, System.Security.Cryptography.X509Certificates.X509Chain, System.Net.Security.SslPolicyErrors, bool>
+Vostok.Clusterclient.Transport.NativeTransportSettings.RemoteCertificateValidationCallback.set -> void
+Vostok.Clusterclient.Transport.NativeTransportSettings.RequestAbortTimeout.get -> System.TimeSpan
+Vostok.Clusterclient.Transport.NativeTransportSettings.RequestAbortTimeout.set -> void
+Vostok.Clusterclient.Transport.NativeTransportSettings.UseResponseStreaming.get -> System.Predicate<long?>
+Vostok.Clusterclient.Transport.NativeTransportSettings.UseResponseStreaming.set -> void
+Vostok.Clusterclient.Transport.SocketsTransport
+Vostok.Clusterclient.Transport.SocketsTransport.Capabilities.get -> Vostok.Clusterclient.Core.Transport.TransportCapabilities
+Vostok.Clusterclient.Transport.SocketsTransport.SendAsync(Vostok.Clusterclient.Core.Model.Request request, System.TimeSpan? connectionTimeout, System.TimeSpan timeout, System.Threading.CancellationToken token) -> System.Threading.Tasks.Task<Vostok.Clusterclient.Core.Model.Response>
+Vostok.Clusterclient.Transport.SocketsTransport.SocketsTransport(Vostok.Clusterclient.Transport.SocketsTransportSettings settings, Vostok.Logging.Abstractions.ILog log) -> void
+Vostok.Clusterclient.Transport.SocketsTransport.SocketsTransport(Vostok.Logging.Abstractions.ILog log) -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings
+Vostok.Clusterclient.Transport.SocketsTransportSettings.AllowAutoRedirect.get -> bool
+Vostok.Clusterclient.Transport.SocketsTransportSettings.AllowAutoRedirect.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.ArpCacheWarmupEnabled.get -> bool
+Vostok.Clusterclient.Transport.SocketsTransportSettings.ArpCacheWarmupEnabled.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.BufferFactory.get -> System.Func<int, byte[]>
+Vostok.Clusterclient.Transport.SocketsTransportSettings.BufferFactory.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.ClientCertificates.get -> System.Security.Cryptography.X509Certificates.X509Certificate2[]
+Vostok.Clusterclient.Transport.SocketsTransportSettings.ClientCertificates.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.ConnectionIdleTimeout.get -> System.TimeSpan
+Vostok.Clusterclient.Transport.SocketsTransportSettings.ConnectionIdleTimeout.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.ConnectionLifetime.get -> System.TimeSpan
+Vostok.Clusterclient.Transport.SocketsTransportSettings.ConnectionLifetime.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.Credentials.get -> System.Net.ICredentials
+Vostok.Clusterclient.Transport.SocketsTransportSettings.Credentials.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.DecompressionMethods.get -> System.Net.DecompressionMethods
+Vostok.Clusterclient.Transport.SocketsTransportSettings.DecompressionMethods.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.HttpVersion.get -> System.Version
+Vostok.Clusterclient.Transport.SocketsTransportSettings.HttpVersion.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.HttpVersionPolicy.get -> System.Net.Http.HttpVersionPolicy?
+Vostok.Clusterclient.Transport.SocketsTransportSettings.HttpVersionPolicy.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.MaxConnectionsPerEndpoint.get -> int
+Vostok.Clusterclient.Transport.SocketsTransportSettings.MaxConnectionsPerEndpoint.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.MaxResponseBodySize.get -> long?
+Vostok.Clusterclient.Transport.SocketsTransportSettings.MaxResponseBodySize.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.Proxy.get -> System.Net.IWebProxy
+Vostok.Clusterclient.Transport.SocketsTransportSettings.Proxy.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.RemoteCertificateValidationCallback.get -> System.Net.Security.RemoteCertificateValidationCallback
+Vostok.Clusterclient.Transport.SocketsTransportSettings.RemoteCertificateValidationCallback.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.RequestAbortTimeout.get -> System.TimeSpan
+Vostok.Clusterclient.Transport.SocketsTransportSettings.RequestAbortTimeout.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.SocketsTransportSettings() -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.TcpKeepAliveEnabled.get -> bool
+Vostok.Clusterclient.Transport.SocketsTransportSettings.TcpKeepAliveEnabled.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.TcpKeepAliveInterval.get -> System.TimeSpan
+Vostok.Clusterclient.Transport.SocketsTransportSettings.TcpKeepAliveInterval.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.TcpKeepAliveTime.get -> System.TimeSpan
+Vostok.Clusterclient.Transport.SocketsTransportSettings.TcpKeepAliveTime.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.UseResponseStreaming.get -> System.Predicate<long?>
+Vostok.Clusterclient.Transport.SocketsTransportSettings.UseResponseStreaming.set -> void
+Vostok.Clusterclient.Transport.UniversalTransport
+Vostok.Clusterclient.Transport.UniversalTransport.Capabilities.get -> Vostok.Clusterclient.Core.Transport.TransportCapabilities
+Vostok.Clusterclient.Transport.UniversalTransport.SendAsync(Vostok.Clusterclient.Core.Model.Request request, System.TimeSpan? connectionTimeout, System.TimeSpan timeout, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<Vostok.Clusterclient.Core.Model.Response>
+Vostok.Clusterclient.Transport.UniversalTransport.UniversalTransport(Vostok.Clusterclient.Transport.UniversalTransportSettings settings, Vostok.Logging.Abstractions.ILog log) -> void
+Vostok.Clusterclient.Transport.UniversalTransport.UniversalTransport(Vostok.Logging.Abstractions.ILog log) -> void
+Vostok.Clusterclient.Transport.UniversalTransportSettings
+Vostok.Clusterclient.Transport.UniversalTransportSettings.AllowAutoRedirect.get -> bool
+Vostok.Clusterclient.Transport.UniversalTransportSettings.AllowAutoRedirect.set -> void
+Vostok.Clusterclient.Transport.UniversalTransportSettings.BufferFactory.get -> System.Func<int, byte[]>
+Vostok.Clusterclient.Transport.UniversalTransportSettings.BufferFactory.set -> void
+Vostok.Clusterclient.Transport.UniversalTransportSettings.ClientCertificates.get -> System.Security.Cryptography.X509Certificates.X509Certificate2[]
+Vostok.Clusterclient.Transport.UniversalTransportSettings.ClientCertificates.set -> void
+Vostok.Clusterclient.Transport.UniversalTransportSettings.ConnectionIdleTimeout.get -> System.TimeSpan
+Vostok.Clusterclient.Transport.UniversalTransportSettings.ConnectionIdleTimeout.set -> void
+Vostok.Clusterclient.Transport.UniversalTransportSettings.Credentials.get -> System.Net.ICredentials
+Vostok.Clusterclient.Transport.UniversalTransportSettings.Credentials.set -> void
+Vostok.Clusterclient.Transport.UniversalTransportSettings.DecompressionMethods.get -> System.Net.DecompressionMethods
+Vostok.Clusterclient.Transport.UniversalTransportSettings.DecompressionMethods.set -> void
+Vostok.Clusterclient.Transport.UniversalTransportSettings.HttpVersion.get -> System.Version
+Vostok.Clusterclient.Transport.UniversalTransportSettings.HttpVersion.set -> void
+Vostok.Clusterclient.Transport.UniversalTransportSettings.HttpVersionPolicy.get -> System.Net.Http.HttpVersionPolicy?
+Vostok.Clusterclient.Transport.UniversalTransportSettings.HttpVersionPolicy.set -> void
+Vostok.Clusterclient.Transport.UniversalTransportSettings.MaxConnectionsPerEndpoint.get -> int
+Vostok.Clusterclient.Transport.UniversalTransportSettings.MaxConnectionsPerEndpoint.set -> void
+Vostok.Clusterclient.Transport.UniversalTransportSettings.MaxResponseBodySize.get -> long?
+Vostok.Clusterclient.Transport.UniversalTransportSettings.MaxResponseBodySize.set -> void
+Vostok.Clusterclient.Transport.UniversalTransportSettings.Proxy.get -> System.Net.IWebProxy
+Vostok.Clusterclient.Transport.UniversalTransportSettings.Proxy.set -> void
+Vostok.Clusterclient.Transport.UniversalTransportSettings.RemoteCertificateValidationCallback.get -> System.Net.Security.RemoteCertificateValidationCallback
+Vostok.Clusterclient.Transport.UniversalTransportSettings.RemoteCertificateValidationCallback.set -> void
+Vostok.Clusterclient.Transport.UniversalTransportSettings.RequestAbortTimeout.get -> System.TimeSpan
+Vostok.Clusterclient.Transport.UniversalTransportSettings.RequestAbortTimeout.set -> void
+Vostok.Clusterclient.Transport.UniversalTransportSettings.TcpKeepAliveEnabled.get -> bool
+Vostok.Clusterclient.Transport.UniversalTransportSettings.TcpKeepAliveEnabled.set -> void
+Vostok.Clusterclient.Transport.UniversalTransportSettings.TcpKeepAliveInterval.get -> System.TimeSpan
+Vostok.Clusterclient.Transport.UniversalTransportSettings.TcpKeepAliveInterval.set -> void
+Vostok.Clusterclient.Transport.UniversalTransportSettings.TcpKeepAliveTime.get -> System.TimeSpan
+Vostok.Clusterclient.Transport.UniversalTransportSettings.TcpKeepAliveTime.set -> void
+Vostok.Clusterclient.Transport.UniversalTransportSettings.ToNativeTransportSettings() -> Vostok.Clusterclient.Transport.NativeTransportSettings
+Vostok.Clusterclient.Transport.UniversalTransportSettings.ToSocketsTransportSettings() -> Vostok.Clusterclient.Transport.SocketsTransportSettings
+Vostok.Clusterclient.Transport.UniversalTransportSettings.ToWebRequestTransportSettings() -> Vostok.Clusterclient.Transport.WebRequestTransportSettings
+Vostok.Clusterclient.Transport.UniversalTransportSettings.UniversalTransportSettings() -> void
+Vostok.Clusterclient.Transport.UniversalTransportSettings.UseResponseStreaming.get -> System.Predicate<long?>
+Vostok.Clusterclient.Transport.UniversalTransportSettings.UseResponseStreaming.set -> void
+Vostok.Clusterclient.Transport.WebRequestTransport
+Vostok.Clusterclient.Transport.WebRequestTransport.Capabilities.get -> Vostok.Clusterclient.Core.Transport.TransportCapabilities
+Vostok.Clusterclient.Transport.WebRequestTransport.SendAsync(Vostok.Clusterclient.Core.Model.Request request, System.TimeSpan? connectionTimeout, System.TimeSpan timeout, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<Vostok.Clusterclient.Core.Model.Response>
+Vostok.Clusterclient.Transport.WebRequestTransport.WebRequestTransport(Vostok.Clusterclient.Transport.WebRequestTransportSettings settings, Vostok.Logging.Abstractions.ILog log) -> void
+Vostok.Clusterclient.Transport.WebRequestTransport.WebRequestTransport(Vostok.Logging.Abstractions.ILog log) -> void
+Vostok.Clusterclient.Transport.WebRequestTransportSettings
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.AllowAutoRedirect.get -> bool
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.AllowAutoRedirect.set -> void
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.ArpCacheWarmupEnabled.get -> bool
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.ArpCacheWarmupEnabled.set -> void
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.BufferFactory.get -> System.Func<int, byte[]>
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.BufferFactory.set -> void
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.ClientCertificates.get -> System.Security.Cryptography.X509Certificates.X509Certificate2[]
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.ClientCertificates.set -> void
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.ConnectionGroupName.get -> string
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.ConnectionGroupName.set -> void
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.ConnectionIdleTimeout.get -> System.TimeSpan
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.ConnectionIdleTimeout.set -> void
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.Credentials.get -> System.Net.ICredentials
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.Credentials.set -> void
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.DecompressionMethods.get -> System.Net.DecompressionMethods
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.DecompressionMethods.set -> void
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.FixNonAsciiHeaders.get -> bool
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.FixNonAsciiHeaders.set -> void
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.MaxConnectionsPerEndpoint.get -> int
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.MaxConnectionsPerEndpoint.set -> void
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.MaxResponseBodySize.get -> long?
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.MaxResponseBodySize.set -> void
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.Pipelined.get -> bool
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.Pipelined.set -> void
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.Proxy.get -> System.Net.IWebProxy
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.Proxy.set -> void
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.RemoteCertificateValidationCallback.get -> System.Net.Security.RemoteCertificateValidationCallback
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.RemoteCertificateValidationCallback.set -> void
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.RequestAbortTimeout.get -> System.TimeSpan
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.RequestAbortTimeout.set -> void
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.TcpKeepAliveEnabled.get -> bool
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.TcpKeepAliveEnabled.set -> void
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.TcpKeepAliveInterval.get -> System.TimeSpan
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.TcpKeepAliveInterval.set -> void
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.TcpKeepAliveTime.get -> System.TimeSpan
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.TcpKeepAliveTime.set -> void
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.UseResponseStreaming.get -> System.Predicate<long?>
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.UseResponseStreaming.set -> void
+Vostok.Clusterclient.Transport.WebRequestTransportSettings.WebRequestTransportSettings() -> void
