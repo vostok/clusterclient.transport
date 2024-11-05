@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Clusterclient.Core.Transport;
 using Vostok.Clusterclient.Transport.Sockets;
+using Vostok.Clusterclient.Transport.Sockets.HttpMessageHandlersCache;
 using Vostok.Clusterclient.Transport.SystemNetHttp.BodyReading;
 using Vostok.Clusterclient.Transport.SystemNetHttp.Contents;
 using Vostok.Clusterclient.Transport.SystemNetHttp.Header;
