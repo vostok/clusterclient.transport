@@ -6,6 +6,7 @@ using FluentAssertions.Extensions;
 using NSubstitute;
 using NUnit.Framework;
 using Vostok.Clusterclient.Transport.Sockets;
+using Vostok.Clusterclient.Transport.Sockets.HttpMessageHandlersCache;
 using Vostok.Clusterclient.Transport.Tests.Helpers;
 
 namespace Vostok.Clusterclient.Transport.Tests.Sockets
