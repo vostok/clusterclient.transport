@@ -2,6 +2,7 @@
 
 namespace Vostok.Clusterclient.Transport.Sockets.HttpMessageHandlersCache;
 
+// NOTE: используется в сингуляре (WS проект) через Include .cs файлов
 internal class GlobalCacheKeyComparer : IEqualityComparer<GlobalCacheKey>
 {
     public static readonly GlobalCacheKeyComparer Instance = new GlobalCacheKeyComparer();

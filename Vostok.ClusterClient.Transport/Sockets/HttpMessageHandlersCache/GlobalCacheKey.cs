@@ -7,6 +7,7 @@ using System.Threading;
 
 namespace Vostok.Clusterclient.Transport.Sockets.HttpMessageHandlersCache;
 
+// NOTE: используется в сингуляре (WS проект) через Include .cs файлов
 internal readonly struct GlobalCacheKey
 {
     public readonly IWebProxy Proxy;
