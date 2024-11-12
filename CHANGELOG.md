@@ -1,3 +1,7 @@
+## 0.1.37 (12-11-2024):
+
+Target .net8
+
 ## 0.1.36 (15-12-2023):
 
 Add HeadersModifier delegate to ITransportSettings.
