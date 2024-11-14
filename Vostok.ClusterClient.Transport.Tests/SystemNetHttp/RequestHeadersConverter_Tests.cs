@@ -50,6 +50,20 @@ namespace Vostok.Clusterclient.Transport.Tests.SystemNetHttp
             }
         }
 
-        protected override Runtime SupportedRuntimes => Runtime.Core20 | Runtime.Core21 | Runtime.Core31;
+        [TestCase("\n")]
+        [TestCase("\r")]
+        [TestCase("\n\r")]
+        [TestCase("\r\n")]
+        public void Should_throw_error_for_headers_with_new_line(string value)
+        {
+            var request = Request.Get("/")
+                .WithHeader("test", value);
+            
+            var action = () => RequestHeadersConverter.Fill(request, message, new SynchronousConsoleLog());
+
+            action.Should().Throw<InvalidOperationException>();
+        }
+
+        protected override Runtime SupportedRuntimes => Runtime.Core20 | Runtime.Core21 | Runtime.Core31 | Runtime.Core50;
     }
 }
