@@ -1,3 +1,7 @@
+## 0.1.38 (15-11-2024)
+
+Drop requests with new line symbols in headers
+
 ## 0.1.37 (12-11-2024):
 
 Target .net8
