@@ -8,6 +8,8 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Header
 {
     internal static class RequestHeadersConverter
     {
+        private static readonly char[] NewLineChars = new[] {'\r', '\n'};
+
         public static void Fill(Request request, HttpRequestMessage message, ILog log)
         {
             if (request.Headers != null)
@@ -33,7 +35,7 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Header
                 if (NeedToSkipHeader(header.Name))
                     continue;
 
-                if (!target.TryAddWithoutValidation(header.Name, header.Value))
+                if (ContainsNewLine(header.Value) || !target.TryAddWithoutValidation(header.Name, header.Value))
                     throw new InvalidOperationException($"Failed to add header with name '{header.Name}' and value '{header.Value}'.");
             }
         }
@@ -87,6 +89,16 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Header
             var host = source?[HeaderNames.Host];
             if (host != null)
                 target.Host = host;
+        }
+
+        private static bool ContainsNewLine(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                return false;
+#if NET5_0_OR_GREATER
+            return value.AsSpan().IndexOfAny('\r', '\n') != -1;
+#endif
+            return value.IndexOfAny(NewLineChars) != -1;
         }
     }
 }
