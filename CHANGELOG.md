@@ -1,3 +1,7 @@
+## 0.1.40
+
+Bump NuGet deps versions
+
 ## 0.1.39 (15-11-2024)
 
 Drop requests with new line symbols in headers
