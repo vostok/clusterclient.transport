@@ -9,6 +9,25 @@ notests *default:
     - Vostok.ClusterClient.Transport/bin/Release/netstandard2.0/Vostok.ClusterClient.Transport.dll
     - module vostok.clusterclient.core
     - module vostok.logging.abstractions
+    - groups:
+        - target-framework: "netstandard2.0"
+          libraries:
+            - Vostok.ClusterClient.Transport/bin/Release/netstandard2.0/Vostok.ClusterClient.Transport.dll
+          modules:
+            - name: vostok.clusterclient.core
+            - name: vostok.logging.abstractions
+        - target-framework: "net6.0"
+          libraries:
+            - Vostok.ClusterClient.Transport/bin/Release/net6.0/Vostok.ClusterClient.Transport.dll
+          modules:
+            - name: vostok.clusterclient.core
+            - name: vostok.logging.abstractions
+        - target-framework: "net8.0"
+          libraries:
+            - Vostok.ClusterClient.Transport/bin/Release/net8.0/Vostok.ClusterClient.Transport.dll
+          modules:
+            - name: vostok.clusterclient.core
+            - name: vostok.logging.abstractions
 
   deps:
     - vostok.commons.environment/src
@@ -24,6 +43,30 @@ full-build > notests:
   build:
     target: Vostok.ClusterClient.Transport.sln
     configuration: Release
+
+  install:
+    - Vostok.ClusterClient.Transport/bin/Release/netstandard2.0/Vostok.ClusterClient.Transport.dll
+    - module vostok.clusterclient.core
+    - module vostok.logging.abstractions
+    - groups:
+        - target-framework: "netstandard2.0"
+          libraries:
+            - Vostok.ClusterClient.Transport/bin/Release/netstandard2.0/Vostok.ClusterClient.Transport.dll
+          modules:
+            - name: vostok.clusterclient.core
+            - name: vostok.logging.abstractions
+        - target-framework: "net6.0"
+          libraries:
+            - Vostok.ClusterClient.Transport/bin/Release/net6.0/Vostok.ClusterClient.Transport.dll
+          modules:
+            - name: vostok.clusterclient.core
+            - name: vostok.logging.abstractions
+        - target-framework: "net8.0"
+          libraries:
+            - Vostok.ClusterClient.Transport/bin/Release/net8.0/Vostok.ClusterClient.Transport.dll
+          modules:
+            - name: vostok.clusterclient.core
+            - name: vostok.logging.abstractions
 
   deps:
     - vostok.commons.testing/src
