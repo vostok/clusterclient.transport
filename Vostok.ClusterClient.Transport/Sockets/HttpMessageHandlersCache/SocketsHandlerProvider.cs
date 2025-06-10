@@ -46,6 +46,9 @@ namespace Vostok.Clusterclient.Transport.Sockets.HttpMessageHandlersCache
             if (RuntimeDetector.IsDotNet50AndNewer)
                 NetCore50Utils.TuneHandler(handler, key.TcpKeepAliveEnables, key.TcpKeepAliveInterval, key.TcpKeepAliveTime);
 
+            if (RuntimeDetector.IsDotNet60AndNewer)
+                NetCore60Utils.TuneHandler(handler);
+
             return handler;
         }
     }
