@@ -1,3 +1,7 @@
+## 0.1.41 (10.06.2025):
+
+Disable Http Activity native creation because ClusterClient implements tracing manually.
+
 ## 0.1.40
 
 Bump NuGet deps versions
