@@ -113,11 +113,27 @@ namespace Vostok.Clusterclient.Transport
                         return new Response(bodyReadResult.ErrorCode.Value, headers: responseHeaders);
 
                     if (bodyReadResult.Stream == null)
-                        return new Response(responseCode, bodyReadResult.Content, responseHeaders);
+                    {
+#if NETSTANDARD2_1_OR_GREATER || NET5_0_OR_GREATER
+                        // note(d.khrustalev): мы создаём инстанс headers здесь, потому что к моменту вызова колбэка state может быть недоступен
+                        var trailers = ResponseHeadersConverter.Convert(state.Response.TrailingHeaders);
+#endif
+                        return new Response(responseCode,
+                            bodyReadResult.Content,
+                            responseHeaders)
+#if NETSTANDARD2_1_OR_GREATER || NET5_0_OR_GREATER
+                            .WithTrailersCallback(() => trailers)
+#endif
+                        ;
+                    }
 
                     state.PreventNextDispose();
 
-                    return new Response(responseCode, null, responseHeaders, new DisposableBodyStream(bodyReadResult.Stream, state));
+                    return new Response(responseCode, null, responseHeaders, new DisposableBodyStream(bodyReadResult.Stream, state))
+#if NETSTANDARD2_1_OR_GREATER || NET5_0_OR_GREATER
+                        .WithTrailersCallback(() => ResponseHeadersConverter.Convert(state.Response.TrailingHeaders))
+#endif
+                        ;
                 }
             }
             catch (Exception error)
