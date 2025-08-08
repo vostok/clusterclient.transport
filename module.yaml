@@ -35,7 +35,7 @@ notests *default:
     - vostok.commons.helpers/src
     - vostok.commons.time/src
     - vostok.commons.threading/src
-    - vostok.clusterclient.core
+    - vostok.clusterclient.core@INFRA-10455-http2-support
     - vostok.devtools
     - vostok.logging.abstractions
 
