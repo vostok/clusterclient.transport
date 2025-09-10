@@ -25,5 +25,9 @@ namespace Vostok.Clusterclient.Transport.Tests.Sockets
         [Test]
         public void Should_advertise_response_streaming_capability()
             => transport.Supports(TransportCapabilities.ResponseStreaming).Should().BeTrue();
+        
+        [Test]
+        public void Should_advertise_response_trailers_capability()
+            => transport.Supports(TransportCapabilities.ResponseTrailers).Should().BeTrue();
     }
 }

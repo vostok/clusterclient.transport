@@ -60,7 +60,8 @@ namespace Vostok.Clusterclient.Transport
         public TransportCapabilities Capabilities
             => TransportCapabilities.RequestCompositeBody |
                TransportCapabilities.RequestStreaming |
-               TransportCapabilities.ResponseStreaming;
+               TransportCapabilities.ResponseStreaming | 
+               TransportCapabilities.ResponseTrailers;
 
         /// <inheritdoc />
         public Task<Response> SendAsync(Request request, TimeSpan? connectionTimeout, TimeSpan timeout, CancellationToken token)
