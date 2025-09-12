@@ -1,5 +1,7 @@
 Vostok.Clusterclient.Transport.NativeTransportSettings.HeadersModifier.get -> System.Action<System.Net.Http.Headers.HttpRequestHeaders, System.Net.Http.Headers.HttpContentHeaders>
 Vostok.Clusterclient.Transport.NativeTransportSettings.HeadersModifier.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.EnableMultipleHttp2Connections.get -> bool
+Vostok.Clusterclient.Transport.SocketsTransportSettings.EnableMultipleHttp2Connections.set -> void
 Vostok.Clusterclient.Transport.SocketsTransportSettings.HeadersModifier.get -> System.Action<System.Net.Http.Headers.HttpRequestHeaders, System.Net.Http.Headers.HttpContentHeaders>
 Vostok.Clusterclient.Transport.SocketsTransportSettings.HeadersModifier.set -> void
 Vostok.Clusterclient.Transport.UniversalTransportSettings.HeadersModifier.get -> System.Action<System.Net.Http.Headers.HttpRequestHeaders, System.Net.Http.Headers.HttpContentHeaders>

@@ -98,7 +98,7 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Sockets
     {
     }
 
-#if NET8_0_OR_GREATER
+#if NET6_0_OR_GREATER
     [Explicit]
     internal class Http2Tests : Http2Tests<SocketsTestsConfig>
     {

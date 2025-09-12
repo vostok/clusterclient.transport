@@ -17,11 +17,12 @@ namespace Vostok.Clusterclient.Transport.Core50
         private static readonly bool IsWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 
         [UsedImplicitly]
-        public static void Tune(HttpMessageHandler handler, bool tcpKeepAliveEnables, TimeSpan tcpKeepAliveInterval, TimeSpan tcpKeepAliveTime)
+        public static void Tune(HttpMessageHandler handler, bool tcpKeepAliveEnables,
+                                TimeSpan tcpKeepAliveInterval, TimeSpan tcpKeepAliveTime,
+                                bool enableMultipleHttp2Connections)
         {
             if (!(handler is SocketsHttpHandler socketHandler))
                 return;
-
             if (tcpKeepAliveEnables)
             {
                 var keepAliveTime = (int)tcpKeepAliveTime.TotalSeconds;
@@ -71,6 +72,8 @@ namespace Vostok.Clusterclient.Transport.Core50
 
             socketHandler.ResponseDrainTimeout = TimeSpan.FromSeconds(3);
             socketHandler.MaxResponseDrainSize = 64 * 1024;
+
+            socketHandler.EnableMultipleHttp2Connections = enableMultipleHttp2Connections;
         }
 
         private static ArraySegment<IPAddress> FilterIPs(IPAddress[] resolvedIps)
