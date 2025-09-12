@@ -104,6 +104,11 @@ namespace Vostok.Clusterclient.Transport
         /// </summary>
         public DecompressionMethods DecompressionMethods { get; set; }
 
+        /// <summary>
+        /// Gets or sets the HTTP/2 connection multiplexing flag.
+        /// </summary>
+        public bool EnableMultipleHttp2Connections { get; set; } = false;
+
 #if NETCOREAPP
         /// <summary>
         /// Gets or sets the HTTP version. If not defined, the default version will be used depending on the framework version.
@@ -117,7 +122,7 @@ namespace Vostok.Clusterclient.Transport
         /// </summary>
         public HttpVersionPolicy? HttpVersionPolicy { get; set; } = null;
 #endif
-        
+
 #if NET5_0_OR_GREATER
         /// <summary>
         /// Gets or sets the HTTP request headers modifier delegate. If not defined, no additional header changes will be applied.

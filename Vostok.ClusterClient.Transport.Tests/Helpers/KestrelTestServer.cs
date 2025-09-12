@@ -1,4 +1,4 @@
-﻿#if NET8_0_OR_GREATER
+﻿#if NET5_0_OR_GREATER
 using System;
 using System.Net;
 using System.Runtime.InteropServices;
@@ -31,7 +31,11 @@ internal class KestrelTestServer : IDisposable
         host = new WebHostBuilder()
             .UseSockets()
             .UseKestrel(GetDefaultKestrelSetup(Port, configureListen, useHttps))
-            .UseStartup(_ => new TestStartup(handle))
+            .Configure(app => app.Run(context =>
+                {
+                    handle(context);
+                    return Task.CompletedTask;
+                }))
             .Build();
     }
 
@@ -69,25 +73,6 @@ internal class KestrelTestServer : IDisposable
                 if (useHttps)
                     listenOptions.UseHttps();
             });
-    }
-
-    private class TestStartup : StartupBase
-    {
-        private readonly Action<HttpContext> handler;
-
-        public TestStartup(Action<HttpContext> handler)
-        {
-            this.handler = handler;
-        }
-
-        public override void Configure(IApplicationBuilder app)
-        {
-            app.Run(context =>
-            {
-                handler(context);
-                return Task.CompletedTask;
-            });
-        }
     }
 }
 #endif

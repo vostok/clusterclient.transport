@@ -12,7 +12,7 @@ namespace Vostok.Clusterclient.Transport.Helpers
         private const string Namespace = "Vostok.Clusterclient.Transport.Core50";
         private const string Library = "Vostok.ClusterClient.Transport.Core50.dll";
 
-        private static readonly Action<HttpMessageHandler, bool, TimeSpan, TimeSpan> tuning;
+        private static readonly Action<HttpMessageHandler, bool, TimeSpan, TimeSpan, bool> tuning;
 
         static NetCore50Utils()
         {
@@ -26,19 +26,21 @@ namespace Vostok.Clusterclient.Transport.Helpers
             var tcpKeepAliveEnablesParameter = Expression.Parameter(typeof(bool));
             var tcpKeepAliveIntervalParameter = Expression.Parameter(typeof(TimeSpan));
             var tcpKeepAliveTimeParameter = Expression.Parameter(typeof(TimeSpan));
+            var enableMultipleHttp2ConnectionsParameter = Expression.Parameter(typeof(bool));
 
-            tuning = Expression.Lambda<Action<HttpMessageHandler, bool, TimeSpan, TimeSpan>>(
-                    Expression.Call(handlerTunerMethod, handlerParameter, tcpKeepAliveEnablesParameter, tcpKeepAliveIntervalParameter, tcpKeepAliveTimeParameter),
+            tuning = Expression.Lambda<Action<HttpMessageHandler, bool, TimeSpan, TimeSpan, bool>>(
+                    Expression.Call(handlerTunerMethod, handlerParameter, tcpKeepAliveEnablesParameter, tcpKeepAliveIntervalParameter, tcpKeepAliveTimeParameter, enableMultipleHttp2ConnectionsParameter),
                     handlerParameter,
                     tcpKeepAliveEnablesParameter,
                     tcpKeepAliveIntervalParameter,
-                    tcpKeepAliveTimeParameter)
+                    tcpKeepAliveTimeParameter,
+                    enableMultipleHttp2ConnectionsParameter)
                 .Compile();
         }
 
-        public static void TuneHandler(HttpMessageHandler handler, bool tcpKeepAliveEnables, TimeSpan tcpKeepAliveInterval, TimeSpan tcpKeepAliveTime)
+        public static void TuneHandler(HttpMessageHandler handler, bool tcpKeepAliveEnables, TimeSpan tcpKeepAliveInterval, TimeSpan tcpKeepAliveTime, bool enableMultipleHttp2Connections)
         {
-            tuning(handler, tcpKeepAliveEnables, tcpKeepAliveInterval, tcpKeepAliveTime);
+            tuning(handler, tcpKeepAliveEnables, tcpKeepAliveInterval, tcpKeepAliveTime, enableMultipleHttp2Connections);
         }
     }
 }
