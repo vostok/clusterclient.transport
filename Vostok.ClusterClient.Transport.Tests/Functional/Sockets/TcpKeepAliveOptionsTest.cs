@@ -1,3 +1,4 @@
+#if NET5_0_OR_GREATER
 using System.Threading;
 using FluentAssertions;
 using NUnit.Framework;
@@ -44,3 +45,4 @@ internal class TcpKeepAliveOptionsTest
         }
     }
 }
+#endif
