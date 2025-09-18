@@ -98,6 +98,6 @@ namespace Vostok.Clusterclient.Transport.Core50
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool NotValidIp(IPAddress ip) =>
-            ip.AddressFamily is not (AddressFamily.InterNetwork);
+            ip.AddressFamily is not (AddressFamily.InterNetwork or AddressFamily.InterNetworkV6);
     }
 }
