@@ -1,7 +1,6 @@
 #if NET5_0_OR_GREATER
 using FluentAssertions;
 using System.Threading;
-using FluentAssertions;
 using NUnit.Framework;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Clusterclient.Transport.Tests.Helpers;
@@ -19,7 +18,7 @@ internal class TcpKeepAliveOptionsTest
     [Test]
     public void Should_send_large_request_body_with_keepalive_option()
     {
-        var requestSize = 5 * 1024 * 1024;
+        const int requestSize = 5 * 1024 * 1024;
         var responseSize = 0;
         
         using (var server = KestrelTestServer.StartNew(ctx =>
@@ -44,7 +43,7 @@ internal class TcpKeepAliveOptionsTest
                     TcpKeepAliveTime = 5.Seconds(),
                 },
                 new ConsoleLog());
-            var response = transport.SendAsync(Request.Post(server.Url).WithContent(new byte[requestSize]), 750.Milliseconds(), 10.Minutes(), CancellationToken.None);
+            var response = transport.SendAsync(Request.Post(server.Url).WithContent(new byte[requestSize]), 750.Milliseconds(), 3.Seconds(), CancellationToken.None);
 
             response.Result.Code.Should().Be(200);
             responseSize.Should().Be(requestSize);
