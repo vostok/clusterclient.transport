@@ -31,7 +31,7 @@ public class IpV6Tests
                 },
                 new ConsoleLog());
 
-            var address = Dns.GetHostAddresses(Dns.GetHostName()).First(x => x.AddressFamily == AddressFamily.InterNetworkV6);
+            var address = Dns.GetHostAddresses("localhost").First(x => x.AddressFamily == AddressFamily.InterNetworkV6);
             var url = new Uri($"http://[{address}]:{server.Port}");
             var response = transport.SendAsync(Request.Post(url), 750.Milliseconds(), 3.Seconds(), CancellationToken.None);
 
