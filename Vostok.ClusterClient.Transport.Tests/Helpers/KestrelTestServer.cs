@@ -39,27 +39,28 @@ internal class KestrelTestServer : IDisposable
             .Build();
     }
 
-    public static KestrelTestServer StartNew(Action<HttpContext> handle, Action<ListenOptions>? configureListen = null, bool useHttps = false)
+    public static async Task<KestrelTestServer> StartNewAsync(Action<HttpContext> handle, Action<ListenOptions>? configureListen = null, bool useHttps = false)
     {
         var server = new KestrelTestServer(handle, configureListen, useHttps);
-        server.Start();
+        await server.StartAsync();
         return server;
     }
 
-    private void Start()
+    
+    private Task StartAsync()
     {
-        host.Start();
+        return host.StartAsync();
     }
 
-    private void Stop()
+    private Task StopAsync()
     {
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-        host.StopAsync(cts.Token).GetAwaiter().GetResult();
+        return host.StopAsync(cts.Token);
     }
 
     public void Dispose()
     {
-        Stop();
+        StopAsync();
     }
     
     private static Action<KestrelServerOptions> GetDefaultKestrelSetup(int port, Action<ListenOptions>? configureListen = null, bool useHttps = false)
