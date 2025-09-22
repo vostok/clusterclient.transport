@@ -13,22 +13,24 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Header
             var headers = Headers.Empty;
 
             if (responseMessage?.Headers != null)
-                headers = headers.Add(responseMessage.Headers);
+                headers = Add(headers, responseMessage.Headers);
 
             if (responseMessage?.Content?.Headers != null)
-                headers = headers.Add(responseMessage.Content.Headers);
+                headers = Add(headers, responseMessage.Content.Headers);
 
             return headers;
         }
 
         public static Headers Convert(HttpResponseHeaders responseHeaders)
         {
-            return responseHeaders == null ? Headers.Empty : Headers.Empty.Add(responseHeaders);;
+            return responseHeaders == null ? Headers.Empty : Add(Headers.Empty, responseHeaders);;
         }
 
-        private static Headers Add(this Headers headers, HttpHeaders responseHeaders)
+        private static Headers Add(Headers headers, HttpHeaders responseHeaders)
         {
-            return responseHeaders.Aggregate(headers, (current, pair) => current.Set(pair.Key, FlattenValue(pair.Value)));
+            foreach (var pair in responseHeaders)
+                headers = headers.Set(pair.Key, FlattenValue(pair.Value));
+            return headers;
         }
 
         private static string FlattenValue(IEnumerable<string> value)

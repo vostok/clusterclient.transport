@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -15,9 +16,9 @@ internal abstract class Http2Tests<TConfig> : TransportFunctionalTests<TConfig>
     where TConfig : ITransportTestConfig, new()
 {
     [Test]
-    public void Should_be_capable_of_sending_http2_requests_over_plain_tcp_in_prior_knowledge_mode()
+    public async Task Should_be_capable_of_sending_http2_requests_over_plain_tcp_in_prior_knowledge_mode()
     {
-        using var server = KestrelTestServer.StartNew(ctx =>
+        using var server = await KestrelTestServer.StartNewAsync(ctx =>
         {
             ctx.Response.StatusCode = HttpProtocol.IsHttp2(ctx.Request.Protocol) 
                 ? StatusCodes.Status200OK 
@@ -28,14 +29,14 @@ internal abstract class Http2Tests<TConfig> : TransportFunctionalTests<TConfig>
         settings.HttpVersionPolicy = HttpVersionPolicy.RequestVersionOrHigher;
         
         var request = Request.Get(server.Url);
-        var response = Send(request);
+        var response = await SendAsync(request);
         response.Code.Should().Be(ResponseCode.Ok);
     }
     
     [Test]
-    public void Should_be_capable_of_sending_http2_requests_over_tls_when_upgrade_available()
+    public async Task Should_be_capable_of_sending_http2_requests_over_tls_when_upgrade_available()
     {
-        using var server = KestrelTestServer.StartNew(ctx =>
+        using var server = await KestrelTestServer.StartNewAsync(ctx =>
         {
             ctx.Response.StatusCode = HttpProtocol.IsHttp2(ctx.Request.Protocol) 
                 ? StatusCodes.Status200OK 
@@ -46,18 +47,18 @@ internal abstract class Http2Tests<TConfig> : TransportFunctionalTests<TConfig>
         settings.HttpVersionPolicy = HttpVersionPolicy.RequestVersionOrHigher;
         
         var request = Request.Get(server.Url);
-        var response = Send(request);
+        var response = await SendAsync(request);
         response.Code.Should().Be(ResponseCode.Ok);
     }
 
     [Test]
-    public void Should_be_capable_of_reading_trailing_headers()
+    public async Task Should_be_capable_of_reading_trailing_headers()
     {
         const string message = "Hello World";
         const string trailerName = "grpc-status";
         const string trailerValue = "0";
         
-        using var server = KestrelTestServer.StartNew(async ctx =>
+        using var server = await KestrelTestServer.StartNewAsync(async ctx =>
         {
             ctx.Response.StatusCode = StatusCodes.Status200OK;
             // note(d.khrustalev): we have to send a body, otherwise trailers won't be sent either
@@ -69,11 +70,11 @@ internal abstract class Http2Tests<TConfig> : TransportFunctionalTests<TConfig>
         settings.HttpVersionPolicy = HttpVersionPolicy.RequestVersionOrHigher;
 
         var request = Request.Get(server.Url);
-        var response = Send(request);
+        var response = await SendAsync(request);
         response.Code.Should().Be(ResponseCode.Ok);
         response.Content.ToString().Should().Be(message);
-        response.Trailers.Should().NotBeNull().And.ContainSingle();
-        response.Trailers[trailerName].Should().Be(trailerValue);
+        response.TrailingHeaders.Should().NotBeNull().And.ContainSingle();
+        response.TrailingHeaders[trailerName].Should().Be(trailerValue);
     }
 }
 #endif
