@@ -22,7 +22,8 @@ internal class GlobalCacheKeyComparer : IEqualityComparer<GlobalCacheKey>
             x.DecompressionMethods == y.DecompressionMethods &&
             x.TcpKeepAliveEnables == y.TcpKeepAliveEnables &&
             x.TcpKeepAliveInterval == y.TcpKeepAliveInterval &&
-            x.TcpKeepAliveTime == y.TcpKeepAliveTime;
+            x.TcpKeepAliveTime == y.TcpKeepAliveTime &&
+            x.EnableMultipleHttp2Connections == y.EnableMultipleHttp2Connections;
     }
 
     public int GetHashCode(GlobalCacheKey key)
