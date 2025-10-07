@@ -17,6 +17,10 @@
     <PackageReference Include="NSubstitute" Version="3.1.0" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp2.1' And '$(TargetFramework)' != 'net471'">
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Vostok.ClusterClient.Transport\Vostok.ClusterClient.Transport.csproj" />
   </ItemGroup>
