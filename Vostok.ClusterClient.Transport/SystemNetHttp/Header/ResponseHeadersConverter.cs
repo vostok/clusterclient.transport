@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using Vostok.Clusterclient.Core.Model;
 
 namespace Vostok.Clusterclient.Transport.SystemNetHttp.Header
@@ -11,17 +13,23 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Header
             var headers = Headers.Empty;
 
             if (responseMessage?.Headers != null)
-            {
-                foreach (var pair in responseMessage.Headers)
-                    headers = headers.Set(pair.Key, FlattenValue(pair.Value));
-            }
+                headers = Add(headers, responseMessage.Headers);
 
             if (responseMessage?.Content?.Headers != null)
-            {
-                foreach (var pair in responseMessage.Content.Headers)
-                    headers = headers.Set(pair.Key, FlattenValue(pair.Value));
-            }
+                headers = Add(headers, responseMessage.Content.Headers);
 
+            return headers;
+        }
+
+        public static Headers Convert(HttpResponseHeaders responseHeaders)
+        {
+            return responseHeaders == null ? Headers.Empty : Add(Headers.Empty, responseHeaders);;
+        }
+
+        private static Headers Add(Headers headers, HttpHeaders responseHeaders)
+        {
+            foreach (var pair in responseHeaders)
+                headers = headers.Set(pair.Key, FlattenValue(pair.Value));
             return headers;
         }
 

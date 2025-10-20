@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -60,7 +61,8 @@ namespace Vostok.Clusterclient.Transport
         public TransportCapabilities Capabilities
             => TransportCapabilities.RequestCompositeBody |
                TransportCapabilities.RequestStreaming |
-               TransportCapabilities.ResponseStreaming;
+               TransportCapabilities.ResponseStreaming | 
+               TransportCapabilities.ResponseTrailingHeaders;
 
         /// <inheritdoc />
         public Task<Response> SendAsync(Request request, TimeSpan? connectionTimeout, TimeSpan timeout, CancellationToken token)
@@ -87,10 +89,10 @@ namespace Vostok.Clusterclient.Transport
 #endif
 
 #if !NET5_0_OR_GREATER
-                    // Due to significant changes in System.Net.Http.HttpConnection class SocketTuningContent can't work starting from .Net7.
-                    // But starting from .Net5 HttpMessageHandler has a special api for setting TcpKeepAlive options. See in NetCore50Utils.TuneHandler and SocketsHttpHandlerTuner.
-                    if (state.Request.Content is GenericContent content && socketTuner.CanTune)
-                        state.Request.Content = new SocketTuningContent(content, socketTuner, log);
+                // Due to significant changes in System.Net.Http.HttpConnection class SocketTuningContent can't work starting from .Net7.
+                // But starting from .Net5 HttpMessageHandler has a special api for setting TcpKeepAlive options. See in NetCore50Utils.TuneHandler and SocketsHttpHandlerTuner.
+                if (state.Request.Content is GenericContent content && socketTuner.CanTune)
+                    state.Request.Content = new SocketTuningContent(content, socketTuner, log);
 #endif
 
 #if NET5_0_OR_GREATER
@@ -113,11 +115,23 @@ namespace Vostok.Clusterclient.Transport
                         return new Response(bodyReadResult.ErrorCode.Value, headers: responseHeaders);
 
                     if (bodyReadResult.Stream == null)
-                        return new Response(responseCode, bodyReadResult.Content, responseHeaders);
+                    {
+                        return new Response(responseCode,
+                            bodyReadResult.Content,
+                            responseHeaders
+#if NETSTANDARD2_1_OR_GREATER || NET5_0_OR_GREATER
+                            , trailingHeaders: ResponseHeadersConverter.Convert(state.Response.TrailingHeaders)
+#endif
+                        );
+                    }
 
                     state.PreventNextDispose();
 
-                    return new Response(responseCode, null, responseHeaders, new DisposableBodyStream(bodyReadResult.Stream, state));
+                    return new Response(responseCode, null, responseHeaders, new DisposableBodyStream(bodyReadResult.Stream, state)
+#if NETSTANDARD2_1_OR_GREATER || NET5_0_OR_GREATER
+                        , getTrailingHeaders: GetTrailingHeadersCallback(state)
+#endif
+                    );
                 }
             }
             catch (Exception error)
@@ -129,5 +143,10 @@ namespace Vostok.Clusterclient.Transport
                 return errorResponse;
             }
         }
+
+#if NETSTANDARD2_1_OR_GREATER || NET5_0_OR_GREATER
+        // note(d.khrustalev): optimisation to reduce unnecessary closure allocations as in https://staff.skbkontur.ru/article/61ad0a39382b995366df065b
+        private Func<Headers> GetTrailingHeadersCallback(DisposableState state) => () => ResponseHeadersConverter.Convert(state.Response.TrailingHeaders);
+#endif
     }
 }
