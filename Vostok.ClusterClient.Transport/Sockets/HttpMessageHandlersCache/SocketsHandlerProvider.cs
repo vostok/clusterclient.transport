@@ -44,7 +44,7 @@ namespace Vostok.Clusterclient.Transport.Sockets.HttpMessageHandlersCache
                 key.DecompressionMethods);
 
             if (RuntimeDetector.IsDotNet50AndNewer)
-                NetCore50Utils.TuneHandler(handler, key.TcpKeepAliveEnables, key.TcpKeepAliveInterval, key.TcpKeepAliveTime);
+                NetCore50Utils.TuneHandler(handler, key.TcpKeepAliveEnables, key.TcpKeepAliveInterval, key.TcpKeepAliveTime, key.EnableMultipleHttp2Connections);
 
             if (RuntimeDetector.IsDotNet60AndNewer)
                 NetCore60Utils.TuneHandler(handler);

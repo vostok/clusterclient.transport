@@ -97,4 +97,11 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Sockets
     internal class CredentialsTests : CredentialsTests<SocketsTestsConfig>
     {
     }
+
+#if NET6_0_OR_GREATER
+    [Explicit]
+    internal class Http2Tests : Http2Tests<SocketsTestsConfig>
+    {
+    }
+#endif
 }

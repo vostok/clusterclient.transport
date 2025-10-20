@@ -23,6 +23,7 @@ internal readonly struct GlobalCacheKey
     public readonly bool TcpKeepAliveEnables;
     public readonly TimeSpan TcpKeepAliveInterval;
     public readonly TimeSpan TcpKeepAliveTime;
+    public readonly bool EnableMultipleHttp2Connections;
 
     public GlobalCacheKey(
         IWebProxy proxy,
@@ -37,7 +38,8 @@ internal readonly struct GlobalCacheKey
         DecompressionMethods decompressionMethods,
         bool tcpKeepAliveEnables,
         TimeSpan tcpKeepAliveInterval,
-        TimeSpan tcpKeepAliveTime)
+        TimeSpan tcpKeepAliveTime,
+        bool enableMultipleHttp2Connections)
     {
         Proxy = proxy;
         AllowAutoRedirect = allowAutoRedirect;
@@ -52,6 +54,7 @@ internal readonly struct GlobalCacheKey
         TcpKeepAliveEnables = tcpKeepAliveEnables;
         TcpKeepAliveInterval = tcpKeepAliveInterval;
         TcpKeepAliveTime = tcpKeepAliveTime;
+        EnableMultipleHttp2Connections = enableMultipleHttp2Connections;
     }
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -69,5 +72,6 @@ internal readonly struct GlobalCacheKey
             settings.DecompressionMethods,
             settings.TcpKeepAliveEnabled,
             settings.TcpKeepAliveInterval,
-            settings.TcpKeepAliveTime);
+            settings.TcpKeepAliveTime,
+            settings.EnableMultipleHttp2Connections);
 }
