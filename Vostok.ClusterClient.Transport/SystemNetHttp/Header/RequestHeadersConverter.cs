@@ -35,6 +35,16 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Header
                 if (NeedToSkipHeader(header.Name))
                     continue;
 
+                // https://yt.skbkontur.ru/issue/INFRA-12602
+                if (header.Name == HeaderNames.Authorization && target is HttpRequestHeaders requestHeaders)
+                {
+                    if (AuthenticationHeaderValue.TryParse(header.Value, out var authValue))
+                        requestHeaders.Authorization = authValue;
+                    else
+                        throw new InvalidOperationException($"Failed to add header with name '{header.Name}' and value '{header.Value}'.");
+                    continue;
+                }
+
                 if (ContainsNewLine(header.Value) || !target.TryAddWithoutValidation(header.Name, header.Value))
                     throw new InvalidOperationException($"Failed to add header with name '{header.Name}' and value '{header.Value}'.");
             }

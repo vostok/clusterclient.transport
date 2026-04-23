@@ -40,6 +40,25 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
 
         [TestCase("GET")]
         [TestCase("POST")]
+        public void Should_automatically_redirect_and_reset_auth_headers(string method)
+        {
+            settings.AllowAutoRedirect = true;
+
+            using (var server = TestServer.StartNew(Handler))
+            {
+                var response = Send(
+                    new Request(method, new Uri($"http://localhost:{server.Port}/redirect"))
+                        .WithHeader(HeaderNames.Authorization, "Basic dXNlcjpwYXNz")
+                );
+
+                response.Code.Should().Be(ResponseCode.Ok);
+                server.LastRequest.Headers[HeaderNames.Authorization].Should().BeNull();
+                server.LastRequest.Url.Should().Be(new Uri($"http://localhost:{server.Port}/target"));
+            }
+        }
+
+        [TestCase("GET")]
+        [TestCase("POST")]
         public void Should_not_automatically_redirect_and_return_Found_if_setting_is_false(string method)
         {
             settings.AllowAutoRedirect = false;
