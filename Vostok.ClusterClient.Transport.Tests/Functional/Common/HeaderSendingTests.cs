@@ -100,5 +100,22 @@ namespace Vostok.Clusterclient.Transport.Tests.Functional.Common
                 server.LastRequest.Headers[HeaderNames.TransferEncoding].Should().BeNull();
             }
         }
+
+        [Test]
+        public void Should_clear_Authorization_header_on_redirect()
+        {
+            settings.AllowAutoRedirect = true;
+            using var redirectServer = TestServer.StartNew(ctx => ctx.Response.StatusCode = 200);
+            using var server = TestServer.StartNew(ctx => {
+                ctx.Response.StatusCode = 301;
+                ctx.Response.AddHeader(HeaderNames.Location, redirectServer.Url.AbsoluteUri);
+                });
+
+            var request = Request.Get(server.Url).WithHeader(HeaderNames.Authorization, "one_ring_to_rule_them_all");
+
+            Send(request);
+
+            redirectServer.LastRequest.Headers[HeaderNames.Authorization].Should().BeNull();
+        }
     }
 }
