@@ -56,6 +56,8 @@ Vostok.Clusterclient.Transport.SocketsTransportSettings.Credentials.get -> Syste
 Vostok.Clusterclient.Transport.SocketsTransportSettings.Credentials.set -> void
 Vostok.Clusterclient.Transport.SocketsTransportSettings.DecompressionMethods.get -> System.Net.DecompressionMethods
 Vostok.Clusterclient.Transport.SocketsTransportSettings.DecompressionMethods.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.EnableMultipleHttp2Connections.get -> bool
+Vostok.Clusterclient.Transport.SocketsTransportSettings.EnableMultipleHttp2Connections.set -> void
 Vostok.Clusterclient.Transport.SocketsTransportSettings.MaxConnectionsPerEndpoint.get -> int
 Vostok.Clusterclient.Transport.SocketsTransportSettings.MaxConnectionsPerEndpoint.set -> void
 Vostok.Clusterclient.Transport.SocketsTransportSettings.MaxResponseBodySize.get -> long?

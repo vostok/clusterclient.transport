@@ -21,6 +21,8 @@ Vostok.Clusterclient.Transport.NativeTransportSettings.Credentials.get -> System
 Vostok.Clusterclient.Transport.NativeTransportSettings.Credentials.set -> void
 Vostok.Clusterclient.Transport.NativeTransportSettings.DecompressionMethods.get -> System.Net.DecompressionMethods
 Vostok.Clusterclient.Transport.NativeTransportSettings.DecompressionMethods.set -> void
+Vostok.Clusterclient.Transport.NativeTransportSettings.HeadersModifier.get -> System.Action<System.Net.Http.Headers.HttpRequestHeaders, System.Net.Http.Headers.HttpContentHeaders>
+Vostok.Clusterclient.Transport.NativeTransportSettings.HeadersModifier.set -> void
 Vostok.Clusterclient.Transport.NativeTransportSettings.HttpVersion.get -> System.Version
 Vostok.Clusterclient.Transport.NativeTransportSettings.HttpVersion.set -> void
 Vostok.Clusterclient.Transport.NativeTransportSettings.HttpVersionPolicy.get -> System.Net.Http.HttpVersionPolicy?
@@ -60,6 +62,10 @@ Vostok.Clusterclient.Transport.SocketsTransportSettings.Credentials.get -> Syste
 Vostok.Clusterclient.Transport.SocketsTransportSettings.Credentials.set -> void
 Vostok.Clusterclient.Transport.SocketsTransportSettings.DecompressionMethods.get -> System.Net.DecompressionMethods
 Vostok.Clusterclient.Transport.SocketsTransportSettings.DecompressionMethods.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.EnableMultipleHttp2Connections.get -> bool
+Vostok.Clusterclient.Transport.SocketsTransportSettings.EnableMultipleHttp2Connections.set -> void
+Vostok.Clusterclient.Transport.SocketsTransportSettings.HeadersModifier.get -> System.Action<System.Net.Http.Headers.HttpRequestHeaders, System.Net.Http.Headers.HttpContentHeaders>
+Vostok.Clusterclient.Transport.SocketsTransportSettings.HeadersModifier.set -> void
 Vostok.Clusterclient.Transport.SocketsTransportSettings.HttpVersion.get -> System.Version
 Vostok.Clusterclient.Transport.SocketsTransportSettings.HttpVersion.set -> void
 Vostok.Clusterclient.Transport.SocketsTransportSettings.HttpVersionPolicy.get -> System.Net.Http.HttpVersionPolicy?
@@ -101,6 +107,8 @@ Vostok.Clusterclient.Transport.UniversalTransportSettings.Credentials.get -> Sys
 Vostok.Clusterclient.Transport.UniversalTransportSettings.Credentials.set -> void
 Vostok.Clusterclient.Transport.UniversalTransportSettings.DecompressionMethods.get -> System.Net.DecompressionMethods
 Vostok.Clusterclient.Transport.UniversalTransportSettings.DecompressionMethods.set -> void
+Vostok.Clusterclient.Transport.UniversalTransportSettings.HeadersModifier.get -> System.Action<System.Net.Http.Headers.HttpRequestHeaders, System.Net.Http.Headers.HttpContentHeaders>
+Vostok.Clusterclient.Transport.UniversalTransportSettings.HeadersModifier.set -> void
 Vostok.Clusterclient.Transport.UniversalTransportSettings.HttpVersion.get -> System.Version
 Vostok.Clusterclient.Transport.UniversalTransportSettings.HttpVersion.set -> void
 Vostok.Clusterclient.Transport.UniversalTransportSettings.HttpVersionPolicy.get -> System.Net.Http.HttpVersionPolicy?

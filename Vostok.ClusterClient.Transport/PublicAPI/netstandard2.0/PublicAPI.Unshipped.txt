@@ -1,2 +1,0 @@
-Vostok.Clusterclient.Transport.SocketsTransportSettings.EnableMultipleHttp2Connections.get -> bool
-Vostok.Clusterclient.Transport.SocketsTransportSettings.EnableMultipleHttp2Connections.set -> void
