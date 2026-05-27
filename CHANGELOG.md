@@ -1,3 +1,7 @@
+## 0.1.42 (27.05.2026):
+
+Add trailing headers support and fix a bug with authorization header clearing upon following redirects.
+
 ## 0.1.41 (10.06.2025):
 
 Disable Http Activity native creation because ClusterClient implements tracing manually.
