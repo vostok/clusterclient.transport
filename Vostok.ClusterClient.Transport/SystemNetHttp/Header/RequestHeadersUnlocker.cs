@@ -69,18 +69,10 @@ namespace Vostok.Clusterclient.Transport.SystemNetHttp.Header
             try
             {
                 if (RuntimeDetector.IsDotNetCore21AndNewer)
-                {
-                    var allowLambda = NetCore20Utils.CreateAssignment(typeof(HttpHeaders).GetField("_allowedHeaderTypes", BindingFlags.Instance | BindingFlags.NonPublic), (int)HeaderType.Custom);
-                    var treatLambda = NetCore20Utils.CreateAssignment(typeof(HttpHeaders).GetField("_treatAsCustomHeaderTypes", BindingFlags.Instance | BindingFlags.NonPublic), (int)HeaderType.All);
-
-                    return h =>
-                    {
-                        allowLambda(h);
-                        treatLambda(h);
-                    };
-                }
+                    return NetCore20Utils.CreateAssignment(typeof(HttpHeaders).GetField("_treatAsCustomHeaderTypes", BindingFlags.Instance | BindingFlags.NonPublic), (int)(HeaderType.Response | HeaderType.Content));
 
                 return NetCore20Utils.CreateNullAssignment(typeof(HttpHeaders).GetField("_invalidHeaders", BindingFlags.Instance | BindingFlags.NonPublic));
+
             }
             catch (Exception error)
             {
